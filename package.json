@@ -1,0 +1,13 @@
+{
+  "name": "augustplan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "jaepang",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2"
+  }
+}
