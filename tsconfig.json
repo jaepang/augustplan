@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    // jsx, tsx
+    "jsx": "react-jsx",
+    // allow import in ts-node
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // allow import json
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@src/*": ["./*"],
+      "@shared/*": ["./shared/*"],
+      "@server/*": ["./server/*"],
+      "@client/*": ["./client/*"],
+      "@components/*": ["./client/components/*"],
+      "@hooks/*": ["./client/hooks/*"],
+    },
+  },
+  "include": ["src/**/*", "**/*.tsx", "**/*.ts"],
+  "exclude": ["node_modules"]
+}

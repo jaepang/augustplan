@@ -1,0 +1,7 @@
+**/libs
+**/build
+**/assets/js/**
+**/config/attractionCategoryIDs.ts
+packages/loadable-ts-transformer
+packages/media-viewer/dist/**
+packages/media-viewer/declaration/**

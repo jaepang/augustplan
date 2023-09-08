@@ -1,0 +1,9 @@
+@import './reset.css';
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background-color: rgb(233, 236, 239);
+}
