@@ -32,10 +32,8 @@ module.exports = () => {
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '@shared': path.resolve(__dirname, 'src/shared'),
-        '@server': path.resolve(__dirname, 'src/server'),
-        '@client': path.resolve(__dirname, 'src/client'),
-        '@components': path.resolve(__dirname, 'src/client/components'),
-        '@hooks': path.resolve(__dirname, 'src/client/hooks'),
+        '@components': path.resolve(__dirname, 'src/components'),
+        '@hooks': path.resolve(__dirname, 'src/hooks'),
       },
     },
 
@@ -83,7 +81,7 @@ module.exports = () => {
       // react router로 이동한 채로 새로고침할 때 Not found가 안나도록 함
       historyApiFallback: true,
       // local 개발 DNS 설정
-      allowedHosts: ['local-m.place.naver.com'],
+      allowedHosts: ['*'],
     },
 
     // loader보다 강력하게 웹팩 실행 전반에 관여한다

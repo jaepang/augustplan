@@ -1,52 +1,25 @@
-import classNames from 'classnames/bind'
-import styles from './DetailSource.module.css'
-const cx = classNames.bind(styles)
+import { useContext } from 'react'
+import { InfoContext } from '@components/InfoProvider'
 
-interface Props {
-  titleImage?: string
-  comment?: string
-  additionalComment?: string
-  color?: {
-    image?: string
-    comment?: string
-  }
-  fabrics?: {
-    image?: string
-    mixedRate?: string
-    comment?: string
-  }[]
-  model?: {
-    number?: number
-    name?: string
-    fittingColor?: string
-    fittingSize?: string
-  }
-  mainImage?: string
-  detailImage?: string
-  sizeInfoImage?: string
-  detailSizeHeader?: string
-  detailSizeTable?: string
-  size?: string
-  colors?: string
-  made?: string
-}
+export default function DetailSource() {
+  const { info, setInfo } = useContext(InfoContext)
+  const {
+    titleImage,
+    comment,
+    additionalComment,
+    color,
+    fabrics,
+    model,
+    mainImage,
+    detailImage,
+    sizeInfoImage,
+    detailSizeHeader,
+    detailSizeTable,
+    size,
+    colors,
+    made,
+  } = info
 
-export default function DetailSource({
-  titleImage,
-  comment,
-  additionalComment,
-  color,
-  fabrics,
-  model,
-  mainImage,
-  detailImage,
-  sizeInfoImage,
-  detailSizeHeader,
-  detailSizeTable,
-  size,
-  colors,
-  made,
-}: Props) {
   return (
     <div id="page">
       <div id="top">
@@ -69,7 +42,13 @@ export default function DetailSource({
 
         {/*상세설명*/}
         <img src="http://aplan92.hgodo.com/etc/page_08.jpg" />
-        <div className={cx('base')}>
+        <div
+          style={{
+            color: 'rgb(0, 0, 0)',
+            fontSize: '8.5pt',
+            fontFamily: "'돋움', dotum",
+          }}
+        >
           <div
             style={{
               lineHeight: '18px',
@@ -88,36 +67,36 @@ export default function DetailSource({
             <br />
             {/*피팅모델인포*/}
             {/*소소모델
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_04.jpg' />
             *블랙,FREE사이즈 착용*
             */}
             {/*시화모델
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_05.jpg' /><br>
             *블랙,FREE사이즈 착용*<br>
             */}
             {/*윤정모델    
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_06.jpg' /><br>
             *블랙,FREE사이즈 착용*<br>
             */}
             {/*지수모델
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_07.jpg' /><br>
             *블랙,M사이즈 착용*<br>
             */}
             {/*수민모델
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_15.jpg' /><br>
             *블랙,M사이즈 착용*<br>
             */}
             {/*서영모델
-            <div style={{marginBottom:5px;">
+            <div style="marginBottom:5px;">
             <img src='http://aplan92.hgodo.com/etc/page_14.jpg' /><br>
             *블랙,M사이즈 착용*<br>
             */}
-            <img src="http://aplan92.hgodo.com/etc/page_{modelNumber}.jpg" />
+            <img src={`http://aplan92.hgodo.com/etc/page_${model?.number}.jpg`} />
             <br />*{model?.fittingColor},{model?.fittingSize}사이즈 착용*
             <br />
             {/*본문이미지*/}
@@ -152,14 +131,14 @@ export default function DetailSource({
                   }}
                 >
                   <img
-                    src="http://gi.esmplus.com/aplan92/web/basic/drawing/{sizeInfoImage}"
+                    src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${sizeInfoImage}`}
                     width="600"
                     height="460"
                   />
                 </div>
 
                 {/*★상품 품목★
-                                  해당되는 품목 주석 풀고 비해당 항목 주석 다시 체크*/}
+                해당되는 품목 주석 풀고 비해당 항목 주석 다시 체크*/}
                 <table
                   width="70%"
                   style={{
@@ -286,27 +265,27 @@ export default function DetailSource({
                           style={{ padding: '5px 0px 0px' }}
                         >
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/yes.gif"
                           />
                           &nbsp;드라이클리닝
                         </td>
                         <td
-                          className={cx('pt5')}
+                          style={{ paddingTop: '5px' }}
                           height="20"
                         >
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/no.gif"
                           />
                           &nbsp;단독 손세탁
                         </td>
                         <td
                           height="20"
-                          className={cx('pt5')}
+                          style={{ paddingTop: '5px' }}
                         >
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/no.gif"
                           />
                           &nbsp;일반세탁
@@ -316,21 +295,21 @@ export default function DetailSource({
                         <th style={{ width: '15%' }}>두께감</th>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{thickness_high}.gif"
                           />
                           &nbsp;두꺼움
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{thickness_medium}.gif"
                           />
                           &nbsp;보통
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{thickness_low}.gif"
                           />
                           &nbsp;얇음
@@ -340,21 +319,21 @@ export default function DetailSource({
                         <th style={{ width: '15%' }}>안감</th>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{lining_yes}.gif"
                           />
                           &nbsp;있음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{lining_no}.gif"
                           />
                           &nbsp;없음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{lining_part}.gif"
                           />
                           &nbsp;부분/기모안감
@@ -364,21 +343,21 @@ export default function DetailSource({
                         <th style={{ width: '15%' }}>신축성</th>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_no}.gif"
                           />
                           &nbsp;없음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_yes}.gif"
                           />
                           &nbsp;있음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_little}.gif"
                           />
                           &nbsp;약간있음
@@ -388,21 +367,21 @@ export default function DetailSource({
                         <th style={{ width: '15%' }}>비침</th>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{see_through_yes}.gif"
                           />
                           &nbsp;있음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{see_through_no}.gif"
                           />
                           &nbsp;없음
                         </td>
                         <td height="20">
                           <img
-                            className={cx('wh11')}
+                            style={{ width: '11px', height: '11px' }}
                             src="http://gi.esmplus.com/aplan92/web/basic/{see_through_little}.gif"
                           />
                           &nbsp;약간/부분있음
