@@ -1,0 +1,50 @@
+<meta
+  http-equiv="Content-Type"
+  content="text/html; charset=utf-8"
+/>
+<div align="center">
+  <div id="page">
+    <div id="top">
+      <img src="http://aplan92.hgodo.com/hopes/etc/Untitled-1.jpg" /><br />
+      <img src="http://aplan92.hgodo.com/hopes/etc/Untitled-2.jpg" /><br />
+      <img src="http://aplan92.hgodo.com/hopes/page/${date}/${folderNumber}/h${folderNumber}-${jobNumber}_01.jpg" /><br />
+    </div>
+    <div style="color: rgb(0, 0, 0); font-family: '돋움', dotum; font-size: 8.5pt">
+      <div style="line-height: 18px; margin-bottom: 50px; font-family: '돋움', dotum">
+        <div style="font-size: 8.5pt; margin-bottom: 5px; color: rgb(0, 0, 0)"></div>
+        <br />
+        [COLOR]<br />
+        ${color}<br />
+        <br />
+        <br />
+        [FABRIC]<br />
+        ${fabric}<br />
+        ${infoStr}<br />
+        <br />
+        <br />
+        [SIZE]<br />
+        ${sizeString}
+        <br />
+        <br />
+        [FITTING]<br />
+        혜리<br />
+        44size/160cm/43kg/235mm<br />
+        <br />
+        <br />
+        [COMMENT]<br />
+        ${comments[0]}<br />
+        ${comments[1]}<br />
+        ${comments[2]}<br />
+        ${garmentType === "니트" ? knitComment : garmentType === "코트" ? coatComment : ""}
+        <br />
+        <br />
+        [PRODUCT CHECK]<br />
+        제조국 : ${origin}<br />
+        제조사 : 홉스앤드 헙력업체<br />
+        제조일자 : 게시일로 부터 3개월 내 제작된 제품<br />\n
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

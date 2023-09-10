@@ -11,10 +11,8 @@
     "paths": {
       "@src/*": ["./*"],
       "@shared/*": ["./shared/*"],
-      "@server/*": ["./server/*"],
-      "@client/*": ["./client/*"],
-      "@components/*": ["./client/components/*"],
-      "@hooks/*": ["./client/hooks/*"],
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
     },
   },
   "include": ["src/**/*", "**/*.tsx", "**/*.ts"],
