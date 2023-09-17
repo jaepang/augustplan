@@ -1,5 +1,8 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
+import classNames from 'classnames/bind'
+import styles from './DetailSource.module.css'
+const cx = classNames.bind(styles)
 
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
@@ -21,7 +24,10 @@ export default function DetailSource() {
   } = info
 
   return (
-    <div id="page">
+    <div
+      id="page"
+      className={cx('root')}
+    >
       <div id="top">
         {/*임시 이미지 영역 (설날 배송, 쿠폰, 안내사항 등 페이지 가장 상단에 노출 됨_오픈마켓/자사몰 동일)*/}
 

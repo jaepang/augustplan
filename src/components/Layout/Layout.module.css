@@ -2,4 +2,11 @@
   display: flex;
   width: 100%;
   height: auto;
+
+  .col {
+    max-width: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+  }
 }
