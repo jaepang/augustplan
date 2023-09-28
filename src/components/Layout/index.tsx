@@ -1,7 +1,7 @@
-import { useState, useEffect, FormEvent } from 'react'
-import mockPresets from './presets-mock.json'
+import { useContext, useState, useEffect, FormEvent } from 'react'
+import mockPresets from '@shared/presets-mock.json'
 
-import InfoProvider from '../InfoProvider'
+import { InfoContext } from '../InfoProvider'
 import DetailSource from '../DetailSource'
 import ExcelInput from '../ExcelInput'
 
@@ -12,6 +12,7 @@ const cx = classNames.bind(styles)
 export default function Layout() {
   const [preset, setPreset] = useState({})
   const [presetOption, setPresetOption] = useState<string>('augustplan')
+  const { info, setInfo } = useContext(InfoContext)
   const { presets } = mockPresets
   const { excelColumns } = mockPresets
   const presetNames = Object.keys(presets)
@@ -26,24 +27,26 @@ export default function Layout() {
 
   function selectOnChange(e: FormEvent<HTMLSelectElement>) {
     setPresetOption(e.currentTarget.value)
+    setInfo((prev) => ({
+      ...prev,
+      type: preset['type'],
+    }))
   }
 
   return (
-    <InfoProvider>
-      <div className={cx('root')}>
-        <div className={cx('col', 'setting')}>
-          <select
-            value={presetOption}
-            onChange={selectOnChange}
-          >
-            {presetNames.map((name) => (
-              <option key={name}>{name}</option>
-            ))}
-          </select>
-          <ExcelInput />
-        </div>
-        <div className={cx('col', 'preview')}>{<DetailSource />}</div>
+    <div className={cx('root')}>
+      <div className={cx('col', 'setting')}>
+        <select
+          value={presetOption}
+          onChange={selectOnChange}
+        >
+          {presetNames.map((name) => (
+            <option key={name}>{name}</option>
+          ))}
+        </select>
+        <ExcelInput />
       </div>
-    </InfoProvider>
+      <div className={cx('col', 'preview')}>{<DetailSource />}</div>
+    </div>
   )
 }

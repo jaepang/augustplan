@@ -6,22 +6,8 @@ const cx = classNames.bind(styles)
 
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
-  const {
-    titleImage,
-    comment,
-    additionalComment,
-    color,
-    fabrics,
-    model,
-    mainImage,
-    detailImage,
-    sizeInfoImage,
-    detailSizeHeader,
-    detailSizeTable,
-    size,
-    colors,
-    made,
-  } = info
+  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, sizeInfoImage, detailSizeHeader, detailSizeTable, size, made } =
+    info.detail || {}
 
   return (
     <div
@@ -61,15 +47,23 @@ export default function DetailSource() {
               marginBottom: '50px',
             }}
           >
-            {comment} {additionalComment}
+            {comment}
             {/*컬러뷰*/}
-            {color?.image}
-            {color?.comment}
+            {colors.map(({ name, comment }) => (
+              <div
+                key={name}
+                style={{
+                  display: 'flex',
+                  columnGap: '7px',
+                }}
+              >
+                {comment} <strong>#{name}</strong>
+              </div>
+            ))}
             {/*패브릭*/}
-            {fabrics?.[0]?.image}
-            {fabrics?.[0]?.mixedRate}의 혼용률로
+            {fabric}의 혼용률로
             <br />
-            {fabrics?.[0]?.comment}
+            {fabricComment}
             <br />
             {/*피팅모델인포*/}
             {/*소소모델
@@ -198,7 +192,7 @@ export default function DetailSource() {
                 >
                   <img src="http://aplan92.hgodo.com/etc/page_10.jpg" />
 
-                  <div>{fabrics[1]?.image}</div>
+                  {/*<div>{fabrics[1]?.image}</div>*/}
 
                   <div>
                     <p
@@ -217,11 +211,11 @@ export default function DetailSource() {
 
                   <div>
                     <p style={{ color: 'rgb(99, 99, 99)', lineHeight: '15px', fontSize: '12px', verticalAlign: 'top' }}>
-                      <b>컬러(Color)</b> : {colors}
+                      <b>컬러(Color)</b> : {colors.map((color) => color.name).join(', ')}
                       <br />
-                      <b>소재(Fabric</b>) : {fabrics[0]?.mixedRate}
+                      <b>소재(Fabric</b>) : {fabric}
                       <br />
-                      <b>사이즈(Size)</b> : {size}
+                      <b>사이즈(Size)</b> : {size.map((size) => size.name).join(',')}
                       <br />
                       <b>모델피팅(Model fitting)</b> : {model?.name}/{model?.fittingColor}/{model?.fittingSize}사이즈
                     </p>

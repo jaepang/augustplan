@@ -1,18 +1,14 @@
 import { createContext, useState, Dispatch, SetStateAction } from 'react'
 
-export interface Info {
+interface DetailInfo {
   titleImage?: string
   comment?: string
-  additionalComment?: string
-  color?: {
-    image?: string
-    comment?: string
-  }
-  fabrics?: {
-    image?: string
-    mixedRate?: string
+  colors?: {
+    name?: string
     comment?: string
   }[]
+  fabric?: string
+  fabricComment?: string
   model?: {
     number?: number
     name?: string
@@ -24,37 +20,44 @@ export interface Info {
   sizeInfoImage?: string
   detailSizeHeader?: string
   detailSizeTable?: string
-  size?: string
-  colors?: string
+  size?: {
+    name: string
+    sizes: string[]
+  }[]
   made?: string
+}
+
+export interface Info {
+  type: 'detail' | 'simple'
+  detail?: DetailInfo
+  simple?: any
 }
 
 export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStateAction<Info>> }>(null)
 
 export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
-    titleImage: '',
-    comment: '',
-    additionalComment: '',
-    color: {
-      image: '',
-      comment: ''
+    type: 'detail',
+    detail: {
+      titleImage: '',
+      comment: '',
+      fabricComment: '',
+      colors: [],
+      fabric: '',
+      model: {
+        number: 0,
+        name: '',
+        fittingColor: '',
+        fittingSize: '',
+      },
+      mainImage: '',
+      detailImage: '',
+      sizeInfoImage: '',
+      detailSizeHeader: '',
+      detailSizeTable: '',
+      size: [],
+      made: '',
     },
-    fabrics: [],
-    model: {
-      number: 0,
-      name: '',
-      fittingColor: '',
-      fittingSize: ''
-    },
-    mainImage: '',
-    detailImage: '',
-    sizeInfoImage: '',
-    detailSizeHeader: '',
-    detailSizeTable: '',
-    size: '',
-    colors: '',
-    made: ''
   })
   return <InfoContext.Provider value={{ info, setInfo }}>{children}</InfoContext.Provider>
 }
