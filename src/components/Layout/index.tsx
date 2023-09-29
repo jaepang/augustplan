@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, FormEvent } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import mockPresets from '@shared/presets-mock.json'
 
 import { InfoContext } from '../InfoProvider'
@@ -13,11 +13,9 @@ export default function Layout() {
   const [preset, setPreset] = useState({})
   const [presetOption, setPresetOption] = useState<string>('augustplan')
   const { info, setInfo } = useContext(InfoContext)
-  const { presets } = mockPresets
-  const { excelColumns } = mockPresets
+  const { presets, excelColumns, categories } = mockPresets
   const presetNames = Object.keys(presets)
   const columns = excelColumns[preset['type']]
-  console.log(preset, columns)
 
   useEffect(() => {
     if (presets) {
@@ -25,23 +23,47 @@ export default function Layout() {
     }
   }, [presets, presetOption])
 
-  function selectOnChange(e: FormEvent<HTMLSelectElement>) {
-    setPresetOption(e.currentTarget.value)
-    setInfo((prev) => ({
-      ...prev,
-      type: preset['type'],
-    }))
+  function presetOnChange(e) {
+    if (e?.target?.value) {
+      setPresetOption(e.target.value)
+      setInfo((prev) => ({
+        ...prev,
+        type: presets[e.target.value]['type'],
+      }))
+    }
   }
+
+  function categoryOnChange(e) {
+    if (e?.target?.value) {
+      setInfo((prev) => ({
+        ...prev,
+        category: e.target.value,
+      }))
+    }
+  }
+
+  useEffect(() => {
+    console.log(info)
+  }, [info])
 
   return (
     <div className={cx('root')}>
       <div className={cx('col', 'setting')}>
         <select
           value={presetOption}
-          onChange={selectOnChange}
+          onChange={presetOnChange}
         >
           {presetNames.map((name) => (
             <option key={name}>{name}</option>
+          ))}
+        </select>
+        <select
+          id="category"
+          value={info.category}
+          onChange={categoryOnChange}
+        >
+          {categories.map((category) => (
+            <option key={category}>{category}</option>
           ))}
         </select>
         <ExcelInput />

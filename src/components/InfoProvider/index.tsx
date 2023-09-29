@@ -17,7 +17,7 @@ interface DetailInfo {
   }
   mainImage?: string
   detailImage?: string
-  sizeInfoImage?: string
+  categoryImage?: string
   detailSizeHeader?: string
   detailSizeTable?: string
   size?: {
@@ -29,6 +29,7 @@ interface DetailInfo {
 
 export interface Info {
   type: 'detail' | 'simple'
+  category: string // '원피스' | '바지' | '치마' | '상의/아우터' | '신발'
   detail?: DetailInfo
   simple?: any
 }
@@ -38,6 +39,7 @@ export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStat
 export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
     type: 'detail',
+    category: '원피스',
     detail: {
       titleImage: '',
       comment: '',
@@ -52,7 +54,7 @@ export default function InfoProvider({ children }) {
       },
       mainImage: '',
       detailImage: '',
-      sizeInfoImage: '',
+      categoryImage: '',
       detailSizeHeader: '',
       detailSizeTable: '',
       size: [],

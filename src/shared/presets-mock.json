@@ -53,6 +53,13 @@
       "comment_3"
     ]
   },
+  "categories": [
+    "원피스",
+    "바지",
+    "치마",
+    "상의/아우터",
+    "신발"
+  ],
   "presets": {
     "augustplan": {
       "name": "augustplan",

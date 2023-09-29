@@ -6,7 +6,7 @@ const cx = classNames.bind(styles)
 
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
-  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, sizeInfoImage, detailSizeHeader, detailSizeTable, size, made } =
+  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, categoryImage, detailSizeHeader, detailSizeTable, size, made } =
     info.detail || {}
 
   return (
@@ -131,7 +131,7 @@ export default function DetailSource() {
                   }}
                 >
                   <img
-                    src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${sizeInfoImage}`}
+                    src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${categoryImage}`}
                     width="600"
                     height="460"
                   />
