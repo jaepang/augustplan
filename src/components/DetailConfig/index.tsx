@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { InfoContext } from '../InfoProvider'
 
 export default function DetailConfig() {
@@ -10,7 +10,7 @@ export default function DetailConfig() {
       ...prev,
       [type]: {
         ...prev[type],
-        [value]: e.currentTarget.value,
+        [value]: e.target.value,
       },
     }))
   }
@@ -24,7 +24,7 @@ export default function DetailConfig() {
           if (i === idx) {
             return {
               ...color,
-              comment: e.currentTarget.value,
+              comment: e.target.value,
             }
           }
           return color
@@ -36,7 +36,7 @@ export default function DetailConfig() {
   return (
     <>
       <div>
-        <h1>상세 설명 입력</h1>
+        <h2>상세 설명 입력</h2>
         <textarea
           value={info[type].comment}
           onChange={(e) => onChange(e, 'comment')}
@@ -45,27 +45,38 @@ export default function DetailConfig() {
         />
       </div>
       <div>
-        <h1>패브릭 입력</h1>
-        <h2>{info[type].fabric}의 혼용률로</h2>
-        <textarea
-          value={info[type].fabricComment}
-          onChange={(e) => onChange(e, 'fabricComment')}
-          cols={30}
-          rows={10}
-        />
+        <h2>패브릭 입력</h2>
+        {info[type].fabric ? (
+          <>
+            <h2>{info[type].fabric}의 혼용률로</h2>
+            <textarea
+              value={info[type].fabricComment}
+              onChange={(e) => onChange(e, 'fabricComment')}
+              cols={30}
+              rows={10}
+            />
+          </>
+        ) : (
+          <div>입력된 패브릭이 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
+        )}
       </div>
       <div>
-        <h1>컬러 입력</h1>
-        {info[type].colors.map((color, idx) => (
-          <div key={color.name}>
-            <input
-              type="text"
-              value={color.comment}
-              placeholder={`${color.name} 코멘트`}
-              onChange={(e) => onColorCommentChange(e, idx)}
-            />
-          </div>
-        ))}
+        <h2>컬러 입력</h2>
+        {info[type].colors?.length > 0 ? (
+          info[type].colors.map((color, idx) => (
+            <div key={color.name}>
+              <input
+                type="text"
+                value={color.comment}
+                placeholder={`${color.name} 코멘트`}
+                onChange={(e) => onColorCommentChange(e, idx)}
+              />
+              <strong>#{color.name}</strong>
+            </div>
+          ))
+        ) : (
+          <div>입력된 컬러가 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
+        )}
       </div>
     </>
   )

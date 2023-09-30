@@ -1,12 +1,23 @@
 .root {
   display: flex;
-  width: 100%;
+  width: calc(100% - 32px);
+  padding: 16px;
   height: auto;
+  gap: 50px;
+  justify-content: space-between;
 
   .col {
-    max-width: 50%;
+    width: 60%;
+    height: calc(100vh - 48px);
+    overflow: auto;
+    padding: 8px;
+    border-radius: 8px;
     background: white;
     display: flex;
     flex-direction: column;
+
+    &.preview {
+      width: 40%;
+    }
   }
 }

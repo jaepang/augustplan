@@ -17,7 +17,6 @@ interface DetailInfo {
   }
   mainImage?: string
   detailImage?: string
-  categoryImage?: string
   detailSizeHeader?: string
   detailSizeTable?: string
   size?: {
@@ -54,7 +53,6 @@ export default function InfoProvider({ children }) {
       },
       mainImage: '',
       detailImage: '',
-      categoryImage: '',
       detailSizeHeader: '',
       detailSizeTable: '',
       size: [],

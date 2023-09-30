@@ -4,15 +4,27 @@ import classNames from 'classnames/bind'
 import styles from './DetailSource.module.css'
 const cx = classNames.bind(styles)
 
+const categoryImageCodeMap = {
+  원피스: 'ops.jpg',
+  바지: 'pt.jpg',
+  치마: 'sk.jpg',
+  '상의/아우터': 'top.jpg',
+  니트: 'top.jpg',
+  코트: 'top.jpg',
+}
+
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
-  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, categoryImage, detailSizeHeader, detailSizeTable, size, made } =
-    info.detail || {}
+  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, detailSizeHeader, detailSizeTable, size, made } = info.detail || {}
+  const categoryImage = categoryImageCodeMap[info.category]
 
   return (
     <div
       id="page"
       className={cx('root')}
+      style={{
+        textAlign: 'center',
+      }}
     >
       <div id="top">
         {/*임시 이미지 영역 (설날 배송, 쿠폰, 안내사항 등 페이지 가장 상단에 노출 됨_오픈마켓/자사몰 동일)*/}
@@ -47,17 +59,25 @@ export default function DetailSource() {
               marginBottom: '50px',
             }}
           >
-            {comment}
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              {comment}
+            </div>
             {/*컬러뷰*/}
-            {colors.map(({ name, comment }) => (
+            {colors?.map(({ name, comment }) => (
               <div
                 key={name}
                 style={{
+                  width: '100%',
                   display: 'flex',
+                  justifyContent: 'center',
                   columnGap: '7px',
                 }}
               >
-                {comment} <strong>#{name}</strong>
+                {comment} <strong style={{ fontWeight: 'bold' }}>#{name}</strong>
               </div>
             ))}
             {/*패브릭*/}
@@ -211,11 +231,11 @@ export default function DetailSource() {
 
                   <div>
                     <p style={{ color: 'rgb(99, 99, 99)', lineHeight: '15px', fontSize: '12px', verticalAlign: 'top' }}>
-                      <b>컬러(Color)</b> : {colors.map((color) => color.name).join(', ')}
+                      <b>컬러(Color)</b> : {colors?.map((color) => color.name).join(', ')}
                       <br />
                       <b>소재(Fabric</b>) : {fabric}
                       <br />
-                      <b>사이즈(Size)</b> : {size.map((size) => size.name).join(',')}
+                      <b>사이즈(Size)</b> : {size?.map((size) => size.name).join(',')}
                       <br />
                       <b>모델피팅(Model fitting)</b> : {model?.name}/{model?.fittingColor}/{model?.fittingSize}사이즈
                     </p>
@@ -391,7 +411,11 @@ export default function DetailSource() {
                   </table>
 
                   {/*제조일, 제조국 체크*/}
-                  <table>
+                  <table
+                    style={{
+                      width: '100%',
+                    }}
+                  >
                     <tbody>
                       <tr>
                         <td>
