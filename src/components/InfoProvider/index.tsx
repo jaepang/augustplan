@@ -29,9 +29,9 @@ interface DetailInfo {
   model?: {
     number?: number
     name?: string
-    fittingColor?: string
-    fittingSize?: string
   }
+  fittingColor?: string
+  fittingSize?: string
   mainImage?: string
   detailImage?: string
   size?: {
@@ -65,8 +65,6 @@ export default function InfoProvider({ children }) {
       model: {
         number: 0,
         name: '',
-        fittingColor: '',
-        fittingSize: '',
       },
       mainImage: '',
       detailImage: '',

@@ -26,7 +26,7 @@ function FabricCheckbox({ checked = false }) {
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL } = info
-  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, size, made } = info.detail || {}
+  const { titleImage, comment, fabricComment, colors, fabric, model, fittingColor, fittingSize, mainImage, detailImage, size, made } = info.detail || {}
   const fabricInfo = {
     '두께감(두꺼움)': info.detail?.['두께감(두꺼움)'],
     '두께감(보통)': info.detail?.['두께감(보통)'],
@@ -155,7 +155,7 @@ export default function DetailSource() {
             *블랙,M사이즈 착용*<br>
             */}
             <img src={`${baseURL}/etc/page_${model?.number}.jpg`} />
-            <br />*{model?.fittingColor},{model?.fittingSize}사이즈 착용*
+            <br />*{fittingColor},{fittingSize?.slice(0, fittingSize?.indexOf('('))}사이즈 착용*
             <br />
             {/*본문이미지*/}
             {mainImage}
@@ -289,7 +289,7 @@ export default function DetailSource() {
                       <br />
                       <b>사이즈(Size)</b> : {size?.map((size) => size.name).join(',')}
                       <br />
-                      <b>모델피팅(Model fitting)</b> : {model?.name}/{model?.fittingColor}/{model?.fittingSize}사이즈
+                      <b>모델피팅(Model fitting)</b> : {model?.name}/{fittingColor}/{fittingSize?.slice(0, fittingSize.indexOf('('))}사이즈
                     </p>
                   </div>
                 </div>
