@@ -13,10 +13,37 @@ const categoryImageCodeMap = {
   코트: 'top.jpg',
 }
 
+function FabricCheckbox({ checked = false }) {
+  const fileName = checked ? 'yes.gif' : 'no.gif'
+  return (
+    <img
+      style={{ width: '11px', height: '11px' }}
+      src={`http://gi.esmplus.com/aplan92/web/basic/${fileName}`}
+    />
+  )
+}
+
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL } = info
-  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, detailSizeHeader, detailSizeTable, size, made } = info.detail || {}
+  const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, size, made } = info.detail || {}
+  const fabricInfo = {
+    '두께감(두꺼움)': info.detail?.['두께감(두꺼움)'],
+    '두께감(보통)': info.detail?.['두께감(보통)'],
+    '두께감(얇음)': info.detail?.['두께감(얇음)'],
+
+    '안감(있음)': info.detail?.['안감(있음)'],
+    '안감(없음)': info.detail?.['안감(없음)'],
+    '안감(부분/기모안감)': info.detail?.['안감(부분/기모안감)'],
+
+    '신축성(없음)': info.detail?.['신축성(없음)'],
+    '신축성(있음)': info.detail?.['신축성(있음)'],
+    '신축성(약간있음)': info.detail?.['신축성(약간있음)'],
+
+    '비침(있음)': info.detail?.['비침(있음)'],
+    '비침(없음)': info.detail?.['비침(없음)'],
+    '비침(약간/부분있음)': info.detail?.['비침(약간/부분있음)'],
+  }
   const categoryImage = categoryImageCodeMap[info.category]
   const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(Object.keys(size?.[0]?.spec) ?? [])] : []
   console.log(info.detail)
@@ -309,126 +336,81 @@ export default function DetailSource() {
                           height="20"
                           style={{ padding: '5px 0px 0px' }}
                         >
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/yes.gif"
-                          />
+                          <FabricCheckbox checked />
                           &nbsp;드라이클리닝
                         </td>
                         <td
                           style={{ paddingTop: '5px' }}
                           height="20"
                         >
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/no.gif"
-                          />
+                          <FabricCheckbox />
                           &nbsp;단독 손세탁
                         </td>
                         <td
                           height="20"
                           style={{ paddingTop: '5px' }}
                         >
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/no.gif"
-                          />
+                          <FabricCheckbox />
                           &nbsp;일반세탁
                         </td>
                       </tr>
                       <tr>
                         <th style={{ width: '15%' }}>두께감</th>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{thickness_high}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['두께감(두꺼움)'] === '1'} />
                           &nbsp;두꺼움
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{thickness_medium}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['두께감(보통)'] === '1'} />
                           &nbsp;보통
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{thickness_low}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['두께감(얇음)'] === '1'} />
                           &nbsp;얇음
                         </td>
                       </tr>
                       <tr>
                         <th style={{ width: '15%' }}>안감</th>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{lining_yes}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['안감(있음)'] === '1'} />
                           &nbsp;있음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{lining_no}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['안감(없음)'] === '1'} />
                           &nbsp;없음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{lining_part}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['안감(부분/기모안감)'] === '1'} />
                           &nbsp;부분/기모안감
                         </td>
                       </tr>
                       <tr>
                         <th style={{ width: '15%' }}>신축성</th>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_no}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['신축성(없음)'] === '1'} />
                           &nbsp;없음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_yes}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['신축성(있음)'] === '1'} />
                           &nbsp;있음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{flexibility_little}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['신축성(약간있음)'] === '1'} />
                           &nbsp;약간있음
                         </td>
                       </tr>
                       <tr>
                         <th style={{ width: '15%' }}>비침</th>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{see_through_yes}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['비침(있음)'] === '1'} />
                           &nbsp;있음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{see_through_no}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['비침(없음)'] === '1'} />
                           &nbsp;없음
                         </td>
                         <td height="20">
-                          <img
-                            style={{ width: '11px', height: '11px' }}
-                            src="http://gi.esmplus.com/aplan92/web/basic/{see_through_little}.gif"
-                          />
+                          <FabricCheckbox checked={fabricInfo?.['비침(약간/부분있음)'] === '1'} />
                           &nbsp;약간/부분있음
                         </td>
                       </tr>

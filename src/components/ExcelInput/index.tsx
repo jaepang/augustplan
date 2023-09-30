@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, FormEvent } from 'react'
 import { InfoContext } from '../InfoProvider'
 
-import InfoEditableTable from '../InfoEditableTable'
+import InfoEditableTable from './InfoEditableTable'
 import mockPresets from '@shared/presets-mock.json'
 
 function parseExcel(excel: string, columns: string[]) {
@@ -20,6 +20,7 @@ function parseExcel(excel: string, columns: string[]) {
 }
 
 export function excelToInfo(excelData) {
+  console.log(excelData)
   return {
     made: excelData?.['원산지'],
     colors: excelData?.['컬러']?.split(',')?.map((color) => ({ name: color ?? '', comment: '' })),
@@ -36,6 +37,22 @@ export function excelToInfo(excelData) {
         총기장: excelData?.['총기장']?.[idx] ?? '',
       },
     })),
+
+    '두께감(두꺼움)': excelData?.['두께감(두꺼움)'],
+    '두께감(보통)': excelData?.['두께감(보통)'],
+    '두께감(얇음)': excelData?.['두께감(얇음)'],
+
+    '안감(있음)': excelData?.['안감(있음)'],
+    '안감(없음)': excelData?.['안감(없음)'],
+    '안감(부분/기모)': excelData?.['안감(부분/기모안감)'],
+
+    '신축성(없음)': excelData?.['신축성(없음)'],
+    '신축성(있음)': excelData?.['신축성(있음)'],
+    '신축성(약간있음)': excelData?.['신축성(약간있음)'],
+
+    '비침(있음)': excelData?.['비침(있음)'],
+    '비침(없음)': excelData?.['비침(없음)'],
+    '비침(약간있음)': excelData?.['비침(약간있음)'],
   }
 }
 

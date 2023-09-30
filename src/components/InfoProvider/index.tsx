@@ -9,6 +9,23 @@ interface DetailInfo {
   }[]
   fabric?: string
   fabricComment?: string
+
+  '두께감(두꺼움)'?: string
+  '두께감(보통)'?: string
+  '두께감(얇음)'?: string
+
+  '안감(있음)'?: string
+  '안감(없음)'?: string
+  '안감(부분/기모)'?: string
+
+  '신축성(없음)'?: string
+  '신축성(있음)'?: string
+  '신축성(약간있음)'?: string
+
+  '비침(있음)'?: string
+  '비침(없음)'?: string
+  '비침(약간있음)'?: string
+
   model?: {
     number?: number
     name?: string
@@ -17,8 +34,6 @@ interface DetailInfo {
   }
   mainImage?: string
   detailImage?: string
-  detailSizeHeader?: string
-  detailSizeTable?: string
   size?: {
     name: string
     spec: string[]
@@ -55,8 +70,6 @@ export default function InfoProvider({ children }) {
       },
       mainImage: '',
       detailImage: '',
-      detailSizeHeader: '',
-      detailSizeTable: '',
       size: [],
       made: '',
     },
