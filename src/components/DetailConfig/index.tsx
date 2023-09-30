@@ -84,22 +84,28 @@ export default function DetailConfig() {
       <div>
         <h2>피팅 정보 입력</h2>
         <div>
-          <select
-            value={info[type].fittingColor}
-            onChange={(e) => onChange(e, 'fittingColor')}
-          >
-            {colors?.map(({ name }) => (
-              <option key={name}>{name}</option>
-            ))}
-          </select>
-          <select
-            value={info[type].fittingSize}
-            onChange={(e) => onChange(e, 'fittingSize')}
-          >
-            {size?.map(({ name }) => (
-              <option key={name}>{name}</option>
-            ))}
-          </select>
+          {info[type]?.fittingColor && info[type]?.fittingSize ? (
+            <>
+              <select
+                value={info[type].fittingColor}
+                onChange={(e) => onChange(e, 'fittingColor')}
+              >
+                {colors?.map(({ name }) => (
+                  <option key={name}>{name}</option>
+                ))}
+              </select>
+              <select
+                value={info[type].fittingSize}
+                onChange={(e) => onChange(e, 'fittingSize')}
+              >
+                {size?.map(({ name }) => (
+                  <option key={name}>{name}</option>
+                ))}
+              </select>
+            </>
+          ) : (
+            <div>입력된 사이즈 / 컬러가 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
+          )}
         </div>
       </div>
     </>

@@ -68,7 +68,8 @@ export default function Layout() {
     const tempEl = document.createElement('a')
     document.body.appendChild(tempEl)
     tempEl.href = url
-    tempEl.download = 'test.html'
+    const downloadCategory = info.category === '상의/아우터' ? '상의' : info.category
+    tempEl.download = `${downloadOption.date.replace(/-/gi, '').slice(2)}_${downloadOption.title}_${downloadCategory}.html`
     tempEl.click()
     setTimeout(() => {
       URL.revokeObjectURL(url)
