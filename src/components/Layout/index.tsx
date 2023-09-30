@@ -20,6 +20,11 @@ export default function Layout() {
   useEffect(() => {
     if (presets) {
       setPreset(presets[presetOption])
+      setInfo((prev) => ({
+        ...prev,
+        type: presets[presetOption]['type'],
+        baseURL: presets[presetOption]['imgBaseUrl'] || '',
+      }))
     }
   }, [presets, presetOption])
 
@@ -29,6 +34,7 @@ export default function Layout() {
       setInfo((prev) => ({
         ...prev,
         type: presets[e.target.value]['type'],
+        baseURL: presets[e.target.value]['imageBaseUrl'] || '',
       }))
     }
   }

@@ -21,16 +21,17 @@ interface DetailInfo {
   detailSizeTable?: string
   size?: {
     name: string
-    sizes: string[]
+    spec: string[]
   }[]
   made?: string
 }
 
 export interface Info {
   type: 'detail' | 'simple'
-  category: string // '원피스' | '바지' | '치마' | '상의/아우터' | '신발'
+  category: string
   detail?: DetailInfo
   simple?: any
+  baseURL?: string
 }
 
 export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStateAction<Info>> }>(null)
@@ -38,7 +39,8 @@ export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStat
 export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
     type: 'detail',
-    category: '원피스',
+    category: '상의/아우터',
+    baseURL: '',
     detail: {
       titleImage: '',
       comment: '',

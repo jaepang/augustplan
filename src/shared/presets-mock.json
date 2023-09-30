@@ -64,7 +64,7 @@
   "presets": {
     "augustplan": {
       "name": "augustplan",
-      "imgBaseUrl": "http://aplan92.hgodo.com/page",
+      "imgBaseUrl": "http://aplan92.hgodo.com",
       "type": "detail"
     },
     "hopescoder": {

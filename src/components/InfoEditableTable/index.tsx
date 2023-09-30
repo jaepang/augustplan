@@ -55,15 +55,15 @@ export default function InfoEditableTable({ data, setData }) {
               className={cx('col')}
             >
               {typeof data[key] === 'string' ? (
-                <input
+                <textarea
                   className={cx('cell')}
                   value={data[key]}
                   onChange={(e) => onChange(e, key)}
                 />
               ) : (
                 data[key].map((item, idx) => (
-                  <input
-                    className={cx('cell')}
+                  <textarea
+                    className={cx('cell', 'array')}
                     key={key + idx}
                     value={item}
                     onChange={(e) => onChange(e, key, idx)}

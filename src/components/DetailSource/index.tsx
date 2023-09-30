@@ -15,8 +15,11 @@ const categoryImageCodeMap = {
 
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
+  const { baseURL } = info
   const { titleImage, comment, fabricComment, colors, fabric, model, mainImage, detailImage, detailSizeHeader, detailSizeTable, size, made } = info.detail || {}
   const categoryImage = categoryImageCodeMap[info.category]
+  const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(Object.keys(size?.[0]?.spec) ?? [])] : []
+  console.log(info.detail)
 
   return (
     <div
@@ -24,6 +27,9 @@ export default function DetailSource() {
       className={cx('root')}
       style={{
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <div id="top">
@@ -32,7 +38,7 @@ export default function DetailSource() {
         {/*배송지연상품 확인하기*/}
         <div>
           <a href="http://shop1.aplan92.cafe24.com/article/%EC%9E%85%EA%B3%A0%EC%A7%80%EC%97%B0/101/286/">
-            <img src="http://aplan92.hgodo.com/etc/delay.jpg" />
+            <img src={`${baseURL}/etc/delay.jpg`} />
           </a>
         </div>
 
@@ -42,10 +48,10 @@ export default function DetailSource() {
         {titleImage}
 
         {/*오늘 더 사랑스러운 당신에게*/}
-        <img src="http://aplan92.hgodo.com/etc/page_02.jpg" />
+        <img src={`${baseURL}/etc/page_02.jpg`} />
 
         {/*상세설명*/}
-        <img src="http://aplan92.hgodo.com/etc/page_08.jpg" />
+        <img src={`${baseURL}/etc/page_08.jpg`} />
         <div
           style={{
             color: 'rgb(0, 0, 0)',
@@ -68,17 +74,22 @@ export default function DetailSource() {
             </div>
             {/*컬러뷰*/}
             {colors?.map(({ name, comment }) => (
-              <div
-                key={name}
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  columnGap: '7px',
-                }}
-              >
-                {comment} <strong style={{ fontWeight: 'bold' }}>#{name}</strong>
-              </div>
+              <>
+                <div
+                  key={name}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    columnGap: '7px',
+                    lineHeight: '18px',
+                  }}
+                >
+                  {comment} <strong style={{ fontWeight: 'bold' }}>#{name}</strong>
+                </div>
+                <br />
+                <br />
+              </>
             ))}
             {/*패브릭*/}
             {fabric}의 혼용률로
@@ -116,7 +127,7 @@ export default function DetailSource() {
             <img src='http://aplan92.hgodo.com/etc/page_14.jpg' /><br>
             *블랙,M사이즈 착용*<br>
             */}
-            <img src={`http://aplan92.hgodo.com/etc/page_${model?.number}.jpg`} />
+            <img src={`${baseURL}/etc/page_${model?.number}.jpg`} />
             <br />*{model?.fittingColor},{model?.fittingSize}사이즈 착용*
             <br />
             {/*본문이미지*/}
@@ -130,7 +141,7 @@ export default function DetailSource() {
                   <tbody>
                     <tr>
                       <td align="center">
-                        <img src="http://aplan92.hgodo.com/etc/page_09.jpg" />
+                        <img src={`${baseURL}/etc/page_09.jpg`} />
                       </td>
                     </tr>
                   </tbody>
@@ -169,20 +180,34 @@ export default function DetailSource() {
                     borderBottomWidth: '1px',
                     borderTopStyle: 'solid',
                     borderBottomStyle: 'solid',
+                    margin: '0 auto',
                   }}
                 >
                   <tbody>
-                    <tr style={{ backgroundColor: '#f5f5f5' }}>
-                      {detailSizeHeader}
+                    <tr style={{ backgroundColor: '#f5f5f5', whiteSpace: 'nowrap' }}>
+                      {sizeDetailTableHeader.map((key) => {
+                        return <th key={key}>{key}</th>
+                      })}
 
                       {/*★사이즈 입력★
                         사이즈 많은 경우 <tr></tr> 한 세트 복사 붙여넣기,
                         항목에 개수에 따라 <td></td> 추가 혹은 삭제
                         <FONT color=#990000></FONT> 강조 할 때 폰트 컬러 소스 활성화
                       */}
-
-                      {detailSizeTable}
                     </tr>
+                    {size?.map((item, idx) => {
+                      const size = item?.name?.slice(0, item.name.indexOf('('))
+                      const recSize = item.name.match(/[^()]+(?=\))/g)?.[0]
+
+                      const row = [size, recSize, ...Object.values(item?.spec)]
+                      return (
+                        <tr key={idx}>
+                          {row.map((value, idx) => (
+                            <td key={value + idx}>{value || '-'}</td>
+                          ))}
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
 
@@ -210,7 +235,7 @@ export default function DetailSource() {
                   id="fabric_info"
                   style={{ marginTop: '200px' }}
                 >
-                  <img src="http://aplan92.hgodo.com/etc/page_10.jpg" />
+                  <img src={`${baseURL}/etc/page_10.jpg`} />
 
                   {/*<div>{fabrics[1]?.image}</div>*/}
 
@@ -257,7 +282,7 @@ export default function DetailSource() {
                     <tbody>
                       <tr>
                         <td>
-                          <img src="http://aplan92.hgodo.com/etc/page_11.jpg" />
+                          <img src={`${baseURL}/etc/page_11.jpg`} />
                         </td>
                       </tr>
                     </tbody>

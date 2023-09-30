@@ -22,19 +22,19 @@ function parseExcel(excel: string, columns: string[]) {
 export function excelToInfo(excelData) {
   return {
     made: excelData?.['원산지'],
-    colors: excelData?.['컬러']?.split(',')?.map((color) => ({ name: color, comment: '' })),
+    colors: excelData?.['컬러']?.split(',')?.map((color) => ({ name: color ?? '', comment: '' })),
     fabric: excelData?.['소재(%)'],
-    size: excelData?.['사이즈(추천사이즈)']?.split(',').map((size, idx) => ({
-      name: size,
-      sizes: [
-        excelData?.['어깨']?.[idx] ?? '',
-        excelData?.['가슴']?.[idx] ?? '',
-        excelData?.['소매길이']?.[idx] ?? '',
-        excelData?.['암홀']?.[idx] ?? '',
-        excelData?.['팔통']?.[idx] ?? '',
-        excelData?.['밑단'][idx] ?? '',
-        excelData?.['총기장'][idx] ?? '',
-      ],
+    size: excelData?.['사이즈(추천사이즈)']?.split(',')?.map((size, idx) => ({
+      name: size ?? '',
+      spec: {
+        어깨: excelData?.['어깨']?.[idx] ?? '',
+        가슴: excelData?.['가슴']?.[idx] ?? '',
+        소매길이: excelData?.['소매길이']?.[idx] ?? '',
+        암홀: excelData?.['암홀']?.[idx] ?? '',
+        팔통: excelData?.['팔통']?.[idx] ?? '',
+        밑단: excelData?.['밑단']?.[idx] ?? '',
+        총기장: excelData?.['총기장']?.[idx] ?? '',
+      },
     })),
   }
 }
@@ -85,6 +85,7 @@ export default function ExcelInput() {
         onChange={onChange}
         cols={30}
         rows={10}
+        style={{ width: 'calc(100% - 16px)', resize: 'none' }}
       />
       {excel && (
         <InfoEditableTable

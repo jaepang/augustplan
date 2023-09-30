@@ -42,6 +42,7 @@ export default function DetailConfig() {
           onChange={(e) => onChange(e, 'comment')}
           cols={30}
           rows={10}
+          style={{ width: 'calc(100% - 16px)', resize: 'none' }}
         />
       </div>
       <div>
@@ -54,6 +55,7 @@ export default function DetailConfig() {
               onChange={(e) => onChange(e, 'fabricComment')}
               cols={30}
               rows={10}
+              style={{ width: 'calc(100% - 16px)', resize: 'none' }}
             />
           </>
         ) : (
