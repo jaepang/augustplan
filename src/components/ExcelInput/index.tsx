@@ -6,13 +6,14 @@ import mockPresets from '@shared/presets-mock.json'
 
 function parseExcel(excel: string, columns: string[]) {
   const items = excel.split(/\t|\n/g)
+  console.log(items)
   return items.reduce((acc, cur, idx) => {
+    if (cur.trim() === '' && idx < columns.length) return acc
     if (cur !== '' && idx >= columns.length) {
       // console.log('new row', idx, cur, columns[idx % columns.length])
       const prev = acc?.[columns[idx % columns.length]]
       if (prev) acc[columns[idx % columns.length]] = typeof prev === 'string' ? [prev, cur] : [...prev, cur]
-    }
-    if (columns?.[idx]) {
+    } else if (columns?.[idx]) {
       acc[columns[idx]] = cur
     }
     return acc

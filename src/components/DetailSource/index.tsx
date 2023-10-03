@@ -155,7 +155,7 @@ export default function DetailSource() {
             *블랙,M사이즈 착용*<br>
             */}
             <img src={`${baseURL}/etc/page_${model?.code}.jpg`} />
-            <br />*{fittingColor},{fittingSize?.slice(0, fittingSize?.indexOf('('))}사이즈 착용*
+            <br />*{Array.from(fittingColor).join(',')}컬러, {Array.from(fittingSize).join(',')}사이즈 착용*
             <br />
             {/*본문이미지*/}
             {mainImage}
@@ -289,7 +289,7 @@ export default function DetailSource() {
                       <br />
                       <b>사이즈(Size)</b> : {size?.map((size) => size.name).join(',')}
                       <br />
-                      <b>모델피팅(Model fitting)</b> : {model?.name}/{fittingColor}/{fittingSize?.slice(0, fittingSize.indexOf('('))}사이즈
+                      <b>모델피팅(Model fitting)</b> : {model?.name}/{fittingColor}/{/*fittingSize?.slice(0, fittingSize.indexOf('('))*/}사이즈
                     </p>
                   </div>
                 </div>

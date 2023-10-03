@@ -6,6 +6,7 @@ export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
   const { size, colors } = info[type]
+  const sizes = size?.map((size) => size.name.slice(0, size.name.indexOf('(')))
   const { models } = mockPresets
 
   function onChange(e, value) {
@@ -14,6 +15,23 @@ export default function DetailConfig() {
       [type]: {
         ...prev[type],
         [value]: e.target.value,
+      },
+    }))
+  }
+
+  function onFittingChange(e, target) {
+    const newSet = info[type][target]
+    if (e.target.checked) {
+      newSet.add(e.target.value)
+    } else {
+      newSet.delete(e.target.value)
+    }
+
+    setInfo((prev) => ({
+      ...prev,
+      [type]: {
+        ...prev[type],
+        [target]: newSet,
       },
     }))
   }
@@ -114,25 +132,39 @@ export default function DetailConfig() {
       <div>
         <h2>피팅 정보 입력</h2>
         <div>
-          {info[type]?.fittingColor && info[type]?.fittingSize ? (
-            <>
-              <select
-                value={info[type].fittingColor}
-                onChange={(e) => onChange(e, 'fittingColor')}
-              >
+          {info[type]?.colors?.length > 0 /*&& info[type]?.fittingSize*/ ? (
+            <div style={{ display: 'flex' }}>
+              <div>
+                <h3>컬러</h3>
                 {colors?.map(({ name }) => (
-                  <option key={name}>{name}</option>
+                  <div key={name}>
+                    <input
+                      id={name}
+                      type="checkbox"
+                      checked={info[type].fittingColor.has(name)}
+                      value={name}
+                      onChange={(e) => onFittingChange(e, 'fittingColor')}
+                    />
+                    <label htmlFor={name}>{name}</label>
+                  </div>
                 ))}
-              </select>
-              <select
-                value={info[type].fittingSize}
-                onChange={(e) => onChange(e, 'fittingSize')}
-              >
-                {size?.map(({ name }) => (
-                  <option key={name}>{name}</option>
+              </div>
+              <div>
+                <h3>사이즈</h3>
+                {sizes.map((size) => (
+                  <div key={size}>
+                    <input
+                      id={size}
+                      type="checkbox"
+                      checked={info[type].fittingSize.has(size)}
+                      value={size}
+                      onChange={(e) => onFittingChange(e, 'fittingSize')}
+                    />
+                    <label htmlFor={size}>{size}</label>
+                  </div>
                 ))}
-              </select>
-            </>
+              </div>
+            </div>
           ) : (
             <div>입력된 사이즈 / 컬러가 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
           )}

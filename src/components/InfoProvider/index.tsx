@@ -1,7 +1,7 @@
 import { createContext, useState, Dispatch, SetStateAction } from 'react'
 import mockPrsests from '@shared/presets-mock.json'
 
-interface DetailInfo {
+interface InfoBase {
   titleImage?: string
   comment?: string
   colors?: {
@@ -31,8 +31,8 @@ interface DetailInfo {
     code?: number | string
     name?: string
   }
-  fittingColor?: string
-  fittingSize?: string
+  fittingColor?: Set<string>
+  fittingSize?: Set<string>
   mainImage?: string
   detailImage?: string
   size?: {
@@ -45,8 +45,8 @@ interface DetailInfo {
 export interface Info {
   type: 'detail' | 'simple'
   category: string
-  detail?: DetailInfo
-  simple?: any
+  detail?: InfoBase
+  simple?: InfoBase
   baseURL?: string
 }
 
@@ -55,7 +55,7 @@ export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStat
 export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
     type: 'detail',
-    category: '상의/아우터',
+    category: mockPrsests.categories[0],
     baseURL: '',
     detail: {
       titleImage: '',
@@ -68,6 +68,8 @@ export default function InfoProvider({ children }) {
       detailImage: '',
       size: [],
       made: '',
+      fittingColor: new Set(),
+      fittingSize: new Set(),
     },
   })
   return <InfoContext.Provider value={{ info, setInfo }}>{children}</InfoContext.Provider>
