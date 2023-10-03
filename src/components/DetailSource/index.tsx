@@ -154,7 +154,7 @@ export default function DetailSource() {
             <img src='http://aplan92.hgodo.com/etc/page_14.jpg' /><br>
             *블랙,M사이즈 착용*<br>
             */}
-            <img src={`${baseURL}/etc/page_${model?.number}.jpg`} />
+            <img src={`${baseURL}/etc/page_${model?.code}.jpg`} />
             <br />*{fittingColor},{fittingSize?.slice(0, fittingSize?.indexOf('('))}사이즈 착용*
             <br />
             {/*본문이미지*/}

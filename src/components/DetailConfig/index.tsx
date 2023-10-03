@@ -1,10 +1,12 @@
 import { useContext } from 'react'
 import { InfoContext } from '../InfoProvider'
+import mockPresets from '@shared/presets-mock.json'
 
 export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
   const { size, colors } = info[type]
+  const { models } = mockPresets
 
   function onChange(e, value) {
     setInfo((prev) => ({
@@ -34,8 +36,36 @@ export default function DetailConfig() {
     }))
   }
 
+  function onModelChange(e) {
+    setInfo((prev) => ({
+      ...prev,
+      [type]: {
+        ...prev[type],
+        model: models.find((model) => model.code === e.target.value) || {},
+      },
+    }))
+  }
+
   return (
     <>
+      <div>
+        <h2>모델 선택</h2>
+        {models?.length > 0 && (
+          <select
+            value={info[type].model.code}
+            onChange={onModelChange}
+          >
+            {models.map((model) => (
+              <option
+                value={model.code}
+                key={model.code}
+              >
+                {model.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
       <div>
         <h2>상세 설명 입력</h2>
         <textarea

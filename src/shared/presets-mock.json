@@ -1,4 +1,18 @@
 {
+  "models": [
+    {
+      "name": "연정",
+      "code": "16"
+    },
+    {
+      "name": "아름",
+      "code": "17"
+    },
+    {
+      "name": "유진",
+      "code": "18"
+    }
+  ],
   "excelColumns": {
     "detail": [
       "컬러",

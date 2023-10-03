@@ -1,4 +1,5 @@
 import { createContext, useState, Dispatch, SetStateAction } from 'react'
+import mockPrsests from '@shared/presets-mock.json'
 
 interface DetailInfo {
   titleImage?: string
@@ -27,7 +28,7 @@ interface DetailInfo {
   '비침(약간있음)'?: string
 
   model?: {
-    number?: number
+    code?: number | string
     name?: string
   }
   fittingColor?: string
@@ -62,10 +63,7 @@ export default function InfoProvider({ children }) {
       fabricComment: '',
       colors: [],
       fabric: '',
-      model: {
-        number: 0,
-        name: '',
-      },
+      model: mockPrsests.models[0],
       mainImage: '',
       detailImage: '',
       size: [],
