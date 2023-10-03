@@ -61,6 +61,18 @@ export default function Layout() {
     }
   }
 
+  function cautionCommentOnChange(e) {
+    let cautionComment: 'none' | 'knit' | 'coat' = 'none'
+    if (e.target.checked) {
+      if (e.target.id === 'knit') {
+        cautionComment = 'knit'
+      } else if (e.target.id === 'coat') {
+        cautionComment = 'coat'
+      }
+    }
+    setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment } }))
+  }
+
   function downloadAsHTML() {
     const pageHTML = document.querySelector('#page').outerHTML
     const blob = new Blob([pageHTML], { type: 'text/html' })
@@ -107,7 +119,7 @@ export default function Layout() {
                 id="knit"
                 type="checkbox"
                 checked={info.detail.cautionComment === 'knit'}
-                onChange={() => setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment: 'knit' } }))}
+                onChange={cautionCommentOnChange}
               />
               니트 코멘트 추가
             </label>
@@ -116,7 +128,7 @@ export default function Layout() {
                 id="coat"
                 type="checkbox"
                 checked={info.detail.cautionComment === 'coat'}
-                onChange={() => setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment: 'coat' } }))}
+                onChange={cautionCommentOnChange}
               />
               코트 코멘트 추가
             </label>

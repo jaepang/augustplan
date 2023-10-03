@@ -67,22 +67,57 @@ export default function DetailConfig() {
   return (
     <>
       <div>
-        <h2>모델 선택</h2>
-        {models?.length > 0 && (
-          <select
-            value={info[type].model.code}
-            onChange={onModelChange}
-          >
-            {models.map((model) => (
-              <option
-                value={model.code}
-                key={model.code}
+        <h2 style={{ marginBottom: 0 }}>피팅 정보 입력</h2>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+          <div>
+            <h3>모델</h3>
+            {models?.length > 0 && (
+              <select
+                value={info[type].model.code}
+                onChange={onModelChange}
               >
-                {model.name}
-              </option>
+                {models.map((model) => (
+                  <option
+                    value={model.code}
+                    key={model.code}
+                  >
+                    {model.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+          <div>
+            <h3>컬러</h3>
+            {colors?.map(({ name }) => (
+              <div key={name}>
+                <input
+                  id={name}
+                  type="checkbox"
+                  checked={info[type].fittingColor.has(name)}
+                  value={name}
+                  onChange={(e) => onFittingChange(e, 'fittingColor')}
+                />
+                <label htmlFor={name}>{name}</label>
+              </div>
             ))}
-          </select>
-        )}
+          </div>
+          <div>
+            <h3>사이즈</h3>
+            {sizes.map((size) => (
+              <div key={size}>
+                <input
+                  id={size}
+                  type="checkbox"
+                  checked={info[type].fittingSize.has(size)}
+                  value={size}
+                  onChange={(e) => onFittingChange(e, 'fittingSize')}
+                />
+                <label htmlFor={size}>{size}</label>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <div>
         <h2>상세 설명 입력</h2>
@@ -128,47 +163,6 @@ export default function DetailConfig() {
         ) : (
           <div>입력된 컬러가 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
         )}
-      </div>
-      <div>
-        <h2>피팅 정보 입력</h2>
-        <div>
-          {info[type]?.colors?.length > 0 /*&& info[type]?.fittingSize*/ ? (
-            <div style={{ display: 'flex' }}>
-              <div>
-                <h3>컬러</h3>
-                {colors?.map(({ name }) => (
-                  <div key={name}>
-                    <input
-                      id={name}
-                      type="checkbox"
-                      checked={info[type].fittingColor.has(name)}
-                      value={name}
-                      onChange={(e) => onFittingChange(e, 'fittingColor')}
-                    />
-                    <label htmlFor={name}>{name}</label>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <h3>사이즈</h3>
-                {sizes.map((size) => (
-                  <div key={size}>
-                    <input
-                      id={size}
-                      type="checkbox"
-                      checked={info[type].fittingSize.has(size)}
-                      value={size}
-                      onChange={(e) => onFittingChange(e, 'fittingSize')}
-                    />
-                    <label htmlFor={size}>{size}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div>입력된 사이즈 / 컬러가 존재하지 않습니다. 엑셀 시트를 입력해주세요.</div>
-          )}
-        </div>
       </div>
     </>
   )
