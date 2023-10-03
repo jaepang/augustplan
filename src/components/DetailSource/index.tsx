@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
+import { KnitComment, CoatComment } from '@shared/consts'
 import classNames from 'classnames/bind'
 import styles from './DetailSource.module.css'
 const cx = classNames.bind(styles)
@@ -9,8 +10,6 @@ const categoryImageCodeMap = {
   바지: 'pt.jpg',
   치마: 'sk.jpg',
   '상의/아우터': 'top.jpg',
-  니트: 'top.jpg',
-  코트: 'top.jpg',
 }
 
 function FabricCheckbox({ checked = false }) {
@@ -26,7 +25,8 @@ function FabricCheckbox({ checked = false }) {
 export default function DetailSource() {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL } = info
-  const { titleImage, comment, fabricComment, colors, fabric, model, fittingColor, fittingSize, mainImage, detailImage, size, made } = info.detail || {}
+  const { titleImage, comment, cautionComment, fabricComment, colors, fabric, model, fittingColor, fittingSize, mainImage, detailImage, size, made } =
+    info.detail || {}
   const fabricInfo = {
     '두께감(두꺼움)': info.detail?.['두께감(두꺼움)'],
     '두께감(보통)': info.detail?.['두께감(보통)'],
@@ -46,6 +46,7 @@ export default function DetailSource() {
   }
   const categoryImage = categoryImageCodeMap[info.category]
   const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(Object.keys(size?.[0]?.spec) ?? [])] : []
+  const additionalComment = cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''
   console.log(info.detail)
 
   return (
@@ -98,6 +99,8 @@ export default function DetailSource() {
               }}
             >
               {comment}
+              <br />
+              {additionalComment}
             </div>
             {/*컬러뷰*/}
             {colors?.map(({ name, comment }) => (

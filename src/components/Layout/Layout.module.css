@@ -9,7 +9,7 @@
   .row {
     display: flex;
     column-gap: 16px;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .col {

@@ -4,6 +4,7 @@ import mockPrsests from '@shared/presets-mock.json'
 interface InfoBase {
   titleImage?: string
   comment?: string
+  cautionComment?: 'none' | 'knit' | 'coat'
   colors?: {
     name?: string
     comment?: string
@@ -60,6 +61,7 @@ export default function InfoProvider({ children }) {
     detail: {
       titleImage: '',
       comment: '',
+      cautionComment: 'none',
       fabricComment: '',
       colors: [],
       fabric: '',

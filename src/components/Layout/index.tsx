@@ -102,6 +102,24 @@ export default function Layout() {
                 <option key={category}>{category}</option>
               ))}
             </select>
+            <label htmlFor="knit">
+              <input
+                id="knit"
+                type="checkbox"
+                checked={info.detail.cautionComment === 'knit'}
+                onChange={() => setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment: 'knit' } }))}
+              />
+              니트 코멘트 추가
+            </label>
+            <label htmlFor="coat">
+              <input
+                id="coat"
+                type="checkbox"
+                checked={info.detail.cautionComment === 'coat'}
+                onChange={() => setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment: 'coat' } }))}
+              />
+              코트 코멘트 추가
+            </label>
           </div>
           <div>
             <h2>날짜</h2>
