@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
 import { KnitComment, CoatComment } from '@shared/consts'
+import mockPresets from '@shared/presets-mock.json'
 import classNames from 'classnames/bind'
 import styles from './DetailSource.module.css'
 const cx = classNames.bind(styles)
@@ -23,8 +24,8 @@ function FabricCheckbox({ checked = false }) {
 }
 
 export default function DetailSource() {
-  const { info, setInfo } = useContext(InfoContext)
-  const { baseURL } = info
+  const { info } = useContext(InfoContext)
+  const { baseURL, type, category } = info
   const { titleImage, comment, cautionComment, fabricComment, colors, fabric, model, fittingColor, fittingSize, mainImage, detailImage, size, made } =
     info.detail || {}
   const fabricInfo = {
@@ -45,7 +46,10 @@ export default function DetailSource() {
     '비침(약간/부분있음)': info.detail?.['비침(약간/부분있음)'],
   }
   const categoryImage = categoryImageCodeMap[info.category]
-  const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(Object.keys(size?.[0]?.spec) ?? [])] : []
+  const { excelColumns } = mockPresets
+  const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
+  const columns = excelColumns[type][columnCategory].slice(4, -12)
+  const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
   const additionalComment = cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''
   console.log(info.detail)
 

@@ -5,6 +5,7 @@ import InfoEditableTable from './InfoEditableTable'
 import mockPresets from '@shared/presets-mock.json'
 
 function parseExcel(excel: string, columns: string[]) {
+  console.log(columns)
   const items = excel.split(/\t|\n/g)
   console.log(items)
   return items.reduce((acc, cur, idx) => {
@@ -19,23 +20,34 @@ function parseExcel(excel: string, columns: string[]) {
   }, {})
 }
 
-export function excelToInfo(excelData) {
-  console.log(excelData)
+export function excelToInfo(type, category, excelData) {
+  const specType = category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom'
+  const sizeLength = excelData?.['사이즈(추천사이즈)']?.split(',')?.length ?? 0
   return {
     made: excelData?.['원산지'],
-    colors: excelData?.['컬러']?.split(',')?.map((color) => ({ name: color ?? '', comment: '' })),
+    colors: type === 'simple' ? excelData?.['컬러'] : excelData?.['컬러']?.split(',')?.map((color) => ({ name: color ?? '', comment: '' })),
     fabric: excelData?.['소재(%)'],
     size: excelData?.['사이즈(추천사이즈)']?.split(',')?.map((size, idx) => ({
       name: size ?? '',
-      spec: {
-        어깨: excelData?.['어깨']?.[idx] ?? '',
-        가슴: excelData?.['가슴']?.[idx] ?? '',
-        소매길이: excelData?.['소매길이']?.[idx] ?? '',
-        암홀: excelData?.['암홀']?.[idx] ?? '',
-        팔통: excelData?.['팔통']?.[idx] ?? '',
-        밑단: excelData?.['밑단']?.[idx] ?? '',
-        총기장: excelData?.['총기장']?.[idx] ?? '',
-      },
+      spec:
+        specType === 'top'
+          ? [
+              sizeLength < 2 ? excelData?.['어깨'] ?? '' : excelData?.['어깨']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['가슴'] ?? '' : excelData?.['가슴']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['소매길이'] ?? '' : excelData?.['소매길이']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['암홀'] ?? '' : excelData?.['암홀']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['팔통'] ?? '' : excelData?.['팔통']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['밑단'] ?? '' : excelData?.['밑단']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['총기장'] ?? '' : excelData?.['총기장']?.[idx] ?? '',
+            ]
+          : [
+              sizeLength < 2 ? excelData?.['허리'] ?? '' : excelData?.['허리']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['힙'] ?? '' : excelData?.['힙']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['허벅지'] ?? '' : excelData?.['허벅지']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['밑위'] ?? '' : excelData?.['밑위']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['밑단'] ?? '' : excelData?.['밑단']?.[idx] ?? '',
+              sizeLength < 2 ? excelData?.['총기장'] ?? '' : excelData?.['총기장']?.[idx] ?? '',
+            ],
     })),
 
     '두께감(두꺼움)': excelData?.['두께감(두꺼움)'],
@@ -53,6 +65,10 @@ export function excelToInfo(excelData) {
     '비침(있음)': excelData?.['비침(있음)'],
     '비침(없음)': excelData?.['비침(없음)'],
     '비침(약간있음)': excelData?.['비침(약간있음)'],
+
+    comment_1: excelData?.['comment_1'],
+    comment_2: excelData?.['comment_2'],
+    comment_3: excelData?.['comment_3'],
   }
 }
 
@@ -60,9 +76,10 @@ export default function ExcelInput() {
   const [excel, setExcel] = useState<string>('')
   const [excelData, setExcelData] = useState<any>(null)
   const { info, setInfo } = useContext(InfoContext)
-  const { type } = info
+  const { type, category } = info
   const { excelColumns } = mockPresets
-  const columns = excelColumns[type]
+  const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
+  const columns = excelColumns[type][columnCategory]
 
   useEffect(() => {
     if (excelData) {
@@ -71,7 +88,7 @@ export default function ExcelInput() {
           ...prev,
           [type]: {
             ...prev[type],
-            ...excelToInfo(excelData),
+            ...excelToInfo(type, category, excelData),
           },
         }))
       } catch (e) {
@@ -82,6 +99,13 @@ export default function ExcelInput() {
       }
     }
   }, [excelData])
+
+  useEffect(() => {
+    console.log(category, columns)
+    if (excel) {
+      setExcelData(parseExcel(excel, columns))
+    }
+  }, [category])
 
   function onChange(e: FormEvent<HTMLTextAreaElement>) {
     try {

@@ -5,9 +5,11 @@ import { InfoContext } from '../InfoProvider'
 import ExcelInput from '../ExcelInput'
 import DetailSource from '../DetailSource'
 import DetailConfig from '../DetailConfig'
+import ImageSelect from '../ImageSelect'
 
 import classNames from 'classnames/bind'
 import styles from './Layout.module.css'
+import SimpleSource from '../SimpleSource'
 const cx = classNames.bind(styles)
 
 export default function Layout() {
@@ -70,7 +72,7 @@ export default function Layout() {
         cautionComment = 'coat'
       }
     }
-    setInfo((prev) => ({ ...prev, detail: { ...prev.detail, cautionComment } }))
+    setInfo((prev) => ({ ...prev, [info.type]: { ...prev[info.type], cautionComment } }))
   }
 
   function downloadAsHTML() {
@@ -118,7 +120,7 @@ export default function Layout() {
               <input
                 id="knit"
                 type="checkbox"
-                checked={info.detail.cautionComment === 'knit'}
+                checked={info[info.type].cautionComment === 'knit'}
                 onChange={cautionCommentOnChange}
               />
               니트 코멘트 추가
@@ -127,7 +129,7 @@ export default function Layout() {
               <input
                 id="coat"
                 type="checkbox"
-                checked={info.detail.cautionComment === 'coat'}
+                checked={info[info.type].cautionComment === 'coat'}
                 onChange={cautionCommentOnChange}
               />
               코트 코멘트 추가
@@ -156,6 +158,10 @@ export default function Layout() {
             <ExcelInput />
           </div>
         </div>
+        {/*<div>
+          <h2>이미지</h2>
+          <ImageSelect date={downloadOption.date} />
+        </div>*/}
         <div>{preset['type'] === 'detail' && <DetailConfig />}</div>
       </div>
       <div className={cx('col', 'preview')}>
@@ -165,7 +171,7 @@ export default function Layout() {
         >
           download
         </button>
-        <div className={cx('container')}>{<DetailSource />}</div>
+        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource /> : <SimpleSource />}</div>
       </div>
     </div>
   )

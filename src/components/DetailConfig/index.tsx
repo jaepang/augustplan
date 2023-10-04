@@ -5,7 +5,7 @@ import mockPresets from '@shared/presets-mock.json'
 export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
-  const { size, colors } = info[type]
+  const { size, colors } = info.detail
   const sizes = size?.map((size) => size.name.slice(0, size.name.indexOf('(')))
   const { models } = mockPresets
 
@@ -20,7 +20,7 @@ export default function DetailConfig() {
   }
 
   function onFittingChange(e, target) {
-    const newSet = info[type][target]
+    const newSet = info.detail[target]
     if (e.target.checked) {
       newSet.add(e.target.value)
     } else {
@@ -39,9 +39,9 @@ export default function DetailConfig() {
   function onColorCommentChange(e, idx) {
     setInfo((prev) => ({
       ...prev,
-      [type]: {
-        ...prev[type],
-        colors: prev[type].colors.map((color, i) => {
+      detail: {
+        ...prev.detail,
+        colors: prev.detail.colors.map((color, i) => {
           if (i === idx) {
             return {
               ...color,
@@ -57,8 +57,8 @@ export default function DetailConfig() {
   function onModelChange(e) {
     setInfo((prev) => ({
       ...prev,
-      [type]: {
-        ...prev[type],
+      detail: {
+        ...prev.detail,
         model: models.find((model) => model.code === e.target.value) || {},
       },
     }))
@@ -73,7 +73,7 @@ export default function DetailConfig() {
             <h3>모델</h3>
             {models?.length > 0 && (
               <select
-                value={info[type].model.code}
+                value={info.detail.model.code}
                 onChange={onModelChange}
               >
                 {models.map((model) => (
@@ -94,7 +94,7 @@ export default function DetailConfig() {
                 <input
                   id={name}
                   type="checkbox"
-                  checked={info[type].fittingColor.has(name)}
+                  checked={info.detail.fittingColor.has(name)}
                   value={name}
                   onChange={(e) => onFittingChange(e, 'fittingColor')}
                 />
@@ -109,7 +109,7 @@ export default function DetailConfig() {
                 <input
                   id={size}
                   type="checkbox"
-                  checked={info[type].fittingSize.has(size)}
+                  checked={info.detail.fittingSize.has(size)}
                   value={size}
                   onChange={(e) => onFittingChange(e, 'fittingSize')}
                 />
@@ -122,7 +122,7 @@ export default function DetailConfig() {
       <div>
         <h2>상세 설명 입력</h2>
         <textarea
-          value={info[type].comment}
+          value={info.detail.comment}
           onChange={(e) => onChange(e, 'comment')}
           cols={30}
           rows={10}
@@ -131,11 +131,11 @@ export default function DetailConfig() {
       </div>
       <div>
         <h2>패브릭 입력</h2>
-        {info[type].fabric ? (
+        {info.detail.fabric ? (
           <>
-            <h2>{info[type].fabric}의 혼용률로</h2>
+            <h2>{info.detail.fabric}의 혼용률로</h2>
             <textarea
-              value={info[type].fabricComment}
+              value={info.detail.fabricComment}
               onChange={(e) => onChange(e, 'fabricComment')}
               cols={30}
               rows={10}
@@ -148,8 +148,8 @@ export default function DetailConfig() {
       </div>
       <div>
         <h2>컬러 입력</h2>
-        {info[type].colors?.length > 0 ? (
-          info[type].colors.map((color, idx) => (
+        {info.detail.colors?.length > 0 ? (
+          info.detail.colors.map((color, idx) => (
             <div key={color.name}>
               <input
                 type="text"
