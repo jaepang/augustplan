@@ -19,6 +19,7 @@ interface InfoBase {
   model?: {
     code?: number | string
     name?: string
+    detail?: string
   }
   size?: {
     name: string
@@ -74,7 +75,6 @@ export default function InfoProvider({ children }) {
       fabricComment: '',
       colors: [],
       fabric: '',
-      model: mockPrsests.models[0],
       mainImage: '',
       detailImage: '',
       size: [],

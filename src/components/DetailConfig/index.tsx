@@ -1,13 +1,11 @@
 import { useContext } from 'react'
 import { InfoContext } from '../InfoProvider'
-import mockPresets from '@shared/presets-mock.json'
 
 export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
   const { size, colors } = info.detail
   const sizes = size?.map((size) => size.name.slice(0, size.name.indexOf('(')))
-  const { models } = mockPresets
 
   function onChange(e, value) {
     setInfo((prev) => ({
@@ -54,39 +52,11 @@ export default function DetailConfig() {
     }))
   }
 
-  function onModelChange(e) {
-    setInfo((prev) => ({
-      ...prev,
-      detail: {
-        ...prev.detail,
-        model: models.find((model) => model.code === e.target.value) || {},
-      },
-    }))
-  }
-
   return (
     <>
       <div>
         <h2 style={{ marginBottom: 0 }}>피팅 정보 입력</h2>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-          <div>
-            <h3>모델</h3>
-            {models?.length > 0 && (
-              <select
-                value={info.detail.model.code}
-                onChange={onModelChange}
-              >
-                {models.map((model) => (
-                  <option
-                    value={model.code}
-                    key={model.code}
-                  >
-                    {model.name}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
           <div>
             <h3>컬러</h3>
             {colors?.map(({ name }) => (

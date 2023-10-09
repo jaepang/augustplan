@@ -136,11 +136,33 @@
     "augustplan": {
       "name": "augustplan",
       "imgBaseUrl": "http://aplan92.hgodo.com",
-      "type": "detail"
+      "type": "detail",
+      "models": [
+        {
+          "name": "연정",
+          "code": "16"
+        },
+        {
+          "name": "아름",
+          "code": "17"
+        },
+        {
+          "name": "유진",
+          "code": "18"
+        }
+      ]
     },
     "hopescoder": {
       "name": "hopescoder",
-      "type": "simple"
+      "imgBaseUrl": "http://aplan92.hgodo.com/hopes",
+      "type": "simple",
+      "models": [
+        {
+          "name": "혜리",
+          "code": "1",
+          "detail": "44size/160cm/43kg/235mm"
+        }
+      ]
     }
   }
 }

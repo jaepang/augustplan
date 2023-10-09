@@ -10,7 +10,7 @@ const cx = classNames.bind(styles)
 export default function SimpleSource() {
   const { info } = useContext(InfoContext)
   const { simple, category, baseURL } = info
-  const { comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made } = simple
+  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made } = simple
   const fInfo = [
     '두께감(두꺼움)',
     '두께감(보통)',
@@ -98,9 +98,9 @@ export default function SimpleSource() {
           <br />
           [FITTING]
           <br />
-          혜리
+          {model?.name}
           <br />
-          44size/160cm/43kg/235mm
+          {model?.detail}
           <br />
           <br />
           <br />

@@ -22,16 +22,23 @@ export default function Layout() {
   })
   const { info, setInfo } = useContext(InfoContext)
   const { presets, categories } = mockPresets
+  const { models } = (preset as any) || {}
   const presetNames = Object.keys(presets)
   const isCategorySet = info.category === '세트'
-  console.log(info.setProduct)
+
   useEffect(() => {
     if (presets) {
       setPreset(presets[presetOption])
+      console.log(presets[presetOption].models)
       setInfo((prev) => ({
         ...prev,
+
         type: presets[presetOption]['type'],
         baseURL: presets[presetOption]['imgBaseUrl'] || '',
+        [presets[presetOption].type]: {
+          ...prev[presets[presetOption].type],
+          model: presets[presetOption]?.models?.[0] || {},
+        },
       }))
     }
   }, [presets, presetOption])
@@ -77,6 +84,16 @@ export default function Layout() {
         },
       }))
     }
+  }
+
+  function onModelChange(e) {
+    setInfo((prev) => ({
+      ...prev,
+      detail: {
+        ...prev.detail,
+        model: models.find((model) => model.code === e.target.value) || {},
+      },
+    }))
   }
 
   function downloadAsHTML() {
@@ -152,6 +169,24 @@ export default function Layout() {
             <ExcelInput />
           </div>
         )}
+        <div>
+          <h3>모델</h3>
+          {models?.length > 0 && (
+            <select
+              value={info[info.type]?.model?.code}
+              onChange={onModelChange}
+            >
+              {models.map((model) => (
+                <option
+                  value={model.code}
+                  key={model.code}
+                >
+                  {model.name}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
 
         {/*<div>
           <h2>이미지</h2>
