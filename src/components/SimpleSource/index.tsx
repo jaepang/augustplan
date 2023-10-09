@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 
 export default function SimpleSource() {
   const { info } = useContext(InfoContext)
-  const { simple, category } = info
+  const { simple, category, baseURL } = info
   const { comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made } = simple
   const fInfo = [
     '두께감(두꺼움)',
@@ -65,12 +65,12 @@ export default function SimpleSource() {
         id="top"
         style={{ width: '100%' }}
       >
-        <img src="http://aplan92.hgodo.com/hopes/etc/Untitled-1.jpg" />
+        <img src={`${baseURL}/etc/Untitled-1.jpg`} />
 
         <br />
-        <img src="http://aplan92.hgodo.com/hopes/etc/Untitled-2.jpg" />
+        <img src={`${baseURL}/etc/Untitled-2.jpg`} />
         <br />
-        <img src="http://aplan92.hgodo.com/hopes/page/${date}/${folderNumber}/h${folderNumber}-${jobNumber}_01.jpg" />
+        {/*<img src={`${baseURL}/page/${date}/${folderNumber}/h${folderNumber}-${jobNumber}_01.jpg`} />*/}
         <br />
       </div>
       <div style={{ color: 'rgb(0, 0, 0)', fontFamily: "'돋움', dotum", fontSize: '8.5pt' }}>

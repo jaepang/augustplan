@@ -55,6 +55,9 @@ export interface Info {
   detail?: InfoDetail
   simple?: InfoSimple
   baseURL?: string
+  setProduct?: InfoBase & {
+    category: string[]
+  }
 }
 
 export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStateAction<Info>> }>(null)

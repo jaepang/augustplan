@@ -23,6 +23,12 @@ function FabricCheckbox({ checked = false }) {
   )
 }
 
+function sizeDetailTableHeader(excelColumns, category, size) {
+  const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
+  const columns = excelColumns.detail[columnCategory].slice(4, -12)
+  return size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
+}
+
 export default function DetailSource() {
   const { info } = useContext(InfoContext)
   const { baseURL, type, category } = info
@@ -46,10 +52,12 @@ export default function DetailSource() {
     '비침(약간/부분있음)': info.detail?.['비침(약간/부분있음)'],
   }
   const categoryImage = categoryImageCodeMap[info.category]
+  const isSet = info.category === '세트'
+  const setCategoryImage = info.setProduct?.category?.map((category) => categoryImageCodeMap[category])
   const { excelColumns } = mockPresets
-  const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
-  const columns = excelColumns[type][columnCategory].slice(4, -12)
-  const sizeDetailTableHeader = size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
+  const categoryIncludingSet = isSet ? info.setProduct?.category : [category]
+  const sizeTableHeader = categoryIncludingSet?.map((category) => sizeDetailTableHeader(excelColumns, category, size))
+
   const additionalComment = cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''
   console.log(info.detail)
 
@@ -196,7 +204,7 @@ export default function DetailSource() {
                   }}
                 >
                   <img
-                    src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${categoryImage}`}
+                    src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${isSet ? setCategoryImage?.[0] : categoryImage}`}
                     width="600"
                     height="460"
                   />
@@ -219,7 +227,7 @@ export default function DetailSource() {
                 >
                   <tbody>
                     <tr style={{ backgroundColor: '#f5f5f5', whiteSpace: 'nowrap' }}>
-                      {sizeDetailTableHeader.map((key) => {
+                      {sizeTableHeader?.[0]?.map((key) => {
                         return <th key={key}>{key}</th>
                       })}
 
@@ -244,6 +252,67 @@ export default function DetailSource() {
                     })}
                   </tbody>
                 </table>
+
+                {isSet && (
+                  <>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                      }}
+                    >
+                      <img
+                        src={`http://gi.esmplus.com/aplan92/web/basic/drawing/${setCategoryImage?.[1]}`}
+                        width="600"
+                        height="460"
+                      />
+                    </div>
+
+                    {/*★상품 품목★
+                해당되는 품목 주석 풀고 비해당 항목 주석 다시 체크*/}
+                    <table
+                      width="70%"
+                      style={{
+                        textAlign: 'center',
+                        borderTopColor: 'rgb(133, 133, 133)',
+                        borderBottomColor: 'rgb(229, 229, 229)',
+                        borderTopWidth: '2px',
+                        borderBottomWidth: '1px',
+                        borderTopStyle: 'solid',
+                        borderBottomStyle: 'solid',
+                        margin: '0 auto',
+                      }}
+                    >
+                      <tbody>
+                        <tr style={{ backgroundColor: '#f5f5f5', whiteSpace: 'nowrap' }}>
+                          {sizeTableHeader?.[1]?.map((key) => {
+                            return <th key={key}>{key}</th>
+                          })}
+
+                          {/*★사이즈 입력★
+                        사이즈 많은 경우 <tr></tr> 한 세트 복사 붙여넣기,
+                        항목에 개수에 따라 <td></td> 추가 혹은 삭제
+                        <FONT color=#990000></FONT> 강조 할 때 폰트 컬러 소스 활성화
+                      */}
+                        </tr>
+                        {info.setProduct?.size?.map((item, idx) => {
+                          const size = item?.name?.slice(0, item.name.indexOf('('))
+                          const recSize = item.name.match(/[^()]+(?=\))/g)?.[0]
+
+                          const row = [size, recSize, ...Object.values(item?.spec)]
+                          return (
+                            <tr key={idx}>
+                              {row.map((value, idx) => (
+                                <td key={value + idx}>{value || '-'}</td>
+                              ))}
+                            </tr>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                )}
 
                 <p
                   style={{

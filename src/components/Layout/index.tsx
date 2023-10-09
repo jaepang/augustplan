@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react'
 import mockPresets from '@shared/presets-mock.json'
 
 import { InfoContext } from '../InfoProvider'
+import BaseConfig from './BaseConfig'
 import ExcelInput from '../ExcelInput'
 import DetailSource from '../DetailSource'
 import DetailConfig from '../DetailConfig'
@@ -22,7 +23,8 @@ export default function Layout() {
   const { info, setInfo } = useContext(InfoContext)
   const { presets, categories } = mockPresets
   const presetNames = Object.keys(presets)
-
+  const isCategorySet = info.category === '세트'
+  console.log(info.setProduct)
   useEffect(() => {
     if (presets) {
       setPreset(presets[presetOption])
@@ -34,6 +36,17 @@ export default function Layout() {
     }
   }, [presets, presetOption])
 
+  useEffect(() => {
+    if (isCategorySet && !info.setProduct) {
+      setInfo((prev) => ({
+        ...prev,
+        setProduct: {
+          category: ['상의/아우터', '바지'],
+        },
+      }))
+    }
+  }, [isCategorySet])
+
   function presetOnChange(e) {
     if (e?.target?.value) {
       setPresetOption(e.target.value)
@@ -41,15 +54,6 @@ export default function Layout() {
         ...prev,
         type: presets[e.target.value]['type'],
         baseURL: presets[e.target.value]['imageBaseUrl'] || '',
-      }))
-    }
-  }
-
-  function categoryOnChange(e) {
-    if (e?.target?.value) {
-      setInfo((prev) => ({
-        ...prev,
-        category: e.target.value,
       }))
     }
   }
@@ -63,16 +67,16 @@ export default function Layout() {
     }
   }
 
-  function cautionCommentOnChange(e) {
-    let cautionComment: 'none' | 'knit' | 'coat' = 'none'
-    if (e.target.checked) {
-      if (e.target.id === 'knit') {
-        cautionComment = 'knit'
-      } else if (e.target.id === 'coat') {
-        cautionComment = 'coat'
-      }
+  function onSetProductCategoryChange(e, index) {
+    if (e?.target?.value) {
+      setInfo((prev) => ({
+        ...prev,
+        setProduct: {
+          ...prev.setProduct,
+          category: prev.setProduct.category.map((c, i) => (i === index ? e.target.value : c)),
+        },
+      }))
     }
-    setInfo((prev) => ({ ...prev, [info.type]: { ...prev[info.type], cautionComment } }))
   }
 
   function downloadAsHTML() {
@@ -106,58 +110,49 @@ export default function Layout() {
               ))}
             </select>
           </div>
-          <div>
-            <h2>상품 카테고리</h2>
-            <select
-              value={info.category}
-              onChange={categoryOnChange}
-            >
-              {categories.map((category) => (
-                <option key={category}>{category}</option>
-              ))}
-            </select>
-            <label htmlFor="knit">
-              <input
-                id="knit"
-                type="checkbox"
-                checked={info[info.type].cautionComment === 'knit'}
-                onChange={cautionCommentOnChange}
-              />
-              니트 코멘트 추가
-            </label>
-            <label htmlFor="coat">
-              <input
-                id="coat"
-                type="checkbox"
-                checked={info[info.type].cautionComment === 'coat'}
-                onChange={cautionCommentOnChange}
-              />
-              코트 코멘트 추가
-            </label>
-          </div>
-          <div>
-            <h2>날짜</h2>
-            <input
-              type="date"
-              value={downloadOption.date}
-              onChange={(e) => onDownloadOptionChange(e, 'date')}
-            />
-          </div>
-          <div>
-            <h2>착장 번호</h2>
-            <input
-              type="text"
-              value={downloadOption.title}
-              onChange={(e) => onDownloadOptionChange(e, 'title')}
-            />
-          </div>
+          <BaseConfig
+            downloadOption={downloadOption}
+            onDownloadOptionChange={onDownloadOptionChange}
+          />
         </div>
-        <div>
+        {isCategorySet ? (
+          <>
+            <div>
+              <h2>세트 1 엑셀 시트 붙여넣기</h2>
+              <select
+                value={info.setProduct?.category?.[0]}
+                onChange={(e) => onSetProductCategoryChange(e, 0)}
+              >
+                {categories
+                  .filter((c) => c !== '세트')
+                  .map((category) => (
+                    <option key={category}>{category}</option>
+                  ))}
+              </select>
+              <ExcelInput />
+            </div>
+            <div>
+              <h2>세트 2 엑셀 시트 붙여넣기</h2>
+              <select
+                value={info.setProduct?.category?.[1]}
+                onChange={(e) => onSetProductCategoryChange(e, 1)}
+              >
+                {categories
+                  .filter((c) => c !== '세트')
+                  .map((category) => (
+                    <option key={category}>{category}</option>
+                  ))}
+              </select>
+              <ExcelInput setProduct />
+            </div>
+          </>
+        ) : (
           <div>
             <h2>엑셀 시트 붙여넣기</h2>
             <ExcelInput />
           </div>
-        </div>
+        )}
+
         {/*<div>
           <h2>이미지</h2>
           <ImageSelect date={downloadOption.date} />

@@ -72,25 +72,36 @@ export function excelToInfo(type, category, excelData) {
   }
 }
 
-export default function ExcelInput() {
+export default function ExcelInput({ setProduct = false }) {
   const [excel, setExcel] = useState<string>('')
   const [excelData, setExcelData] = useState<any>(null)
   const { info, setInfo } = useContext(InfoContext)
   const { type, category } = info
   const { excelColumns } = mockPresets
-  const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
+  const parseCategory = category !== '세트' ? category : !setProduct ? info.setProduct?.category?.[0] : info.setProduct?.category?.[1]
+  const columnCategory = parseCategory === '바지' || parseCategory === '치마' ? 'bottom' : 'top'
   const columns = excelColumns[type][columnCategory]
 
   useEffect(() => {
     if (excelData) {
       try {
-        setInfo((prev) => ({
-          ...prev,
-          [type]: {
-            ...prev[type],
-            ...excelToInfo(type, category, excelData),
-          },
-        }))
+        if (setProduct) {
+          setInfo((prev) => ({
+            ...prev,
+            setProduct: {
+              ...prev.setProduct,
+              ...excelToInfo(type, parseCategory, excelData),
+            },
+          }))
+        } else {
+          setInfo((prev) => ({
+            ...prev,
+            [type]: {
+              ...prev[type],
+              ...excelToInfo(type, parseCategory, excelData),
+            },
+          }))
+        }
       } catch (e) {
         alert('엑셀 형식이 잘못되었습니다. 다시 시도해주세요.')
         console.log(e)

@@ -10,7 +10,7 @@ export default function InfoEditableTable({ data, setData }) {
 
   function onChange(e, key, idx = undefined) {
     // array
-    if (idx) {
+    if (idx !== undefined) {
       setData((prev) => ({
         ...prev,
         [key]: prev[key].map((item, i) => {
