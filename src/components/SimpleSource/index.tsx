@@ -7,10 +7,10 @@ import classNames from 'classnames/bind'
 import styles from './SimpleSource.module.css'
 const cx = classNames.bind(styles)
 
-export default function SimpleSource() {
+export default function SimpleSource({ date }) {
   const { info } = useContext(InfoContext)
   const { simple, category, baseURL } = info
-  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made } = simple
+  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made, folderNo, jobNo, imageLength } = simple
   const fInfo = [
     '두께감(두꺼움)',
     '두께감(보통)',
@@ -27,6 +27,7 @@ export default function SimpleSource() {
   ]
   const { excelColumns } = mockPresets
   const specType = category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom'
+  const dateStr = date.replace(/-/g, '').slice(2)
 
   const infoStr = fInfo
     .map((f) => {
@@ -70,11 +71,11 @@ export default function SimpleSource() {
         <br />
         <img src={`${baseURL}/etc/Untitled-2.jpg`} />
         <br />
-        {/*<img src={`${baseURL}/page/${date}/${folderNumber}/h${folderNumber}-${jobNumber}_01.jpg`} />*/}
+        <img src={`${baseURL}/page/${dateStr}/${folderNo}/h${folderNo}-${jobNo}_01.jpg`} />
         <br />
       </div>
       <div style={{ color: 'rgb(0, 0, 0)', fontFamily: "'돋움', dotum", fontSize: '8.5pt' }}>
-        <div style={{ lineHeight: '18px', marginBottom: '50px', fontFamily: "'돋움', dotum" }}>
+        <div style={{ lineHeight: '18px', marginBottom: '50px', fontFamily: "'돋움', dotum", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ fontSize: '8.5pt', marginBottom: '5px', color: 'rgb(0,0,0)' }}></div>
           <br />
           [COLOR]
@@ -126,6 +127,12 @@ export default function SimpleSource() {
           <br />
           <br />
           <br />
+          {Array.from({ length: imageLength - 1 }, (_, i) => i + 1).map((i) => (
+            <img
+              key={i}
+              src={`${baseURL}/page/${dateStr}/${folderNo}/h${folderNo}-${jobNo}_${i.toString().padStart(2, '0')}.jpg`}
+            />
+          ))}
         </div>
       </div>
     </div>

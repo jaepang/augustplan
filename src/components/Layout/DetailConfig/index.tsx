@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { InfoContext } from '../InfoProvider'
+import { InfoContext } from '@components/InfoProvider'
 
 export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)

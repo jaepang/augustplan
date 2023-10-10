@@ -4,13 +4,15 @@ import mockPresets from '@shared/presets-mock.json'
 import { InfoContext } from '../InfoProvider'
 import BaseConfig from './BaseConfig'
 import ExcelInput from '../ExcelInput'
-import DetailSource from '../DetailSource'
-import DetailConfig from '../DetailConfig'
+import SimpleConfig from './SimpleConfig'
+import DetailConfig from './DetailConfig'
 import ImageSelect from '../ImageSelect'
+import SimpleSource from '../SimpleSource'
+import DetailSource from '../DetailSource'
 
 import classNames from 'classnames/bind'
 import styles from './Layout.module.css'
-import SimpleSource from '../SimpleSource'
+
 const cx = classNames.bind(styles)
 
 export default function Layout() {
@@ -192,7 +194,10 @@ export default function Layout() {
           <h2>이미지</h2>
           <ImageSelect date={downloadOption.date} />
         </div>*/}
-        <div>{preset['type'] === 'detail' && <DetailConfig />}</div>
+        <div>
+          {preset['type'] === 'detail' && <DetailConfig />}
+          {preset['type'] === 'simple' && <SimpleConfig />}
+        </div>
       </div>
       <div className={cx('col', 'preview')}>
         <button
@@ -201,7 +206,7 @@ export default function Layout() {
         >
           download
         </button>
-        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource /> : <SimpleSource />}</div>
+        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource /> : <SimpleSource date={downloadOption.date} />}</div>
       </div>
     </div>
   )

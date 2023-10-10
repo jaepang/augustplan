@@ -33,7 +33,9 @@ interface InfoSimple extends InfoBase {
   comment_2?: string
   comment_3?: string
   colors?: string
-  images?: string[]
+  folderNo?: string
+  jobNo?: string
+  imageLength?: number
 }
 
 interface InfoDetail extends InfoBase {
@@ -87,10 +89,12 @@ export default function InfoProvider({ children }) {
       comment_2: '',
       comment_3: '',
       colors: '',
-      images: [],
       fabric: '',
       size: [],
       made: '',
+      folderNo: '',
+      jobNo: '',
+      imageLength: 0,
     },
   })
   return <InfoContext.Provider value={{ info, setInfo }}>{children}</InfoContext.Provider>
