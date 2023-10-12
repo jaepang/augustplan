@@ -30,16 +30,18 @@ export default function Layout() {
 
   useEffect(() => {
     if (presets) {
-      setPreset(presets[presetOption])
-      console.log(presets[presetOption].models)
+      const nxtPreset = presets[presetOption]
+      const type = nxtPreset.type
+
+      setPreset(nxtPreset)
       setInfo((prev) => ({
         ...prev,
 
-        type: presets[presetOption]['type'],
-        baseURL: presets[presetOption]['imgBaseUrl'] || '',
-        [presets[presetOption].type]: {
-          ...prev[presets[presetOption].type],
-          model: presets[presetOption]?.models?.[0] || {},
+        type,
+        baseURL: nxtPreset.imgBaseUrl || '',
+        [type]: {
+          ...prev[type],
+          model: nxtPreset?.models?.[0] || {},
         },
       }))
     }
@@ -172,7 +174,7 @@ export default function Layout() {
           </div>
         )}
         <div>
-          <h3>모델</h3>
+          <h2>모델</h2>
           {models?.length > 0 && (
             <select
               value={info[info.type]?.model?.code}
@@ -195,7 +197,7 @@ export default function Layout() {
           <ImageSelect date={downloadOption.date} />
         </div>*/}
         <div>
-          {preset['type'] === 'detail' && <DetailConfig />}
+          {preset['type'] === 'detail' && <DetailConfig date={downloadOption.date} />}
           {preset['type'] === 'simple' && <SimpleConfig />}
         </div>
       </div>

@@ -50,6 +50,7 @@ interface InfoDetail extends InfoBase {
   }[]
   fittingColor?: Set<string>
   fittingSize?: Set<string>
+  folderName?: string
 }
 
 export interface Info {

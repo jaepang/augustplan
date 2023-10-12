@@ -1,11 +1,16 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
 
-export default function DetailConfig() {
+import classNames from 'classnames/bind'
+import styles from './DetailConfig.module.css'
+const cx = classNames.bind(styles)
+
+export default function DetailConfig({ date }) {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
   const { size, colors } = info.detail
   const sizes = size?.map((size) => size.name.slice(0, size.name.indexOf('(')))
+  const dateStr = date.replace(/-/g, '').slice(2)
 
   function onChange(e, value) {
     setInfo((prev) => ({
@@ -86,6 +91,31 @@ export default function DetailConfig() {
                 <label htmlFor={size}>{size}</label>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>이미지 입력</h2>
+        <div className={cx('row')}>
+          <div>
+            <h3>폴더명</h3>
+            <input
+              type="text"
+              value={info.detail.folderName}
+              onChange={(e) => onChange(e, 'folderName')}
+            />
+          </div>
+          <div>
+            <h3>
+              메인 이미지
+              {info.detail.folderName && info.detail.mainImage && ` (${info.baseURL}/page/${dateStr}/${info.detail.folderName}/${info.detail.mainImage})`}
+            </h3>
+
+            <input
+              type="text"
+              value={info.detail.mainImage}
+              onChange={(e) => onChange(e, 'mainImage')}
+            />
           </div>
         </div>
       </div>
