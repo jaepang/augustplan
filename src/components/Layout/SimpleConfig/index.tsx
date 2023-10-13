@@ -18,19 +18,19 @@ export default function SimpleConfig() {
   return (
     <>
       <div>
-        <h2>폴더 번호</h2>
+        <h2>폴더명</h2>
         <input
           type="text"
-          value={info.simple.folderNo}
-          onChange={(e) => onChange(e, 'folderNo')}
+          value={info.simple.folderName}
+          onChange={(e) => onChange(e, 'folderName')}
         />
       </div>
       <div>
         <h2>작업 번호</h2>
         <input
           type="text"
-          value={info.simple.jobNo}
-          onChange={(e) => onChange(e, 'jobNo')}
+          value={info.simple.jobName}
+          onChange={(e) => onChange(e, 'jobName')}
         />
       </div>
       <div>

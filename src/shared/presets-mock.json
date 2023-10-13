@@ -136,6 +136,7 @@
     "augustplan": {
       "name": "augustplan",
       "imgBaseUrl": "http://aplan92.hgodo.com",
+      "imgPrefix": "a",
       "type": "detail",
       "models": [
         {
@@ -155,6 +156,7 @@
     "hopescoder": {
       "name": "hopescoder",
       "imgBaseUrl": "http://aplan92.hgodo.com/hopes",
+      "imgPrefix": "h",
       "type": "simple",
       "models": [
         {

@@ -6,7 +6,6 @@ import BaseConfig from './BaseConfig'
 import ExcelInput from '../ExcelInput'
 import SimpleConfig from './SimpleConfig'
 import DetailConfig from './DetailConfig'
-import ImageSelect from '../ImageSelect'
 import SimpleSource from '../SimpleSource'
 import DetailSource from '../DetailSource'
 
@@ -27,6 +26,7 @@ export default function Layout() {
   const { models } = (preset as any) || {}
   const presetNames = Object.keys(presets)
   const isCategorySet = info.category === '세트'
+  const dateStr = downloadOption.date.replace(/-/g, '').slice(2)
 
   useEffect(() => {
     if (presets) {
@@ -39,6 +39,8 @@ export default function Layout() {
 
         type,
         baseURL: nxtPreset.imgBaseUrl || '',
+        imgPrefix: nxtPreset.imgPrefix,
+
         [type]: {
           ...prev[type],
           model: nxtPreset?.models?.[0] || {},
@@ -197,7 +199,7 @@ export default function Layout() {
           <ImageSelect date={downloadOption.date} />
         </div>*/}
         <div>
-          {preset['type'] === 'detail' && <DetailConfig date={downloadOption.date} />}
+          {preset['type'] === 'detail' && <DetailConfig dateStr={dateStr} />}
           {preset['type'] === 'simple' && <SimpleConfig />}
         </div>
       </div>
@@ -208,7 +210,7 @@ export default function Layout() {
         >
           download
         </button>
-        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource /> : <SimpleSource date={downloadOption.date} />}</div>
+        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource dateStr={dateStr} /> : <SimpleSource dateStr={dateStr} />}</div>
       </div>
     </div>
   )

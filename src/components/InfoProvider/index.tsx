@@ -26,6 +26,9 @@ interface InfoBase {
     spec: string[]
   }[]
   made?: string
+  folderName?: string
+  jobName?: string
+  imageLength?: number
 }
 
 interface InfoSimple extends InfoBase {
@@ -33,16 +36,12 @@ interface InfoSimple extends InfoBase {
   comment_2?: string
   comment_3?: string
   colors?: string
-  folderNo?: string
-  jobNo?: string
-  imageLength?: number
 }
 
 interface InfoDetail extends InfoBase {
   comment?: string
   titleImage?: string
   mainImage?: string
-  detailImage?: string
   fabricComment?: string
   colors?: {
     name?: string
@@ -50,7 +49,7 @@ interface InfoDetail extends InfoBase {
   }[]
   fittingColor?: Set<string>
   fittingSize?: Set<string>
-  folderName?: string
+  images: string[]
 }
 
 export interface Info {
@@ -59,6 +58,7 @@ export interface Info {
   detail?: InfoDetail
   simple?: InfoSimple
   baseURL?: string
+  imgPrefix?: string
   setProduct?: InfoBase & {
     category: string[]
   }
@@ -71,6 +71,7 @@ export default function InfoProvider({ children }) {
     type: 'detail',
     category: mockPrsests.categories[0],
     baseURL: '',
+    imgPrefix: '',
     detail: {
       titleImage: '',
       comment: '',
@@ -79,11 +80,14 @@ export default function InfoProvider({ children }) {
       colors: [],
       fabric: '',
       mainImage: '',
-      detailImage: '',
       size: [],
       made: '',
       fittingColor: new Set(),
       fittingSize: new Set(),
+      folderName: '',
+      imageLength: 0,
+      images: [],
+      jobName: '',
     },
     simple: {
       comment_1: '',
@@ -93,8 +97,8 @@ export default function InfoProvider({ children }) {
       fabric: '',
       size: [],
       made: '',
-      folderNo: '',
-      jobNo: '',
+      folderName: '',
+      jobName: '',
       imageLength: 0,
     },
   })

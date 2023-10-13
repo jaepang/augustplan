@@ -29,11 +29,26 @@ function sizeDetailTableHeader(excelColumns, category, size) {
   return size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
 }
 
-export default function DetailSource() {
+export default function DetailSource({ dateStr }) {
   const { info } = useContext(InfoContext)
-  const { baseURL, type, category } = info
-  const { titleImage, comment, cautionComment, fabricComment, colors, fabric, model, fittingColor, fittingSize, mainImage, detailImage, size, made } =
-    info.detail || {}
+  const { baseURL, category, imgPrefix } = info
+  const {
+    titleImage,
+    comment,
+    cautionComment,
+    fabricComment,
+    colors,
+    fabric,
+    model,
+    fittingColor,
+    fittingSize,
+    mainImage,
+    size,
+    made,
+    images,
+    folderName,
+    jobName,
+  } = info.detail || {}
   const fabricInfo = {
     '두께감(두꺼움)': info.detail?.['두께감(두꺼움)'],
     '두께감(보통)': info.detail?.['두께감(보통)'],
@@ -59,7 +74,7 @@ export default function DetailSource() {
   const sizeTableHeader = categoryIncludingSet?.map((category) => sizeDetailTableHeader(excelColumns, category, size))
 
   const additionalComment = cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''
-  console.log(info.detail)
+  const prefix = jobName ? `${imgPrefix}${folderName}-${jobName}` : `${imgPrefix}${folderName}`
 
   return (
     <div
@@ -173,9 +188,14 @@ export default function DetailSource() {
             <br />*{Array.from(fittingColor).join(',')}컬러, {Array.from(fittingSize).join(',')}사이즈 착용*
             <br />
             {/*본문이미지*/}
-            {mainImage}
+            <img src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}${mainImage}.jpg`} />
             {/*디테일이미지*/}
-            {detailImage}
+            {images.map((image) => (
+              <img
+                key={image}
+                src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${image}.jpg`}
+              />
+            ))}
             {/*사이즈 인포 시작*/}
             <div id="detail">
               <div id="size">
