@@ -8,7 +8,8 @@ const cx = classNames.bind(styles)
 
 export default function DragDrop() {
   const { info, setInfo } = useContext(InfoContext)
-  const { images } = info.detail
+  const { baseURL, dateStr } = info
+  const { folderName, images } = info.detail
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
@@ -53,6 +54,10 @@ export default function DragDrop() {
     }))
   }
 
+  function simplifyImageURL(url: string) {
+    return url.replace(`${baseURL}/page/${dateStr}/${folderName}/`, '').replace('.jpg', '')
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable
@@ -80,7 +85,7 @@ export default function DragDrop() {
                       ref={provided.innerRef}
                     >
                       <div className={cx('draggable-item')}>
-                        <h3>{image}</h3>
+                        <h3>{simplifyImageURL(image)}</h3>
                         <img src={image} />
                       </div>
 
