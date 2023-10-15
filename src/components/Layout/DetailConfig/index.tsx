@@ -110,7 +110,7 @@ export default function DetailConfig() {
               value={fabricComment}
               onChange={(e) => onChange(e, 'fabricComment')}
               cols={30}
-              rows={10}
+              rows={1}
               style={{ width: 'calc(100% - 16px)', resize: 'none' }}
             />
           </>
