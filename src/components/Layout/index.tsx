@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from 'react'
 import mockPresets from '@shared/presets-mock.json'
 
-import { InfoContext } from '../InfoProvider'
+import { InfoContext } from '@components/InfoProvider'
 import BaseConfig from './BaseConfig'
-import ExcelInput from '../ExcelInput'
+import ExcelInput from './ExcelInput'
 import SimpleConfig from './SimpleConfig'
 import DetailConfig from './DetailConfig'
-import SimpleSource from '../SimpleSource'
-import DetailSource from '../DetailSource'
+import SimpleSource from './SimpleSource'
+import DetailSource from './DetailSource'
 
 import classNames from 'classnames/bind'
 import styles from './Layout.module.css'
@@ -22,11 +22,11 @@ export default function Layout() {
     title: '',
   })
   const { info, setInfo } = useContext(InfoContext)
+  const { type, category, setProduct } = info
   const { presets, categories } = mockPresets
   const { models } = (preset as any) || {}
   const presetNames = Object.keys(presets)
-  const isCategorySet = info.category === '세트'
-  const dateStr = downloadOption.date.replace(/-/g, '').slice(2)
+  const isCategorySet = category === '세트'
 
   useEffect(() => {
     if (presets) {
@@ -50,7 +50,7 @@ export default function Layout() {
   }, [presets, presetOption])
 
   useEffect(() => {
-    if (isCategorySet && !info.setProduct) {
+    if (isCategorySet && !setProduct) {
       setInfo((prev) => ({
         ...prev,
         setProduct: {
@@ -59,6 +59,13 @@ export default function Layout() {
       }))
     }
   }, [isCategorySet])
+
+  useEffect(() => {
+    setInfo((prev) => ({
+      ...prev,
+      dateStr: downloadOption.date.replace(/-/g, '').slice(2),
+    }))
+  }, [downloadOption.date])
 
   function presetOnChange(e) {
     if (e?.target?.value) {
@@ -95,8 +102,8 @@ export default function Layout() {
   function onModelChange(e) {
     setInfo((prev) => ({
       ...prev,
-      detail: {
-        ...prev.detail,
+      [type]: {
+        ...prev[type],
         model: models.find((model) => model.code === e.target.value) || {},
       },
     }))
@@ -109,7 +116,7 @@ export default function Layout() {
     const tempEl = document.createElement('a')
     document.body.appendChild(tempEl)
     tempEl.href = url
-    const downloadCategory = info.category === '상의/아우터' ? '상의' : info.category
+    const downloadCategory = category === '상의/아우터' ? '상의' : category
     tempEl.download = `${downloadOption.date.replace(/-/gi, '').slice(2)}_${downloadOption.title}_${downloadCategory}.html`
     tempEl.click()
     setTimeout(() => {
@@ -143,7 +150,7 @@ export default function Layout() {
             <div>
               <h2>세트 1 엑셀 시트 붙여넣기</h2>
               <select
-                value={info.setProduct?.category?.[0]}
+                value={setProduct?.category?.[0]}
                 onChange={(e) => onSetProductCategoryChange(e, 0)}
               >
                 {categories
@@ -157,7 +164,7 @@ export default function Layout() {
             <div>
               <h2>세트 2 엑셀 시트 붙여넣기</h2>
               <select
-                value={info.setProduct?.category?.[1]}
+                value={setProduct?.category?.[1]}
                 onChange={(e) => onSetProductCategoryChange(e, 1)}
               >
                 {categories
@@ -179,7 +186,7 @@ export default function Layout() {
           <h2>모델</h2>
           {models?.length > 0 && (
             <select
-              value={info[info.type]?.model?.code}
+              value={info[type]?.model?.code}
               onChange={onModelChange}
             >
               {models.map((model) => (
@@ -193,13 +200,8 @@ export default function Layout() {
             </select>
           )}
         </div>
-
-        {/*<div>
-          <h2>이미지</h2>
-          <ImageSelect date={downloadOption.date} />
-        </div>*/}
         <div>
-          {preset['type'] === 'detail' && <DetailConfig dateStr={dateStr} />}
+          {preset['type'] === 'detail' && <DetailConfig />}
           {preset['type'] === 'simple' && <SimpleConfig />}
         </div>
       </div>
@@ -210,7 +212,7 @@ export default function Layout() {
         >
           download
         </button>
-        <div className={cx('container')}>{preset['type'] === 'detail' ? <DetailSource dateStr={dateStr} /> : <SimpleSource dateStr={dateStr} />}</div>
+        <div className={cx('container')}>{type === 'detail' ? <DetailSource /> : <SimpleSource />}</div>
       </div>
     </div>
   )

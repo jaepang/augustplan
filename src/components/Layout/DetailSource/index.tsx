@@ -29,9 +29,9 @@ function sizeDetailTableHeader(excelColumns, category, size) {
   return size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
 }
 
-export default function DetailSource({ dateStr }) {
+export default function DetailSource() {
   const { info } = useContext(InfoContext)
-  const { baseURL, category, imgPrefix } = info
+  const { baseURL, category, imgPrefix, dateStr } = info
   const {
     titleImage,
     comment,

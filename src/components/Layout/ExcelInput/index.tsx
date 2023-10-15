@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, FormEvent } from 'react'
-import { InfoContext } from '../InfoProvider'
+import { InfoContext } from '../../InfoProvider'
 
 import InfoEditableTable from './InfoEditableTable'
 import mockPresets from '@shared/presets-mock.json'

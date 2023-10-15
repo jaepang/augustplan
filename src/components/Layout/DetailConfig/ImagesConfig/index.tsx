@@ -6,7 +6,7 @@ import classNames from 'classnames/bind'
 import styles from './ImageConfig.module.css'
 const cx = classNames.bind(styles)
 
-export default function ImageConfig({ dateStr, onChange }) {
+export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
@@ -17,7 +17,7 @@ export default function ImageConfig({ dateStr, onChange }) {
     jobName: '',
     fileName: '',
   })
-  const { baseURL, imgPrefix } = info
+  const { baseURL, imgPrefix, dateStr } = info
   const { folderName, jobName, mainImage, imageLength, images } = info.detail
   const prefix = jobName ? `${imgPrefix}${folderName}-${jobName}` : `${imgPrefix}${folderName}`
 
@@ -27,7 +27,6 @@ export default function ImageConfig({ dateStr, onChange }) {
   const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${additionalPrefix}${
     additionalImage.fileName
   }`
-  console.log(images, imgPrefix, jobName, prefix)
 
   useEffect(() => {
     setAdditionalImage((prev) => ({
@@ -170,7 +169,7 @@ export default function ImageConfig({ dateStr, onChange }) {
           {(dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName && <button onClick={addAdditionalImage}>추가</button>}
         </div>
       </div>
-      {images.length > 0 && <DragDrop dateStr={dateStr} />}
+      {images.length > 0 && <DragDrop />}
     </div>
   )
 }

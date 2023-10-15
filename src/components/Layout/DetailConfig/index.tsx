@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
 import ImageConfig from './ImagesConfig'
 
-export default function DetailConfig({ dateStr }) {
+export default function DetailConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { type } = info
   const { size, colors, fittingColor, fittingSize, comment, fabric, fabricComment } = info.detail
@@ -90,10 +90,7 @@ export default function DetailConfig({ dateStr }) {
           </div>
         </div>
       </div>
-      <ImageConfig
-        dateStr={dateStr}
-        onChange={onChange}
-      />
+      <ImageConfig onChange={onChange} />
       <div>
         <h2>상세 설명 입력</h2>
         <textarea

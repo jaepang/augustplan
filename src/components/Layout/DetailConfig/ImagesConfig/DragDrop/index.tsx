@@ -6,11 +6,9 @@ import classNames from 'classnames/bind'
 import styles from './DragDrop.module.css'
 const cx = classNames.bind(styles)
 
-export default function DragDrop({ dateStr }) {
+export default function DragDrop() {
   const { info, setInfo } = useContext(InfoContext)
-  const { baseURL, imgPrefix } = info
-  const { images, jobName, folderName } = info.detail
-  const prefix = jobName ? `${imgPrefix}${folderName}-${jobName}` : `${imgPrefix}${folderName}`
+  const { images } = info.detail
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
