@@ -79,8 +79,8 @@ export default function DragDrop({ dateStr }) {
                       ref={provided.innerRef}
                     >
                       <div>
-                        <h3>{`${prefix}_${image}.jpg`}</h3>
-                        <img src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${image}.jpg`} />
+                        <h3>{image}</h3>
+                        <img src={image} />
                       </div>
 
                       <button onClick={() => removeImage(idx)}>X</button>

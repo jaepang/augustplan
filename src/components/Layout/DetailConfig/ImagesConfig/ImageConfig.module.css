@@ -20,4 +20,19 @@
   .draggable {
     cursor: grab;
   }
+
+  &.additional {
+    height: 80px;
+    align-items: flex-end;
+
+    div {
+      min-width: 20%;
+    }
+  }
+}
+
+.additional-img {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }

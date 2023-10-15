@@ -193,7 +193,7 @@ export default function DetailSource({ dateStr }) {
             {images.map((image) => (
               <img
                 key={image}
-                src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${image}.jpg`}
+                src={image}
               />
             ))}
             {/*사이즈 인포 시작*/}
