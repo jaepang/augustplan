@@ -122,6 +122,7 @@ export default function ImageConfig({ onChange }) {
           {folderName && mainImage && imageLength > 0 && <button onClick={createImages}>이미지 목록 자동 생성</button>}
         </div>
       </div>
+      {images.length > 0 && <DragDrop />}
       <div className={cx('additional-img')}>
         <h3>추가 이미지 수동 입력</h3>
 
@@ -178,7 +179,6 @@ export default function ImageConfig({ onChange }) {
           {(dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName && <button onClick={addAdditionalImage}>추가</button>}
         </div>
       </div>
-      {images.length > 0 && <DragDrop />}
     </div>
   )
 }
