@@ -2,8 +2,8 @@
   width: 100%;
   padding-top: 30px;
   display: grid;
-  grid-template-columns: repeat(8, 10%);
-  column-gap: 2.85%;
+  grid-template-columns: repeat(10, 8%);
+  column-gap: 2.22%;
   row-gap: 10px;
   /*display: flex;
   column-gap: 7px;
