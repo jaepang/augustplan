@@ -385,7 +385,8 @@ export default function DetailSource() {
                       <br />
                       <b>사이즈(Size)</b> : {size?.map((size) => size.name).join(',')}
                       <br />
-                      <b>모델피팅(Model fitting)</b> : {model?.name}/{fittingColor}/{/*fittingSize?.slice(0, fittingSize.indexOf('('))*/}사이즈
+                      <b>모델피팅(Model fitting)</b> : {model?.name}/{Array.from(fittingColor).join(',')}/{Array.from(fittingSize).join(',')}
+                      사이즈
                     </p>
                   </div>
                 </div>
