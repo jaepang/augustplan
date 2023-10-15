@@ -55,7 +55,10 @@ export default function DragDrop() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="images">
+      <Droppable
+        droppableId="images"
+        direction="horizontal"
+      >
         {(provided) => (
           <>
             <div
@@ -73,10 +76,10 @@ export default function DragDrop() {
                     <div
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className={cx('draggable-item')}
+                      className={cx('draggable-wrap')}
                       ref={provided.innerRef}
                     >
-                      <div>
+                      <div className={cx('draggable-item')}>
                         <h3>{image}</h3>
                         <img src={image} />
                       </div>

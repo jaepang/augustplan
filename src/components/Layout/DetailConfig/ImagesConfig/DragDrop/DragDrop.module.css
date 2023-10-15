@@ -1,25 +1,31 @@
 .draggable-container {
   padding-top: 30px;
   display: flex;
-  flex-direction: column;
-  row-gap: 7px;
+  column-gap: 7px;
+  overflow: scroll;
 
-  .draggable-item {
-    width: 50%;
-    padding: 3px 7px;
-    padding-top: 0;
-    padding-right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+  .draggable-wrap {
+    width: 15%;
+    position: relative;
     border: 1px solid lightgray;
 
-    img {
-      width: 90%;
-      object-fit: cover;
+    .draggable-item {
+      width: 100%;
+
+      h3 {
+        overflow-wrap: break-word;
+      }
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
     }
 
     button {
+      position: absolute;
+      top: 0;
+      right: 0;
       aspect-ratio: 1;
       color: white;
       background: red;
