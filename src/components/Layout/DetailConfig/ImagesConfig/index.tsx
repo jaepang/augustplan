@@ -19,7 +19,8 @@ export default function ImageConfig({ onChange }) {
   })
   const { baseURL, imgPrefix, dateStr } = info
   const { folderName, jobName, mainImage, imageLength, images } = info.detail
-  const prefix = jobName ? `${imgPrefix}${folderName}-${jobName}` : `${imgPrefix}${folderName}`
+  const defaultPrefix = `${imgPrefix}${folderName}`
+  const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
   const additionalPrefix = additionalImage.jobName
     ? `${imgPrefix}${additionalImage.folderName}-${additionalImage.jobName}`
@@ -35,15 +36,23 @@ export default function ImageConfig({ onChange }) {
     }))
   }, [additionalImage.date])
 
+  function createImageArray() {
+    const arrayWithDefaultPrefix = Array.from({ length: imageLength }).map(
+      (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+    )
+    const arrayWithJobName = Array.from({ length: imageLength }).map(
+      (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+    )
+    return jobName ? [...arrayWithJobName, ...arrayWithDefaultPrefix] : arrayWithDefaultPrefix
+  }
+
   function createImages() {
     if (additionalAdded && !confirm('수동으로 추가한 이미지가 있습니다. 추가 이미지를 삭제하고 자동 생성하시겠습니까?')) return
     setInfo((prev) => ({
       ...prev,
       detail: {
         ...prev.detail,
-        images: Array.from({ length: imageLength }).map(
-          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
-        ),
+        images: createImageArray(),
       },
     }))
   }
