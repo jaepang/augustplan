@@ -5,9 +5,6 @@
   grid-template-columns: repeat(10, 8%);
   column-gap: 2.22%;
   row-gap: 10px;
-  /*display: flex;
-  column-gap: 7px;
-  overflow: scroll;*/
 
   .draggable-wrap {
     width: 100%;
@@ -21,6 +18,7 @@
       h3 {
         overflow-wrap: break-word;
         margin: 0;
+        font-size: 12px;
       }
 
       img {
