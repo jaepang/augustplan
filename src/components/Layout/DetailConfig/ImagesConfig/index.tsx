@@ -8,6 +8,7 @@ const cx = classNames.bind(styles)
 
 export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
+  const [detailImageLength, setDetailImageLength] = useState(0)
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
   const [additionalImage, setAdditionalImage] = useState({
@@ -18,7 +19,7 @@ export default function ImageConfig({ onChange }) {
     fileName: '',
   })
   const { baseURL, imgPrefix, dateStr } = info
-  const { folderName, jobName, mainImage, imageLength, images } = info.detail
+  const { folderName, jobName, mainImage, imageLength: modelImageLength, images } = info.detail
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
@@ -36,23 +37,18 @@ export default function ImageConfig({ onChange }) {
     }))
   }, [additionalImage.date])
 
-  function createImageArray() {
-    const arrayWithDefaultPrefix = Array.from({ length: imageLength }).map(
-      (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
-    )
-    const arrayWithJobName = Array.from({ length: imageLength }).map(
-      (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
-    )
-    return jobName ? [...arrayWithJobName, ...arrayWithDefaultPrefix] : arrayWithDefaultPrefix
-  }
-
   function createImages() {
     if (additionalAdded && !confirm('수동으로 추가한 이미지가 있습니다. 추가 이미지를 삭제하고 자동 생성하시겠습니까?')) return
     setInfo((prev) => ({
       ...prev,
       detail: {
         ...prev.detail,
-        images: createImageArray(),
+        detailImages: Array.from({ length: detailImageLength }).map(
+          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+        ),
+        modelImages: Array.from({ length: modelImageLength }).map(
+          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+        ),
       },
     }))
   }
@@ -69,7 +65,7 @@ export default function ImageConfig({ onChange }) {
       ...prev,
       detail: {
         ...prev.detail,
-        images: [...prev.detail.images, `${baseURL}/page/${additionalImageFilename}.jpg`],
+        modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
     setAdditionalImage({
@@ -114,14 +110,32 @@ export default function ImageConfig({ onChange }) {
         </div>
         <div>
           <h3>본문 이미지 개수</h3>
-          <input
-            type="number"
-            value={imageLength}
-            onChange={(e) => onChange(e, 'imageLength')}
-          />
-          {folderName && mainImage && imageLength > 0 && <button onClick={createImages}>이미지 목록 자동 생성</button>}
+          <div>
+            <h4>디테일</h4>
+            <input
+              type="number"
+              value={detailImageLength}
+              onChange={(e) => setDetailImageLength(parseInt(e.target.value))}
+            />
+          </div>
+          <div>
+            <h4>모델</h4>
+            <input
+              type="number"
+              value={modelImageLength}
+              onChange={(e) => onChange(e, 'imageLength')}
+            />
+          </div>
         </div>
       </div>
+      {folderName && mainImage && (modelImageLength > 0 || detailImageLength > 0) && (
+        <button
+          className={cx('create-img-btn')}
+          onClick={createImages}
+        >
+          이미지 목록 자동 생성
+        </button>
+      )}
       {images.length > 0 && <DragDrop />}
       <div className={cx('additional-img')}>
         <h3>추가 이미지 수동 입력</h3>

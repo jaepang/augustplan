@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 export default function DragDrop() {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL, dateStr } = info
-  const { folderName, images } = info.detail
+  const { folderName, modelImages } = info.detail
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
@@ -23,7 +23,7 @@ export default function DragDrop() {
         if (destination.droppableId === source.droppableId && source.index === destination.index) return
 
         setInfo((prev) => {
-          const newImages = prev.detail.images
+          const newImages = prev.detail.modelImages
 
           newImages.splice(srcIndex, 1)
           newImages.splice(destIndex, 0, draggableId)
@@ -32,7 +32,7 @@ export default function DragDrop() {
             ...prev,
             detail: {
               ...prev.detail,
-              images: newImages,
+              modelImages: newImages,
             },
           }
         })
@@ -42,7 +42,7 @@ export default function DragDrop() {
   )
 
   function removeImage(idx: number) {
-    const newImages = info.detail.images
+    const newImages = info.detail.modelImages
     newImages.splice(idx, 1)
 
     setInfo((prev) => ({
@@ -71,7 +71,7 @@ export default function DragDrop() {
               ref={provided.innerRef}
               className={cx('draggable-container')}
             >
-              {images.map((image, idx) => (
+              {modelImages.map((image, idx) => (
                 <Draggable
                   key={image}
                   draggableId={image}

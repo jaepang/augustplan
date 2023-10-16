@@ -1,8 +1,12 @@
 .row {
-  height: 110px;
+  height: 105px;
   display: flex;
   align-items: flex-start;
   column-gap: 8px;
+
+  h3 {
+    margin: 0;
+  }
 
   div {
     min-width: 23%;
@@ -11,9 +15,26 @@
     flex-direction: column;
     justify-content: space-between;
 
+    div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h4 {
+        margin: 2px 0 0 0;
+        font-size: 12px;
+      }
+    }
+
     span {
       width: 100%;
       overflow-wrap: break-word;
+    }
+
+    button {
+      margin-top: 10px;
     }
   }
 
@@ -29,6 +50,11 @@
       min-width: 20%;
     }
   }
+}
+
+.create-img-btn {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .additional-img {
