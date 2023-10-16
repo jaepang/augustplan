@@ -8,7 +8,10 @@ const cx = classNames.bind(styles)
 
 export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
-  const [detailImageLength, setDetailImageLength] = useState(0)
+  const [imageLength, setImageLength] = useState({
+    detail: 0,
+    model: 0,
+  })
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
   const [additionalImage, setAdditionalImage] = useState({
@@ -19,7 +22,7 @@ export default function ImageConfig({ onChange }) {
     fileName: '',
   })
   const { baseURL, imgPrefix, dateStr } = info
-  const { folderName, jobName, mainImage, imageLength: modelImageLength, images } = info.detail
+  const { folderName, jobName, mainImage, images } = info.detail
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
@@ -43,10 +46,10 @@ export default function ImageConfig({ onChange }) {
       ...prev,
       detail: {
         ...prev.detail,
-        detailImages: Array.from({ length: detailImageLength }).map(
+        detailImages: Array.from({ length: imageLength.detail }).map(
           (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
         ),
-        modelImages: Array.from({ length: modelImageLength }).map(
+        modelImages: Array.from({ length: imageLength.model }).map(
           (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
         ),
       },
@@ -114,21 +117,21 @@ export default function ImageConfig({ onChange }) {
             <h4>디테일</h4>
             <input
               type="number"
-              value={detailImageLength}
-              onChange={(e) => setDetailImageLength(parseInt(e.target.value))}
+              value={imageLength.detail}
+              onChange={(e) => setImageLength((prev) => ({ ...prev, detail: parseInt(e.target.value) }))}
             />
           </div>
           <div>
             <h4>모델</h4>
             <input
               type="number"
-              value={modelImageLength}
-              onChange={(e) => onChange(e, 'imageLength')}
+              value={imageLength.model}
+              onChange={(e) => setImageLength((prev) => ({ ...prev, model: parseInt(e.target.value) }))}
             />
           </div>
         </div>
       </div>
-      {folderName && mainImage && (modelImageLength > 0 || detailImageLength > 0) && (
+      {folderName && mainImage && (imageLength.detail > 0 || imageLength.model > 0) && (
         <button
           className={cx('create-img-btn')}
           onClick={createImages}

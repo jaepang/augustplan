@@ -28,7 +28,6 @@ interface InfoBase {
   made?: string
   folderName?: string
   jobName?: string
-  imageLength?: number
 }
 
 interface InfoSimple extends InfoBase {
@@ -36,6 +35,7 @@ interface InfoSimple extends InfoBase {
   comment_2?: string
   comment_3?: string
   colors?: string
+  imageLength?: number
 }
 
 interface InfoDetail extends InfoBase {
@@ -89,7 +89,6 @@ export default function InfoProvider({ children }) {
       fittingColor: new Set(),
       fittingSize: new Set(),
       folderName: '',
-      imageLength: 0,
       detailImages: [],
       modelImages: [],
       images: [],
