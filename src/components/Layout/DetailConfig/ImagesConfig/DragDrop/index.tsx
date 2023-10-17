@@ -55,7 +55,7 @@ export default function DragDrop() {
   }
 
   function simplifyImageURL(url: string) {
-    return url.replace(`${baseURL}/page/${dateStr}/${folderName}/`, '').replace('.jpg', '')
+    return url.replace(`${baseURL}/page`, '').replace(`/${dateStr}`, '').replace(`/${folderName}/`, '').replace('/', '').replace('.jpg', '')
   }
 
   return (

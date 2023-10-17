@@ -49,9 +49,12 @@ export default function ImageConfig({ onChange }) {
         detailImages: Array.from({ length: imageLength.detail }).map(
           (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
         ),
-        modelImages: Array.from({ length: imageLength.model }).map(
-          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
-        ),
+        modelImages: [
+          ...Array.from({ length: imageLength.model }).map(
+            (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+          ),
+          `${baseURL}/page/${dateStr}/cut.jpg`,
+        ],
       },
     }))
   }
