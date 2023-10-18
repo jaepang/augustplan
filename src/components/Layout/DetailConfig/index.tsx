@@ -8,12 +8,15 @@ export default function DetailConfig() {
   const { size, colors, fittingColor, fittingSize, comment, fabric, fabricComment } = info.detail
   const sizes = size?.map((size) => size.name.slice(0, size.name.indexOf('(')))
 
-  function onChange(e, value) {
+  function onChange(e, option) {
+    const isComment = option === 'comment'
+    const newValue = isComment ? e.target.value.replace(/\n*"\n*/g, '') : e.target.value
+
     setInfo((prev) => ({
       ...prev,
       [type]: {
         ...prev[type],
-        [value]: e.target.value,
+        [option]: newValue,
       },
     }))
   }
@@ -75,7 +78,7 @@ export default function DetailConfig() {
           </div>
           <div>
             <h3>사이즈</h3>
-            {sizes.map((size) => (
+            {sizes?.map((size) => (
               <div key={size}>
                 <input
                   id={size}
