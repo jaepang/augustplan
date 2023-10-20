@@ -8,3 +8,11 @@ body {
   background-color: rgb(233, 236, 239);
   font-family: sans-serif;
 }
+
+[data-react-beautiful-dnd-droppable] {
+  margin-bottom: 20px;
+  display: grid !important;
+  grid-template-columns: repeat(10, 8%);
+  column-gap: 2.22%;
+  row-gap: 10px;
+}

@@ -22,7 +22,7 @@ export default function ImageConfig({ onChange }) {
     fileName: '',
   })
   const { baseURL, imgPrefix, dateStr } = info
-  const { folderName, jobName, mainImage, images } = info.detail
+  const { folderName, jobName, mainImage, modelImages } = info.detail
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
@@ -142,7 +142,7 @@ export default function ImageConfig({ onChange }) {
           이미지 목록 자동 생성
         </button>
       )}
-      {images.length > 0 && <DragDrop />}
+      {modelImages.length > 0 && <DragDrop />}
       <div className={cx('additional-img')}>
         <h3>추가 이미지 수동 입력</h3>
 

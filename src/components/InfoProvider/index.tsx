@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { createContext, useState, Dispatch, SetStateAction } from 'react'
 import mockPrsests from '@shared/presets-mock.json'
 
 interface InfoBase {
@@ -51,7 +51,6 @@ interface InfoDetail extends InfoBase {
   fittingSize?: Set<string>
   detailImages: string[]
   modelImages: string[]
-  images: string[]
 }
 
 export interface Info {
@@ -91,7 +90,6 @@ export default function InfoProvider({ children }) {
       folderName: '',
       detailImages: [],
       modelImages: [],
-      images: [],
       jobName: '',
     },
     simple: {
@@ -107,16 +105,6 @@ export default function InfoProvider({ children }) {
       imageLength: 0,
     },
   })
-
-  useEffect(() => {
-    setInfo((prev) => ({
-      ...prev,
-      detail: {
-        ...prev.detail,
-        images: [...prev.detail.detailImages, ...prev.detail.modelImages],
-      },
-    }))
-  }, [info.detail.detailImages, info.detail.modelImages])
 
   return <InfoContext.Provider value={{ info, setInfo }}>{children}</InfoContext.Provider>
 }

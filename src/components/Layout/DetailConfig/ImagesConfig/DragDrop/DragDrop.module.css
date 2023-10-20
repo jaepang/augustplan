@@ -1,13 +1,11 @@
 .draggable-container {
   width: 100%;
   padding-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(10, 8%);
-  column-gap: 2.22%;
-  row-gap: 10px;
 
   .draggable-wrap {
     width: 100%;
+    flex-grow: 0;
+    flex-shrink: 1;
     position: relative;
     border: 1px solid lightgray;
 

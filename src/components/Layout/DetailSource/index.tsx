@@ -43,9 +43,10 @@ export default function DetailSource() {
     fittingColor,
     fittingSize,
     mainImage,
+    detailImages,
+    modelImages,
     size,
     made,
-    images,
     folderName,
     jobName,
   } = info.detail || {}
@@ -87,7 +88,14 @@ export default function DetailSource() {
         alignItems: 'center',
       }}
     >
-      <div id="top">
+      <div
+        id="top"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {/*임시 이미지 영역 (설날 배송, 쿠폰, 안내사항 등 페이지 가장 상단에 노출 됨_오픈마켓/자사몰 동일)*/}
 
         {/*배송지연상품 확인하기*/}
@@ -187,15 +195,30 @@ export default function DetailSource() {
             <img src={`${baseURL}/etc/page_${model?.code}.jpg`} />
             <br />*{Array.from(fittingColor).join(',')}컬러, {Array.from(fittingSize).join(',')}사이즈 착용*
             <br />
-            {/*본문이미지*/}
-            <img src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}${mainImage}.jpg`} />
-            {/*디테일이미지*/}
-            {images.map((image) => (
-              <img
-                key={image}
-                src={image}
-              />
-            ))}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              {/*본문이미지*/}
+              <img src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}${mainImage}.jpg`} />
+              {/*디테일이미지*/}
+              {detailImages.map((image) => (
+                <img
+                  key={image}
+                  src={image}
+                />
+              ))}
+              {/*모델이미지*/}
+              {modelImages.map((image) => (
+                <img
+                  key={image}
+                  src={image}
+                />
+              ))}
+            </div>
             {/*사이즈 인포 시작*/}
             <div id="detail">
               <div id="size">

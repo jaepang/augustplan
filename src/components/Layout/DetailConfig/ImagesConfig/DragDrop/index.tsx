@@ -1,6 +1,6 @@
 import { useContext, useCallback } from 'react'
 import { InfoContext } from '@components/InfoProvider'
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
+import { ListManager } from 'react-beautiful-dnd-grid'
 
 import classNames from 'classnames/bind'
 import styles from './DragDrop.module.css'
@@ -11,37 +11,27 @@ export default function DragDrop() {
   const { baseURL, dateStr } = info
   const { folderName, modelImages } = info.detail
 
-  const onDragEnd = useCallback(
-    (result: DropResult) => {
-      if (result.reason === 'DROP') {
-        console.log(result, result?.source, result?.destination)
-        const { source, destination, draggableId } = result
-        const srcIndex = result.source?.index
-        const destIndex = result.destination?.index
+  function onDragEnd(srcIndex: number, destIndex: number) {
+    const target = modelImages[srcIndex]
+    console.log(srcIndex, destIndex, modelImages[srcIndex])
+    setInfo((prev) => {
+      const newImages = prev.detail.modelImages
 
-        if (!srcIndex || !destIndex) return
-        if (destination.droppableId === source.droppableId && source.index === destination.index) return
+      newImages.splice(srcIndex, 1)
+      newImages.splice(destIndex, 0, target)
 
-        setInfo((prev) => {
-          const newImages = prev.detail.modelImages
-
-          newImages.splice(srcIndex, 1)
-          newImages.splice(destIndex, 0, draggableId)
-
-          return {
-            ...prev,
-            detail: {
-              ...prev.detail,
-              modelImages: newImages,
-            },
-          }
-        })
+      return {
+        ...prev,
+        detail: {
+          ...prev.detail,
+          modelImages: newImages,
+        },
       }
-    },
-    [info, setInfo],
-  )
+    })
+  }
 
-  function removeImage(idx: number) {
+  function removeImage(image: string) {
+    const idx = modelImages.findIndex((img) => img === image)
     const newImages = info.detail.modelImages
     newImages.splice(idx, 1)
 
@@ -49,7 +39,7 @@ export default function DragDrop() {
       ...prev,
       detail: {
         ...prev.detail,
-        images: newImages,
+        modelImages: newImages,
       },
     }))
   }
@@ -59,46 +49,23 @@ export default function DragDrop() {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable
-        droppableId="images"
+    <div className={cx('draggable-container')}>
+      <ListManager
+        items={modelImages}
         direction="horizontal"
-      >
-        {(provided) => (
-          <>
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className={cx('draggable-container')}
-            >
-              {modelImages.map((image, idx) => (
-                <Draggable
-                  key={image}
-                  draggableId={image}
-                  index={idx}
-                >
-                  {(provided) => (
-                    <div
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={cx('draggable-wrap')}
-                      ref={provided.innerRef}
-                    >
-                      <div className={cx('draggable-item')}>
-                        <h3>{simplifyImageURL(image)}</h3>
-                        <img src={image} />
-                      </div>
-
-                      <button onClick={() => removeImage(idx)}>X</button>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+        maxItems={10}
+        render={(image) => (
+          <div className={cx('draggable-wrap')}>
+            <div className={cx('draggable-item')}>
+              <h3>{simplifyImageURL(image)}</h3>
+              <img src={image} />
             </div>
-            {provided.placeholder}
-          </>
+
+            <button onClick={() => removeImage(image)}>X</button>
+          </div>
         )}
-      </Droppable>
-    </DragDropContext>
+        onDragEnd={onDragEnd}
+      />
+    </div>
   )
 }
