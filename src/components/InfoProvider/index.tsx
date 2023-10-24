@@ -56,6 +56,8 @@ interface InfoDetail extends InfoBase {
 export interface Info {
   type: 'detail' | 'simple'
   category: string
+  title: string
+  date: string
   dateStr?: string
   detail?: InfoDetail
   simple?: InfoSimple
@@ -72,6 +74,8 @@ export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
     type: 'detail',
     category: mockPrsests.categories[0],
+    title: '',
+    date: new Date().toISOString().slice(0, 10),
     dateStr: '',
     baseURL: '',
     imgPrefix: '',

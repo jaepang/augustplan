@@ -17,12 +17,8 @@ const cx = classNames.bind(styles)
 export default function Layout() {
   const [preset, setPreset] = useState({})
   const [presetOption, setPresetOption] = useState<string>('augustplan')
-  const [downloadOption, setDownloadOption] = useState({
-    date: new Date().toISOString().slice(0, 10),
-    title: '',
-  })
   const { info, setInfo } = useContext(InfoContext)
-  const { type, category, setProduct } = info
+  const { title, date, dateStr, type, category, setProduct } = info
   const { presets, categories } = mockPresets
   const { models } = (preset as any) || {}
   const presetNames = Object.keys(presets)
@@ -63,9 +59,9 @@ export default function Layout() {
   useEffect(() => {
     setInfo((prev) => ({
       ...prev,
-      dateStr: downloadOption.date.replace(/-/g, '').slice(2),
+      dateStr: date.replace(/-/g, '').slice(2),
     }))
-  }, [downloadOption.date])
+  }, [date])
 
   function presetOnChange(e) {
     if (e?.target?.value) {
@@ -74,15 +70,6 @@ export default function Layout() {
         ...prev,
         type: presets[e.target.value]['type'],
         baseURL: presets[e.target.value]['imageBaseUrl'] || '',
-      }))
-    }
-  }
-
-  function onDownloadOptionChange(e, option) {
-    if (e?.target?.value) {
-      setDownloadOption((prev) => ({
-        ...prev,
-        [option]: e.target.value,
       }))
     }
   }
@@ -117,7 +104,7 @@ export default function Layout() {
     document.body.appendChild(tempEl)
     tempEl.href = url
     const downloadCategory = category === '상의/아우터' ? '상의' : category
-    tempEl.download = `${downloadOption.date.replace(/-/gi, '').slice(2)}_${downloadOption.title}_${downloadCategory}.html`
+    tempEl.download = `${dateStr}_${title}_${downloadCategory}.html`
     tempEl.click()
     setTimeout(() => {
       URL.revokeObjectURL(url)
@@ -140,10 +127,7 @@ export default function Layout() {
               ))}
             </select>
           </div>
-          <BaseConfig
-            downloadOption={downloadOption}
-            onDownloadOptionChange={onDownloadOptionChange}
-          />
+          <BaseConfig />
         </div>
         {isCategorySet ? (
           <>

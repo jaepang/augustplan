@@ -3,15 +3,16 @@ import { InfoContext } from '@components/InfoProvider'
 
 import mockPresets from '@shared/presets-mock.json'
 
-export default function BaseConfig({ downloadOption, onDownloadOptionChange }) {
+export default function BaseConfig() {
   const { info, setInfo } = useContext(InfoContext)
-  const { presets, categories } = mockPresets
+  const { date, title } = info
+  const { categories } = mockPresets
 
-  function categoryOnChange(e) {
+  function onInfoBaseChange(e, option) {
     if (e?.target?.value) {
       setInfo((prev) => ({
         ...prev,
-        category: e.target.value,
+        [option]: e.target.value,
       }))
     }
   }
@@ -34,7 +35,7 @@ export default function BaseConfig({ downloadOption, onDownloadOptionChange }) {
         <h2>상품 카테고리</h2>
         <select
           value={info.category}
-          onChange={categoryOnChange}
+          onChange={(e) => onInfoBaseChange(e, 'category')}
         >
           {categories.map((category) => (
             <option key={category}>{category}</option>
@@ -63,16 +64,16 @@ export default function BaseConfig({ downloadOption, onDownloadOptionChange }) {
         <h2>날짜</h2>
         <input
           type="date"
-          value={downloadOption.date}
-          onChange={(e) => onDownloadOptionChange(e, 'date')}
+          value={date}
+          onChange={(e) => onInfoBaseChange(e, 'date')}
         />
       </div>
       <div>
         <h2>착장 번호</h2>
         <input
           type="text"
-          value={downloadOption.title}
-          onChange={(e) => onDownloadOptionChange(e, 'title')}
+          value={title}
+          onChange={(e) => onInfoBaseChange(e, 'title')}
         />
       </div>
     </>

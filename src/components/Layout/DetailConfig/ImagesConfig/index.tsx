@@ -14,14 +14,14 @@ export default function ImageConfig({ onChange }) {
   })
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
+  const { baseURL, imgPrefix, date, dateStr } = info
   const [additionalImage, setAdditionalImage] = useState({
-    date: new Date().toISOString().slice(0, 10),
+    date,
     dateStr: '',
     folderName: '',
     jobName: '',
     fileName: '',
   })
-  const { baseURL, imgPrefix, dateStr } = info
   const { folderName, jobName, mainImage, modelImages } = info.detail
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
@@ -74,14 +74,21 @@ export default function ImageConfig({ onChange }) {
         modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
+    setAdditionalImage((prev) => ({
+      ...prev,
+      fileName: '',
+    }))
+    setAdditionalAdded(true)
+  }
+
+  function clearAdditionalImage() {
     setAdditionalImage({
-      date: new Date().toISOString().slice(0, 10),
+      date,
       dateStr: '',
       folderName: '',
       jobName: '',
       fileName: '',
     })
-    setAdditionalAdded(true)
   }
 
   return (
@@ -196,7 +203,13 @@ export default function ImageConfig({ onChange }) {
               onChange={(e) => setAdditionalImageInput(e, 'fileName')}
             />
           </div>
-          {(dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName && <button onClick={addAdditionalImage}>추가</button>}
+          <button
+            disabled={!((dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName)}
+            onClick={addAdditionalImage}
+          >
+            추가
+          </button>
+          <button onClick={clearAdditionalImage}>초기화</button>
         </div>
       </div>
     </div>
