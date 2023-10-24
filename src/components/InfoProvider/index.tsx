@@ -1,5 +1,5 @@
 import { createContext, useState, Dispatch, SetStateAction } from 'react'
-import mockPrsests from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 
 interface InfoBase {
   cautionComment?: 'none' | 'knit' | 'coat'
@@ -73,7 +73,7 @@ export const InfoContext = createContext<{ info: Info; setInfo: Dispatch<SetStat
 export default function InfoProvider({ children }) {
   const [info, setInfo] = useState<Info>({
     type: 'detail',
-    category: mockPrsests.categories[0],
+    category: config.categories[0],
     title: '',
     date: new Date().toISOString().slice(0, 10),
     dateStr: '',

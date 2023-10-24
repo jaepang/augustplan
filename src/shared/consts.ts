@@ -15,3 +15,5 @@ export const CoatComment = `+
 어떠한 경우에도 교환 및 반품이 불가한 점 양해 부탁드립니다.
 
 `
+
+export const config = JSON.parse(process.env.CONFIG)

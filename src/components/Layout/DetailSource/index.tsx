@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
 import { KnitComment, CoatComment } from '@shared/consts'
-import mockPresets from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 import classNames from 'classnames/bind'
 import styles from './DetailSource.module.css'
 const cx = classNames.bind(styles)
@@ -70,7 +70,7 @@ export default function DetailSource() {
   const categoryImage = categoryImageCodeMap[info.category]
   const isSet = info.category === '세트'
   const setCategoryImage = info.setProduct?.category?.map((category) => categoryImageCodeMap[category])
-  const { excelColumns } = mockPresets
+  const { excelColumns } = config
   const categoryIncludingSet = isSet ? info.setProduct?.category : [category]
   const sizeTableHeader = categoryIncludingSet?.map((category) => sizeDetailTableHeader(excelColumns, category, size))
 

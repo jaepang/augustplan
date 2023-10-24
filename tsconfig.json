@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
-      "@src/*": ["./*"],
+      "@/*": ["./*"],
       "@shared/*": ["./shared/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],

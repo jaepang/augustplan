@@ -20,7 +20,7 @@
   },
   "peacock.color": "#61dafb",
   "eslint.alwaysShowStatus": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "prettier.eslintIntegration": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

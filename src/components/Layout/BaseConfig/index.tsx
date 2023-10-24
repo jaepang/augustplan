@@ -1,12 +1,11 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
-
-import mockPresets from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 
 export default function BaseConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { date, title } = info
-  const { categories } = mockPresets
+  const { categories } = config
 
   function onInfoBaseChange(e, option) {
     if (e?.target?.value) {

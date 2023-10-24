@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
 import { KnitComment, CoatComment } from '@shared/consts'
-import mockPresets from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 
 import classNames from 'classnames/bind'
 import styles from './SimpleSource.module.css'
@@ -25,7 +25,7 @@ export default function SimpleSource() {
     '비침(없음)',
     '비침(약간있음)',
   ]
-  const { excelColumns } = mockPresets
+  const { excelColumns } = config
   const specType = category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom'
 
   const infoStr = fInfo

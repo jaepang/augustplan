@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, FormEvent } from 'react'
 import { InfoContext } from '../../InfoProvider'
 
 import InfoEditableTable from './InfoEditableTable'
-import mockPresets from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 
 function parseExcel(excel: string, columns: string[]) {
   console.log(columns)
@@ -77,7 +77,7 @@ export default function ExcelInput({ setProduct = false }) {
   const [excelData, setExcelData] = useState<any>(null)
   const { info, setInfo } = useContext(InfoContext)
   const { type, category } = info
-  const { excelColumns } = mockPresets
+  const { excelColumns } = config
   const parseCategory = category !== '세트' ? category : !setProduct ? info.setProduct?.category?.[0] : info.setProduct?.category?.[1]
   const columnCategory = parseCategory === '바지' || parseCategory === '치마' ? 'bottom' : 'top'
   const columns = excelColumns[type][columnCategory]

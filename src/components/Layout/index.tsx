@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import mockPresets from '@shared/presets-mock.json'
+import { config } from '@shared/consts'
 
 import { InfoContext } from '@components/InfoProvider'
 import BaseConfig from './BaseConfig'
@@ -19,15 +19,15 @@ export default function Layout() {
   const [presetOption, setPresetOption] = useState<string>('augustplan')
   const { info, setInfo } = useContext(InfoContext)
   const { title, date, dateStr, type, category, setProduct } = info
-  const { presets, categories } = mockPresets
+  const { presets, categories } = config
   const { models } = (preset as any) || {}
   const presetNames = Object.keys(presets)
   const isCategorySet = category === '세트'
 
   useEffect(() => {
     if (presets) {
-      const nxtPreset = presets[presetOption]
-      const type = nxtPreset.type
+      const nxtPreset = presets?.[presetOption]
+      const type = nxtPreset?.type
 
       setPreset(nxtPreset)
       setInfo((prev) => ({
@@ -43,7 +43,7 @@ export default function Layout() {
         },
       }))
     }
-  }, [presets, presetOption])
+  }, [presetOption])
 
   useEffect(() => {
     if (isCategorySet && !setProduct) {
