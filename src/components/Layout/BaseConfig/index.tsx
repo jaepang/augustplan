@@ -4,7 +4,7 @@ import { config } from '@shared/consts'
 
 export default function BaseConfig() {
   const { info, setInfo } = useContext(InfoContext)
-  const { date, title } = info
+  const { date, type } = info
   const { categories } = config
 
   function onInfoBaseChange(e, option) {
@@ -26,6 +26,16 @@ export default function BaseConfig() {
       }
     }
     setInfo((prev) => ({ ...prev, [info.type]: { ...prev[info.type], cautionComment } }))
+  }
+
+  function onFolderNameChange(e) {
+    setInfo((prev) => ({
+      ...prev,
+      [type]: {
+        ...prev[type],
+        folderName: e.target.value,
+      },
+    }))
   }
 
   return (
@@ -71,8 +81,8 @@ export default function BaseConfig() {
         <h2>착장 번호</h2>
         <input
           type="text"
-          value={title}
-          onChange={(e) => onInfoBaseChange(e, 'title')}
+          value={info[info.type].folderName}
+          onChange={onFolderNameChange}
         />
       </div>
     </>

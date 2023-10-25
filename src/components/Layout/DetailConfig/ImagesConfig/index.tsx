@@ -21,16 +21,13 @@ export default function ImageConfig({ onChange }) {
     date,
     dateStr: '',
     folderName: '',
-    jobName: '',
     fileName: '',
   })
 
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
-  const additionalPrefix = additionalImage.jobName
-    ? `${imgPrefix}${additionalImage.folderName}-${additionalImage.jobName}`
-    : `${imgPrefix}${additionalImage.folderName}`
+  const additionalPrefix = `${imgPrefix}${additionalImage.folderName}`
   const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${additionalPrefix}${
     additionalImage.fileName
   }`
@@ -90,10 +87,6 @@ export default function ImageConfig({ onChange }) {
         modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
-    setAdditionalImage((prev) => ({
-      ...prev,
-      fileName: '',
-    }))
     setAdditionalAdded(true)
   }
 
@@ -102,7 +95,6 @@ export default function ImageConfig({ onChange }) {
       date,
       dateStr: '',
       folderName: '',
-      jobName: '',
       fileName: '',
     })
   }
@@ -192,14 +184,6 @@ export default function ImageConfig({ onChange }) {
               type="text"
               value={additionalImage.folderName}
               onChange={(e) => setAdditionalImageInput(e, 'folderName')}
-            />
-          </div>
-          <div>
-            <h4>작업명</h4>
-            <input
-              type="text"
-              value={additionalImage.jobName}
-              onChange={(e) => setAdditionalImageInput(e, 'jobName')}
             />
           </div>
           <div>
