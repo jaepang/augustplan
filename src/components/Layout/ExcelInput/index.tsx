@@ -83,6 +83,10 @@ export default function ExcelInput({ setProduct = false }) {
   const columns = excelColumns[type][columnCategory]
 
   useEffect(() => {
+    setExcel('')
+  }, [info.preset])
+
+  useEffect(() => {
     if (excelData) {
       try {
         if (setProduct) {

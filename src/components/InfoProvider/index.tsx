@@ -55,6 +55,7 @@ interface InfoDetail extends InfoBase {
 }
 
 export interface Info {
+  preset?: string
   type: 'detail' | 'simple'
   category: string
   date: string
