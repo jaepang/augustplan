@@ -74,8 +74,7 @@ export default function SimpleSource() {
         <br />
       </div>
       <div style={{ color: 'rgb(0, 0, 0)', fontFamily: "'돋움', dotum", fontSize: '8.5pt' }}>
-        <div style={{ lineHeight: '18px', marginBottom: '50px', fontFamily: "'돋움', dotum", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{ fontSize: '8.5pt', marginBottom: '5px', color: 'rgb(0,0,0)' }}></div>
+        <div style={{ lineHeight: '18px', marginBottom: '50px', fontFamily: "'돋움', dotum", display: 'flex', flexDirection: 'column', alignItems: 'center', whiteSpace: 'pre-wrap' }}>
           <br />
           [COLOR]
           <br />

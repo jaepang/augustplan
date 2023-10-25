@@ -27,8 +27,7 @@ export default function ImageConfig({ onChange }) {
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
-  const additionalPrefix = `${imgPrefix}${additionalImage.folderName}`
-  const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${additionalPrefix}${
+  const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${
     additionalImage.fileName
   }`
 

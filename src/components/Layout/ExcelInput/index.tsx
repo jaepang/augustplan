@@ -116,7 +116,6 @@ export default function ExcelInput({ setProduct = false }) {
   }, [excelData])
 
   useEffect(() => {
-    console.log(category, columns)
     if (excel) {
       setExcelData(parseExcel(excel, columns))
     }
