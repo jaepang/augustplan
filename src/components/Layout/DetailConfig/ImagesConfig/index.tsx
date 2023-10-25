@@ -8,13 +8,15 @@ const cx = classNames.bind(styles)
 
 export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
+  const { baseURL, imgPrefix, date, dateStr } = info
+  const { folderName, jobName, titleImage, modelImages } = info.detail
+  
   const [imageLength, setImageLength] = useState({
     detail: 5,
     model: 0,
   })
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
-  const { baseURL, imgPrefix, date, dateStr } = info
   const [additionalImage, setAdditionalImage] = useState({
     date,
     dateStr: '',
@@ -22,7 +24,7 @@ export default function ImageConfig({ onChange }) {
     jobName: '',
     fileName: '',
   })
-  const { folderName, jobName, titleImage, modelImages } = info.detail
+
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
@@ -59,8 +61,8 @@ export default function ImageConfig({ onChange }) {
       ...prev,
       detail: {
         ...prev.detail,
-        fabricImages: [`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(imageLength.detail+1).toString().padStart(2, '0')}.jpg`, prev.detail.fabricImages[1]],
-        detailImages: Array.from({ length: imageLength.detail - 1 }).map(
+        fabricImages: [`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(imageLength.detail).toString().padStart(2, '0')}.jpg`, prev.detail.fabricImages[1]],
+        detailImages: Array.from({ length: imageLength.detail - 2 }).map(
           (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 2).toString().padStart(2, '0')}.jpg`,
         ),
         modelImages: [
