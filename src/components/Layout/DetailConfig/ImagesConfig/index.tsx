@@ -12,7 +12,7 @@ export default function ImageConfig({ onChange }) {
   const { folderName, jobName, titleImage, modelImages } = info.detail
   
   const [imageLength, setImageLength] = useState({
-    detail: 5,
+    detail: 6,
     model: 0,
   })
   const [additionalAdded, setAdditionalAdded] = useState(false)
