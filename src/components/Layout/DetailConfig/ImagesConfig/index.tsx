@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
   const [imageLength, setImageLength] = useState({
-    detail: 0,
+    detail: 5,
     model: 0,
   })
   const [additionalAdded, setAdditionalAdded] = useState(false)
@@ -22,7 +22,7 @@ export default function ImageConfig({ onChange }) {
     jobName: '',
     fileName: '',
   })
-  const { folderName, jobName, mainImage, modelImages } = info.detail
+  const { folderName, jobName, titleImage, modelImages } = info.detail
   const defaultPrefix = `${imgPrefix}${folderName}`
   const prefix = jobName ? `${defaultPrefix}-${jobName}` : defaultPrefix
 
@@ -40,14 +40,28 @@ export default function ImageConfig({ onChange }) {
     }))
   }, [additionalImage.date])
 
+  useEffect(() => {
+    if(folderName && jobName)
+      setInfo((prev) => ({
+        ...prev,
+        detail: {
+          ...prev.detail,
+          titleImage: `${baseURL}/page/${dateStr}/${folderName}/${prefix}m.jpg`,
+          colorImage: `${baseURL}/page/${dateStr}/${folderName}/${prefix}_01.jpg`,
+          fabricImages: [prev.detail.fabricImages[0], `${baseURL}/page/${dateStr}/${folderName}/${prefix}f.jpg`],
+        },
+      }))
+  }, [dateStr, folderName, jobName])
+
   function createImages() {
     if (additionalAdded && !confirm('수동으로 추가한 이미지가 있습니다. 추가 이미지를 삭제하고 자동 생성하시겠습니까?')) return
     setInfo((prev) => ({
       ...prev,
       detail: {
         ...prev.detail,
-        detailImages: Array.from({ length: imageLength.detail }).map(
-          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
+        fabricImages: [`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(imageLength.detail+1).toString().padStart(2, '0')}.jpg`, prev.detail.fabricImages[1]],
+        detailImages: Array.from({ length: imageLength.detail - 1 }).map(
+          (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 2).toString().padStart(2, '0')}.jpg`,
         ),
         modelImages: [
           ...Array.from({ length: imageLength.model }).map(
@@ -94,6 +108,7 @@ export default function ImageConfig({ onChange }) {
   return (
     <div>
       <h2>이미지 입력</h2>
+      <p>타이틀 이미지: {titleImage}</p>
       <div className={cx('row')}>
         <div>
           <h3>폴더명</h3>
@@ -109,16 +124,6 @@ export default function ImageConfig({ onChange }) {
             type="text"
             value={jobName}
             onChange={(e) => onChange(e, 'jobName')}
-          />
-        </div>
-        <div>
-          <h3>메인 이미지</h3>
-          {folderName && mainImage && <span>{`${baseURL}/page/${dateStr}/${folderName}/${prefix}${mainImage}.jpg`}</span>}
-
-          <input
-            type="text"
-            value={mainImage}
-            onChange={(e) => onChange(e, 'mainImage')}
           />
         </div>
         <div>
@@ -141,7 +146,7 @@ export default function ImageConfig({ onChange }) {
           </div>
         </div>
       </div>
-      {folderName && mainImage && (imageLength.detail > 0 || imageLength.model > 0) && (
+      {folderName && titleImage && (imageLength.detail > 0 || imageLength.model > 0) && (
         <button
           className={cx('create-img-btn')}
           onClick={createImages}

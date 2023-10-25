@@ -42,7 +42,8 @@ export default function DetailSource() {
     model,
     fittingColor,
     fittingSize,
-    mainImage,
+    colorImage,
+    fabricImages,
     detailImages,
     modelImages,
     size,
@@ -108,7 +109,7 @@ export default function DetailSource() {
         {/*유튜브 링크 (유튜브 영상 노출)*/}
 
         {/*메인이미지*/}
-        {titleImage}
+        <img src={titleImage} />
 
         {/*오늘 더 사랑스러운 당신에게*/}
         <img src={`${baseURL}/etc/page_02.jpg`} />
@@ -138,6 +139,7 @@ export default function DetailSource() {
               {additionalComment}
             </div>
             {/*컬러뷰*/}
+            <img src={colorImage} />
             {colors?.map(({ name, comment }) => (
               <>
                 <div
@@ -157,41 +159,12 @@ export default function DetailSource() {
               </>
             ))}
             {/*패브릭*/}
+            <img src={fabricImages[0]} />
             {fabric}의 혼용률로
             <br />
             {fabricComment}
             <br />
             {/*피팅모델인포*/}
-            {/*소소모델
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_04.jpg' />
-            *블랙,FREE사이즈 착용*
-            */}
-            {/*시화모델
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_05.jpg' /><br>
-            *블랙,FREE사이즈 착용*<br>
-            */}
-            {/*윤정모델    
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_06.jpg' /><br>
-            *블랙,FREE사이즈 착용*<br>
-            */}
-            {/*지수모델
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_07.jpg' /><br>
-            *블랙,M사이즈 착용*<br>
-            */}
-            {/*수민모델
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_15.jpg' /><br>
-            *블랙,M사이즈 착용*<br>
-            */}
-            {/*서영모델
-            <div style="marginBottom:5px;">
-            <img src='http://aplan92.hgodo.com/etc/page_14.jpg' /><br>
-            *블랙,M사이즈 착용*<br>
-            */}
             <img src={`${baseURL}/etc/page_${model?.code}.jpg`} />
             <br />*{Array.from(fittingColor).join(',')}컬러, {Array.from(fittingSize).join(',')}사이즈 착용*
             <br />
@@ -203,16 +176,15 @@ export default function DetailSource() {
               }}
             >
               {/*본문이미지*/}
-              <img src={`${baseURL}/page/${dateStr}/${folderName}/${prefix}${mainImage}.jpg`} />
-              {/*디테일이미지*/}
-              {detailImages.map((image) => (
+              {/*모델이미지*/}
+              {modelImages.map((image) => (
                 <img
                   key={image}
                   src={image}
                 />
               ))}
-              {/*모델이미지*/}
-              {modelImages.map((image) => (
+              {/*디테일이미지*/}
+              {detailImages.map((image) => (
                 <img
                   key={image}
                   src={image}
@@ -383,7 +355,11 @@ export default function DetailSource() {
                 >
                   <img src={`${baseURL}/etc/page_10.jpg`} />
 
-                  {/*<div>{fabrics[1]?.image}</div>*/}
+                  <img
+                    src={fabricImages[1]}
+                    width={570}
+                    height={438}
+                  />
 
                   <div>
                     <p

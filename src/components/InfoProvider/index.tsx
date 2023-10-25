@@ -41,7 +41,6 @@ interface InfoSimple extends InfoBase {
 interface InfoDetail extends InfoBase {
   comment?: string
   titleImage?: string
-  mainImage?: string
   fabricComment?: string
   colors?: {
     name?: string
@@ -49,8 +48,10 @@ interface InfoDetail extends InfoBase {
   }[]
   fittingColor?: Set<string>
   fittingSize?: Set<string>
-  detailImages: string[]
+  colorImage: string
+  fabricImages: string[]
   modelImages: string[]
+  detailImages: string[]
 }
 
 export interface Info {
@@ -86,15 +87,16 @@ export default function InfoProvider({ children }) {
       fabricComment: '',
       colors: [],
       fabric: '',
-      mainImage: '',
       size: [],
       made: '',
       fittingColor: new Set(),
       fittingSize: new Set(),
       folderName: '',
+      jobName: '',
+      colorImage: '',
+      fabricImages: ['', ''],
       detailImages: [],
       modelImages: [],
-      jobName: '',
     },
     simple: {
       comment_1: '',
