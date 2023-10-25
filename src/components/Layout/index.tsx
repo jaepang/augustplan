@@ -97,7 +97,7 @@ export default function Layout() {
     }))
   }
 
-  function downloadAsHTML() {
+  function downloadAsTXT() {
     const pageHTML = document.querySelector('#page').outerHTML
     const blob = new Blob([pageHTML], { type: 'text/html' })
     const url = URL.createObjectURL(blob)
@@ -105,7 +105,7 @@ export default function Layout() {
     document.body.appendChild(tempEl)
     tempEl.href = url
     const downloadCategory = category === '상의/아우터' ? '상의' : category
-    tempEl.download = `${dateStr}_${info[type].folderName}_${downloadCategory}.html`
+    tempEl.download = `${dateStr}_${info[type].folderName}_${downloadCategory}.txt`
     tempEl.click()
     setTimeout(() => {
       URL.revokeObjectURL(url)
@@ -193,7 +193,7 @@ export default function Layout() {
       <div className={cx('col', 'preview')}>
         <button
           className={cx('download')}
-          onClick={downloadAsHTML}
+          onClick={downloadAsTXT}
         >
           download
         </button>
