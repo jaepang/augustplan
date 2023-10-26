@@ -3,7 +3,6 @@ import { InfoContext } from '@components/InfoProvider'
 
 export default function SimpleConfig() {
   const { info, setInfo } = useContext(InfoContext)
-  console.log(info.simple)
 
   function onChange(e, value) {
     setInfo((prev) => ({

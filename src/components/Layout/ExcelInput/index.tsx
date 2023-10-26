@@ -5,12 +5,9 @@ import InfoEditableTable from './InfoEditableTable'
 import { config } from '@shared/consts'
 
 function parseExcel(excel: string, columns: string[]) {
-  console.log(columns)
   const items = excel.split(/\t|\n/g)
-  console.log(items)
   return items.reduce((acc, cur, idx) => {
     if (cur !== '' && idx >= columns.length) {
-      // console.log('new row', idx, cur, columns[idx % columns.length])
       const prev = acc?.[columns[idx % columns.length]]
       if (prev) acc[columns[idx % columns.length]] = typeof prev === 'string' ? [prev, cur] : [...prev, cur]
     } else if (columns?.[idx]) {

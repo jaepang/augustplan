@@ -37,7 +37,6 @@ export default function SimpleSource() {
     .filter((f) => f)
     .join('/')
 
-  console.log(size)
   const sizeString =
     size
       ?.map(
