@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { config } from '@shared/consts'
+import { html as beautifyHTML } from 'js-beautify'
 
 import { InfoContext } from '@components/InfoProvider'
 import BaseConfig from './BaseConfig'
@@ -99,7 +100,8 @@ export default function Layout() {
 
   function downloadAsTXT() {
     const pageHTML = document.querySelector('#page').outerHTML
-    const blob = new Blob([pageHTML], { type: 'text/html' })
+    const formattedHTML = beautifyHTML(pageHTML)
+    const blob = new Blob([formattedHTML], { type: 'text/html' })
     const url = URL.createObjectURL(blob)
     const tempEl = document.createElement('a')
     document.body.appendChild(tempEl)
