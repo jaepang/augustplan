@@ -1,4 +1,5 @@
-export const KnitComment = `+
+export const KnitComment = `
++
 원사를 편직하여 만든 니트제품은
 생활 환경에 따라 필링현상이 생길 수 있습니다.
 이는 불량으로 간주하기 어려우며 착용하신 상품은
@@ -6,7 +7,8 @@ export const KnitComment = `+
 
 `
 
-export const CoatComment = `+
+export const CoatComment = `
++
 해당 상품은 압축 가공처리 후 높은 밀도로 제작 되어
 필링현상을 최소화 하였습니다.
 다만 제품 구성 성분 중 하나인 폴리는 화학 섬유로

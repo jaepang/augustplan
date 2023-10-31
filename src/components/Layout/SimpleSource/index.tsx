@@ -73,7 +73,17 @@ export default function SimpleSource() {
         <br />
       </div>
       <div style={{ color: 'rgb(0, 0, 0)', fontFamily: "'돋움', dotum", fontSize: '8.5pt' }}>
-        <div style={{ lineHeight: '18px', marginBottom: '50px', fontFamily: "'돋움', dotum", display: 'flex', flexDirection: 'column', alignItems: 'center', whiteSpace: 'pre-wrap' }}>
+        <div
+          style={{
+            lineHeight: '18px',
+            marginBottom: '50px',
+            fontFamily: "'돋움', dotum",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
           <br />
           [COLOR]
           <br />
@@ -125,10 +135,13 @@ export default function SimpleSource() {
           <br />
           <br />
           {Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map((i) => (
-            <img
-              key={i}
-              src={`${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`}
-            />
+            <>
+              <img
+                key={i}
+                src={`${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`}
+              />
+              <br />
+            </>
           ))}
         </div>
       </div>
