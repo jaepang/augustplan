@@ -58,6 +58,9 @@ export default function SimpleSource() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        color: 'rgb(0, 0, 0)',
+        fontFamily: "'돋움', dotum",
+        fontSize: '8.5pt',
       }}
     >
       <div
@@ -72,78 +75,76 @@ export default function SimpleSource() {
         <img src={`${baseURL}/page/${dateStr}/${folderName}/${imgPrefix}${folderName}-${jobName}_01.jpg`} />
         <br />
       </div>
-      <div style={{ color: 'rgb(0, 0, 0)', fontFamily: "'돋움', dotum", fontSize: '8.5pt' }}>
-        <div
-          style={{
-            lineHeight: '18px',
-            marginBottom: '50px',
-            fontFamily: "'돋움', dotum",
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            whiteSpace: 'pre-wrap',
-          }}
-        >
-          <br />
-          [COLOR]
-          <br />
-          {colors}
-          <br />
-          <br />
-          <br />
-          [FABRIC]
-          <br />
-          {fabric}
-          <br />
-          {infoStr}
-          <br />
-          <br />
-          <br />
-          [SIZE]
-          <br />
-          {sizeString}
-          <br />
-          <br />
-          [FITTING]
-          <br />
-          {model?.name}
-          <br />
-          {model?.detail}
-          <br />
-          <br />
-          <br />
-          [COMMENT]
-          <br />
-          {comment_1}
-          <br />
-          {comment_2}
-          <br />
-          {comment_3}
-          <br />
-          <br />
-          {cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}
-          <br />
-          <br />
-          [PRODUCT CHECK]
-          <br />
-          제조국 : {made}
-          <br />
-          제조사 : 홉스앤드 헙력업체
-          <br />
-          제조일자 : 게시일로 부터 3개월 내 제작된 제품
-          <br />
-          <br />
-          <br />
-          {Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map((i) => (
-            <>
-              <img
-                key={i}
-                src={`${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`}
-              />
-              <br />
-            </>
-          ))}
-        </div>
+      <div
+        style={{
+          lineHeight: '18px',
+          marginBottom: '50px',
+          fontFamily: "'돋움', dotum",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        <br />
+        [COLOR]
+        <br />
+        {colors}
+        <br />
+        <br />
+        <br />
+        [FABRIC]
+        <br />
+        {fabric}
+        <br />
+        {infoStr}
+        <br />
+        <br />
+        <br />
+        [SIZE]
+        <br />
+        {sizeString}
+        <br />
+        <br />
+        [FITTING]
+        <br />
+        {model?.name}
+        <br />
+        {model?.detail}
+        <br />
+        <br />
+        <br />
+        [COMMENT]
+        <br />
+        {comment_1}
+        <br />
+        {comment_2}
+        <br />
+        {comment_3}
+        <br />
+        <br />
+        {cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}
+        <br />
+        <br />
+        [PRODUCT CHECK]
+        <br />
+        제조국 : {made}
+        <br />
+        제조사 : 홉스앤드 헙력업체
+        <br />
+        제조일자 : 게시일로 부터 3개월 내 제작된 제품
+        <br />
+        <br />
+        <br />
+        {Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map((i) => (
+          <>
+            <img
+              key={i}
+              src={`${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`}
+            />
+            <br />
+          </>
+        ))}
       </div>
     </div>
   )
