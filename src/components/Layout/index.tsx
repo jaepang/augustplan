@@ -101,7 +101,8 @@ export default function Layout() {
   function downloadAsTXT() {
     const pageHTML = document.querySelector('#page').outerHTML
     const formattedHTML = beautifyHTML(pageHTML, {
-      extra_liners: ['br']
+      extra_liners: ['br'],
+      content_unformatted: ['span']
     })
     const blob = new Blob([formattedHTML], { type: 'text/html' })
     const url = URL.createObjectURL(blob)

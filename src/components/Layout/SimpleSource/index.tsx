@@ -37,16 +37,18 @@ export default function SimpleSource() {
     .filter((f) => f)
     .join('/')
 
+  const sizeStringOffset = specType === 'top' ? -15 : -16
   const sizeString =
     size
       ?.map(
         (s) =>
           `(${s.name}) ` +
           excelColumns.simple[specType]
-            .slice(4, -15)
-            .map((key, idx) => `${key}${s.spec[idx]}`)
+            .slice(4, sizeStringOffset)
+            .map((key, idx) => `${key}${s.spec[idx] ?? ''}`)
             .join('/'),
       )
+      ?.filter((item) => item !== '')
       ?.join('\n') ?? ''
 
   return (
@@ -59,7 +61,6 @@ export default function SimpleSource() {
         flexDirection: 'column',
         alignItems: 'center',
         color: 'rgb(0, 0, 0)',
-        fontFamily: "'돋움', dotum",
         fontSize: '8.5pt',
       }}
     >
@@ -79,11 +80,9 @@ export default function SimpleSource() {
         style={{
           lineHeight: '18px',
           marginBottom: '50px',
-          fontFamily: "'돋움', dotum",
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          whiteSpace: 'pre-wrap',
         }}
       >
         <br />
@@ -123,7 +122,7 @@ export default function SimpleSource() {
         {comment_3}
         <br />
         <br />
-        {cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}
+        <span style={{whiteSpace: 'pre-wrap'}}>{cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}</span>
         <br />
         <br />
         [PRODUCT CHECK]

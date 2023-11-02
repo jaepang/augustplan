@@ -115,15 +115,14 @@ export default function DetailSource() {
           alignItems: 'center',
           color: 'rgb(0, 0, 0)',
           fontSize: '8.5pt',
-          fontFamily: "'돋움', dotum",
+          textAlign: 'center',
           lineHeight: '18px',
           marginBottom: '50px',
-          whiteSpace: 'pre-wrap',
         }}
       >
-        {comment}
+        <span style={{ whiteSpace: 'pre-wrap' }}>{comment}</span>
         <br />
-        {additionalComment}
+        <span style={{ whiteSpace: 'pre-wrap' }}>{additionalComment}</span>
         {/*컬러뷰*/}
         <img src={colorImage} />
         {colors?.map(({ name, comment }) => (
