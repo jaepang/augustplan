@@ -76,7 +76,8 @@ export default function DetailSource() {
   const sizeTableHeader = categoryIncludingSet?.map((category) => sizeDetailTableHeader(excelColumns, category, size))
 
   const additionalComment = cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''
-  const prefix = jobName ? `${imgPrefix}${folderName}-${jobName}` : `${imgPrefix}${folderName}`
+  const showColors = colors.reduce((acc, cur) => acc || (cur.comment !== ''), false)
+  const showFiber = fabricComment !== ''
 
   return (
     <div
@@ -125,27 +126,27 @@ export default function DetailSource() {
         <span style={{ whiteSpace: 'pre-wrap' }}>{additionalComment}</span>
         {/*컬러뷰*/}
         <img src={colorImage} />
-        {colors?.map(({ name, comment }) => (
-          <>
-            <div
-              key={name}
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                columnGap: '7px',
-                lineHeight: '18px',
-              }}
-            >
-              {comment} <strong style={{ fontWeight: 'bold' }}>#{name}</strong>
+        {showColors &&
+          colors?.map(({ name, comment }) => (
+            <div key={name}>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  columnGap: '7px',
+                  lineHeight: '18px',
+                }}
+              >
+                {comment} <strong style={{ fontWeight: 'bold' }}>#{name}</strong>
+              </div>
+              <br />
+              <br />
             </div>
-            <br />
-            <br />
-          </>
-        ))}
+          ))}
         {/*패브릭*/}
         <img src={fabricImages[0]} />
-        {fabric}의 혼용률로
+        {showFiber && <>{fabric}의 혼용률로</>}
         <br />
         {fabricComment}
         <br />
