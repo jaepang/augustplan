@@ -98,6 +98,7 @@ export default function InfoProvider({ children }) {
       modelImages: [],
     },
     simple: {
+      cautionComment: 'none',
       comment_1: '',
       comment_2: '',
       comment_3: '',

@@ -102,7 +102,7 @@ export default function SimpleSource() {
         <br />
         [SIZE]
         <br />
-        {sizeString}
+        <span style={{ whiteSpace: 'pre-wrap' }}>{sizeString}</span>
         <br />
         <br />
         [FITTING]
@@ -121,9 +121,11 @@ export default function SimpleSource() {
         <br />
         {comment_3}
         <br />
-        <br />
-        <span style={{whiteSpace: 'pre-wrap'}}>{cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}</span>
-        <br />
+        {cautionComment !== 'none' ? (
+          <>
+            <span style={{ whiteSpace: 'pre-wrap' }}>{cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}</span>
+          </>
+        ): <br />}
         <br />
         [PRODUCT CHECK]
         <br />
