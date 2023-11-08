@@ -25,7 +25,8 @@ function FabricCheckbox({ checked = false }) {
 
 function sizeDetailTableHeader(excelColumns, category, size) {
   const columnCategory = category === '바지' || category === '치마' ? 'bottom' : 'top'
-  const columns = excelColumns.detail[columnCategory].slice(4, -12)
+  const sliceOffset = category === '바지' || category === '치마' ? -13 : -12
+  const columns = excelColumns.detail[columnCategory].slice(4, sliceOffset)
   return size?.length > 0 ? ['사이즈', '추천사이즈', ...(columns ?? [])] : []
 }
 
