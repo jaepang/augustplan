@@ -53,7 +53,7 @@ export function excelToInfo(type, category, excelData) {
 
     '안감(있음)': excelData?.['안감(있음)'],
     '안감(없음)': excelData?.['안감(없음)'],
-    '안감(부분/기모)': excelData?.['안감(부분/기모안감)'],
+    '안감(부분/기모)': excelData?.['안감(부분/기모안감)'] || excelData?.['안감(부분/기모)'],
 
     '신축성(없음)': excelData?.['신축성(없음)'],
     '신축성(있음)': excelData?.['신축성(있음)'],
