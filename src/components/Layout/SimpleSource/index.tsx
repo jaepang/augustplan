@@ -10,7 +10,7 @@ const cx = classNames.bind(styles)
 export default function SimpleSource() {
   const { info } = useContext(InfoContext)
   const { simple, category, baseURL, dateStr, imgPrefix } = info
-  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made, folderName, jobName, imageLength } = simple
+  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made, folderName, jobName, imageLength, fittingColor, fittingSize } = simple
   const fInfo = [
     '두께감(두꺼움)',
     '두께감(보통)',
@@ -27,6 +27,8 @@ export default function SimpleSource() {
   ]
   const { excelColumns } = config
   const specType = category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom'
+  const fittingColorString = fittingColor.size > 0 ? `${Array.from(fittingColor).join(', ')}컬러,` : ''
+  const fittingSizeString = fittingSize.size > 0 ? `${Array.from(fittingSize).join(', ')}사이즈 착용` : ''
 
   const infoStr = fInfo
     .map((f) => {
@@ -110,6 +112,8 @@ export default function SimpleSource() {
         {model?.name}
         <br />
         {model?.detail}
+        <br />
+        {fittingColorString + fittingSizeString}
         <br />
         <br />
         <br />

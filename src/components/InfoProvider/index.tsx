@@ -21,6 +21,8 @@ interface InfoBase {
     name?: string
     detail?: string
   }
+  fittingColor?: Set<string>
+  fittingSize?: Set<string>
   size?: {
     name: string
     spec: string[]
@@ -46,8 +48,6 @@ interface InfoDetail extends InfoBase {
     name?: string
     comment?: string
   }[]
-  fittingColor?: Set<string>
-  fittingSize?: Set<string>
   colorImage: string
   fabricImages: string[]
   modelImages: string[]
@@ -109,6 +109,8 @@ export default function InfoProvider({ children }) {
       folderName: '',
       jobName: '',
       imageLength: 0,
+      fittingColor: new Set(),
+      fittingSize: new Set(),
     },
   })
 
