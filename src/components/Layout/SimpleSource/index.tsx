@@ -1,11 +1,29 @@
 import { useContext } from 'react'
 import { InfoContext } from '@components/InfoProvider'
+import type { Info } from '@components/InfoProvider'
 import { KnitComment, CoatComment } from '@shared/consts'
 import { config } from '@shared/consts'
 
 import classNames from 'classnames/bind'
 import styles from './SimpleSource.module.css'
 const cx = classNames.bind(styles)
+
+function generateSizeString({ size, specType }: { size: Info['simple']['size']; specType: string }): string {
+  const { excelColumns } = config
+  const sizeStringOffset = specType === 'top' ? -15 : -16
+
+  return size
+    ?.map(
+      (s) =>
+        `(${s.name}) ` +
+        excelColumns.simple[specType]
+          .slice(4, sizeStringOffset)
+          .map((key, idx) => `${key}${s.spec[idx] ?? ''}`)
+          .join('/'),
+    )
+    ?.filter((item) => item !== '')
+    ?.join('\n') ?? ''
+}
 
 export default function SimpleSource() {
   const { info } = useContext(InfoContext)
@@ -25,10 +43,15 @@ export default function SimpleSource() {
     '비침(없음)',
     '비침(약간있음)',
   ]
-  const { excelColumns } = config
-  const specType = category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom'
   const fittingColorString = fittingColor.size > 0 ? `${Array.from(fittingColor).join(', ')}컬러,` : ''
   const fittingSizeString = fittingSize.size > 0 ? `${Array.from(fittingSize).join(', ')}사이즈 착용` : ''
+
+  const isSet = info.category === '세트'
+  const categoryIncludingSet = isSet ? info.setProduct?.category : [category]
+  const sizeIncludingSet = isSet ? [size, info.setProduct?.size] : [size]
+  const specTypeIncludingSet = categoryIncludingSet?.map(category =>
+    category === '상의/아우터' || category === '원피스' ? 'top' : 'bottom',
+  )
 
   const infoStr = fInfo
     .map((f) => {
@@ -38,20 +61,7 @@ export default function SimpleSource() {
     })
     .filter((f) => f)
     .join('/')
-
-  const sizeStringOffset = specType === 'top' ? -15 : -16
-  const sizeString =
-    size
-      ?.map(
-        (s) =>
-          `(${s.name}) ` +
-          excelColumns.simple[specType]
-            .slice(4, sizeStringOffset)
-            .map((key, idx) => `${key}${s.spec[idx] ?? ''}`)
-            .join('/'),
-      )
-      ?.filter((item) => item !== '')
-      ?.join('\n') ?? ''
+  const sizeString = specTypeIncludingSet?.map((specType, idx) => generateSizeString({ size: sizeIncludingSet[idx], specType })).join('\n\n')
 
   return (
     <div
@@ -129,7 +139,7 @@ export default function SimpleSource() {
           <>
             <span style={{ whiteSpace: 'pre-wrap' }}>{cautionComment === 'knit' ? KnitComment : cautionComment === 'coat' ? CoatComment : ''}</span>
           </>
-        ): <br />}
+        ) : <br />}
         <br />
         [PRODUCT CHECK]
         <br />
