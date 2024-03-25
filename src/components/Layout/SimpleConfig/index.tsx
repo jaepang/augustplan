@@ -1,12 +1,35 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { InfoContext } from '@components/InfoProvider'
+
+import classNames from 'classnames/bind'
+import styles from '../DetailConfig/ImagesConfig/ImageConfig.module.css'
+const cx = classNames.bind(styles)
 
 export default function SimpleConfig() {
   const { info, setInfo } = useContext(InfoContext)
-  const { colors: colorsString, fittingColor, fittingSize, size } = info.simple
+  const { date, dateStr, baseURL, simple } = info
+  const { colors: colorsString, fittingColor, fittingSize, size } = simple
   const colors = colorsString?.split(',')
   const sizes = size?.map((size) => (size.name.includes('(') ? size.name.slice(0, size.name.indexOf('(')) : size.name))
   const showFitting = colors?.length > 0 && sizes?.length > 0
+
+  const [additionalAdded, setAdditionalAdded] = useState(false)
+  const [includeDate, setIncludeDate] = useState(true)
+  const [additionalImage, setAdditionalImage] = useState({
+    date,
+    dateStr: '',
+    folderName: '',
+    fileName: '',
+  })
+
+  const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${additionalImage.fileName}`
+
+  useEffect(() => {
+    setAdditionalImage((prev) => ({
+      ...prev,
+      dateStr: additionalImage.date.replace(/-/g, '').slice(2),
+    }))
+  }, [additionalImage.date])
 
   function onFittingChange(e, target) {
     const newSet = info.simple[target]
@@ -35,6 +58,33 @@ export default function SimpleConfig() {
     }))
   }
 
+  function setAdditionalImageInput(e, target) {
+    setAdditionalImage((prev) => ({
+      ...prev,
+      [target]: e.target.value,
+    }))
+  }
+
+  function addAdditionalImage() {
+    setInfo((prev) => ({
+      ...prev,
+      detail: {
+        ...prev.detail,
+        modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
+      },
+    }))
+    setAdditionalAdded(true)
+  }
+
+  function clearAdditionalImage() {
+    setAdditionalImage({
+      date,
+      dateStr: '',
+      folderName: '',
+      fileName: '',
+    })
+  }
+
   return (
     <>
       <div>
@@ -60,6 +110,60 @@ export default function SimpleConfig() {
           value={info.simple.imageLength}
           onChange={(e) => onChange(e, 'imageLength')}
         />
+      </div>
+      <div className={cx('additional-img')}>
+        <h3>추가 이미지 수동 입력</h3>
+
+        <label
+          className={cx('checkbox')}
+          htmlFor="includeDate"
+        >
+          <input
+            id="includeDate"
+            type="checkbox"
+            checked={includeDate}
+            onChange={() => setIncludeDate(!includeDate)}
+          />
+          동일 날짜
+        </label>
+        {(dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName && (
+          <span>{`${baseURL}/page/${additionalImageFilename}.jpg`}</span>
+        )}
+        <div className={cx('row', 'additional')}>
+          {!includeDate && (
+            <div>
+              <h4>날짜</h4>
+              <input
+                type="date"
+                value={additionalImage.date}
+                onChange={(e) => setAdditionalImageInput(e, 'date')}
+              />
+            </div>
+          )}
+          <div>
+            <h4>폴더명</h4>
+            <input
+              type="text"
+              value={additionalImage.folderName}
+              onChange={(e) => setAdditionalImageInput(e, 'folderName')}
+            />
+          </div>
+          <div>
+            <h4>파일명</h4>
+            <input
+              type="text"
+              value={additionalImage.fileName}
+              onChange={(e) => setAdditionalImageInput(e, 'fileName')}
+            />
+          </div>
+          <button
+            disabled={!((dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName)}
+            onClick={addAdditionalImage}
+          >
+            추가
+          </button>
+          <button onClick={clearAdditionalImage}>초기화</button>
+        </div>
       </div>
       {showFitting && (
         <div>
