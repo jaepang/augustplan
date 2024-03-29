@@ -68,9 +68,9 @@ export default function SimpleConfig() {
   function addAdditionalImage() {
     setInfo((prev) => ({
       ...prev,
-      detail: {
-        ...prev.detail,
-        modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
+      simple: {
+        ...prev.simple,
+        modelImages: [...prev.simple.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
     setAdditionalAdded(true)

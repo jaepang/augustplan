@@ -38,6 +38,7 @@ interface InfoSimple extends InfoBase {
   comment_3?: string
   colors?: string
   imageLength?: number
+  modelImages: string[]
 }
 
 interface InfoDetail extends InfoBase {
@@ -111,6 +112,7 @@ export default function InfoProvider({ children }) {
       imageLength: 0,
       fittingColor: new Set(),
       fittingSize: new Set(),
+      modelImages: []
     },
   })
 
