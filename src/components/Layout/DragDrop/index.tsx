@@ -1,21 +1,23 @@
 import { useContext } from 'react'
-import { InfoContext } from '@components/InfoProvider'
+import { InfoContext, InfoDetail, InfoSimple } from '@components/InfoProvider'
 import { ListManager } from 'react-beautiful-dnd-grid'
 
 import classNames from 'classnames/bind'
 import styles from './DragDrop.module.css'
 const cx = classNames.bind(styles)
 
-export default function DragDrop() {
+export default function DragDrop({ scope = 'detail' }: { scope?: 'detail' | 'simple' }) {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL, dateStr } = info
-  const { folderName, modelImages } = info.detail
+  const { folderName } = info[scope] as InfoDetail
+  const isDetail = scope === 'detail'
+  const images = isDetail ? info.detail.modelImages : info.simple.images
 
   function onDragEnd(srcIndex: number, destIndex: number) {
-    const target = modelImages[srcIndex]
-    console.log(srcIndex, destIndex, modelImages[srcIndex])
+    const target = images[srcIndex]
+    console.log(srcIndex, destIndex, images[srcIndex])
     setInfo((prev) => {
-      const newImages = prev.detail.modelImages
+      const newImages = prev[scope][isDetail ? 'modelImages' : 'images']
 
       newImages.splice(srcIndex, 1)
       newImages.splice(destIndex, 0, target)
@@ -31,7 +33,7 @@ export default function DragDrop() {
   }
 
   function removeImage(image: string) {
-    const idx = modelImages.findIndex((img) => img === image)
+    const idx = images.findIndex((img) => img === image)
     const newImages = info.detail.modelImages
     newImages.splice(idx, 1)
 
@@ -51,7 +53,7 @@ export default function DragDrop() {
   return (
     <div className={cx('draggable-container')}>
       <ListManager
-        items={modelImages}
+        items={images}
         direction="horizontal"
         maxItems={10}
         render={(image) => (

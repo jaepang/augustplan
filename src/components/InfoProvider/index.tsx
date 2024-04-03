@@ -32,16 +32,16 @@ interface InfoBase {
   jobName?: string
 }
 
-interface InfoSimple extends InfoBase {
+export interface InfoSimple extends InfoBase {
   comment_1?: string
   comment_2?: string
   comment_3?: string
   colors?: string
   imageLength?: number
-  modelImages: string[]
+  images: string[]
 }
 
-interface InfoDetail extends InfoBase {
+export interface InfoDetail extends InfoBase {
   comment?: string
   titleImage?: string
   fabricComment?: string
@@ -112,7 +112,7 @@ export default function InfoProvider({ children }) {
       imageLength: 0,
       fittingColor: new Set(),
       fittingSize: new Set(),
-      modelImages: []
+      images: []
     },
   })
 

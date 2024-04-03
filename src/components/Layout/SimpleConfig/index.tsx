@@ -70,7 +70,7 @@ export default function SimpleConfig() {
       ...prev,
       simple: {
         ...prev.simple,
-        modelImages: [...prev.simple.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
+        images: [...prev.simple.images, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
     setAdditionalAdded(true)

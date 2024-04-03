@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { InfoContext } from '@components/InfoProvider'
-import DragDrop from './DragDrop'
+import DragDrop from '@components/Layout/DragDrop'
 
 import classNames from 'classnames/bind'
 import styles from './ImageConfig.module.css'
