@@ -28,7 +28,7 @@ function generateSizeString({ size, specType }: { size: Info['simple']['size']; 
 export default function SimpleSource() {
   const { info } = useContext(InfoContext)
   const { simple, category, baseURL, dateStr, imgPrefix } = info
-  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made, folderName, jobName, imageLength, fittingColor, fittingSize, images: modelImages } = simple
+  const { model, comment_1, comment_2, comment_3, cautionComment, colors, fabric, size, made, folderName, jobName, imageLength, fittingColor, fittingSize, images } = simple
   const fInfo = [
     '두께감(두꺼움)',
     '두께감(보통)',
@@ -151,23 +151,13 @@ export default function SimpleSource() {
         <br />
         <br />
         <br />
-        {Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map((i) => (
-          <>
+        {images?.map(image => (
+          <div key={image}>
             <img
-              key={i}
-              src={`${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`}
-            />
-            <br />
-          </>
-        ))}
-        {modelImages?.map(image => (
-          <>
-            <img
-              key={image}
               src={image}
             />
             <br />
-          </>
+          </div>
         ))}
       </div>
     </div>

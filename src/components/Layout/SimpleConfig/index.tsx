@@ -3,12 +3,13 @@ import { InfoContext } from '@components/InfoProvider'
 
 import classNames from 'classnames/bind'
 import styles from '../DetailConfig/ImagesConfig/ImageConfig.module.css'
+import DragDrop from '../DragDrop'
 const cx = classNames.bind(styles)
 
 export default function SimpleConfig() {
   const { info, setInfo } = useContext(InfoContext)
   const { date, dateStr, baseURL, simple } = info
-  const { colors: colorsString, fittingColor, fittingSize, size } = simple
+  const { colors: colorsString, fittingColor, fittingSize, size, imageLength, folderName, jobName } = simple
   const colors = colorsString?.split(',')
   const sizes = size?.map((size) => (size.name.includes('(') ? size.name.slice(0, size.name.indexOf('(')) : size.name))
   const showFitting = colors?.length > 0 && sizes?.length > 0
@@ -24,6 +25,19 @@ export default function SimpleConfig() {
 
   const additionalImageFilename = `${includeDate ? dateStr : additionalImage.dateStr}/${additionalImage.folderName}/${additionalImage.fileName}`
 
+  useEffect(() => {
+    if (baseURL && dateStr && folderName && jobName && imageLength > 0) {
+      setInfo(prev => ({
+        ...prev,
+        simple: {
+          ...prev.simple,
+          images: Array.from({ length: imageLength }, (_, i) => i + 2).map((i) => (
+            `${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`
+          ))
+        }
+      }))
+    }
+  }, [folderName, jobName, imageLength])
   useEffect(() => {
     setAdditionalImage((prev) => ({
       ...prev,
@@ -165,6 +179,7 @@ export default function SimpleConfig() {
           <button onClick={clearAdditionalImage}>초기화</button>
         </div>
       </div>
+      <DragDrop scope="simple" />
       {showFitting && (
         <div>
           <h2 style={{ marginBottom: 0 }}>피팅 정보 입력</h2>
