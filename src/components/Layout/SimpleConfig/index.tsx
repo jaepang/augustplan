@@ -27,14 +27,14 @@ export default function SimpleConfig() {
 
   useEffect(() => {
     if (baseURL && dateStr && folderName && jobName && imageLength > 0) {
-      setInfo(prev => ({
+      setInfo((prev) => ({
         ...prev,
         simple: {
           ...prev.simple,
-          images: Array.from({ length: imageLength }, (_, i) => i + 2).map((i) => (
-            `${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`
-          ))
-        }
+          images: Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map(
+            (i) => `${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`,
+          ),
+        },
       }))
     }
   }, [folderName, jobName, imageLength])

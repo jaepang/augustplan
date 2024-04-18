@@ -34,14 +34,15 @@ export default function DragDrop({ scope = 'detail' }: { scope?: 'detail' | 'sim
 
   function removeImage(image: string) {
     const idx = images.findIndex((img) => img === image)
-    const newImages = info.detail.modelImages
+    const newImages = isDetail ? info.detail.modelImages : info.simple.images
     newImages.splice(idx, 1)
 
     setInfo((prev) => ({
       ...prev,
-      detail: {
-        ...prev.detail,
-        modelImages: newImages,
+      [scope]: {
+        ...prev[scope],
+        ...(isDetail && { modelImages: newImages }),
+        ...(!isDetail && { images: newImages }),
       },
     }))
   }
