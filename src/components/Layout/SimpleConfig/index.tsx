@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { InfoContext } from '@components/InfoProvider'
+import { type Info, InfoContext } from '@components/InfoProvider'
 
 import classNames from 'classnames/bind'
 import styles from '../DetailConfig/ImagesConfig/ImageConfig.module.css'
@@ -32,7 +32,7 @@ export default function SimpleConfig() {
         simple: {
           ...prev.simple,
           images: Array.from({ length: imageLength - 1 }, (_, i) => i + 2).map(
-            (i) => `${baseURL}/page/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`,
+            (i) => `${baseURL}/${dateStr}/${folderName}/h${folderName}-${jobName}_${i.toString().padStart(2, '0')}.jpg`,
           ),
         },
       }))
@@ -62,7 +62,14 @@ export default function SimpleConfig() {
     }))
   }
 
-  function onChange(e, value) {
+  function onInfoBaseChange(e, option: keyof Info) {
+    setInfo((prev) => ({
+      ...prev,
+      [option]: e.target.value
+    }))
+  }
+
+  function onChange(e, value: keyof Info['simple']) {
     setInfo((prev) => ({
       ...prev,
       simple: {
@@ -84,7 +91,7 @@ export default function SimpleConfig() {
       ...prev,
       simple: {
         ...prev.simple,
-        images: [...prev.simple.images, `${baseURL}/page/${additionalImageFilename}.jpg`],
+        images: [...prev.simple.images, `${baseURL}/${additionalImageFilename}.jpg`],
       },
     }))
     setAdditionalAdded(true)
@@ -118,6 +125,14 @@ export default function SimpleConfig() {
         />
       </div>
       <div>
+        <h2>이미지 URL</h2>
+        <input
+          type="string"
+          value={info.baseURL}
+          onChange={(e) => onInfoBaseChange(e, 'baseURL')}
+        />
+      </div>
+      <div>
         <h2>이미지 개수</h2>
         <input
           type="number"
@@ -141,7 +156,7 @@ export default function SimpleConfig() {
           동일 날짜
         </label>
         {(dateStr || additionalImage.dateStr) && additionalImage.fileName && additionalImage.folderName && (
-          <span>{`${baseURL}/page/${additionalImageFilename}.jpg`}</span>
+          <span>{`${baseURL}/${additionalImageFilename}.jpg`}</span>
         )}
         <div className={cx('row', 'additional')}>
           {!includeDate && (

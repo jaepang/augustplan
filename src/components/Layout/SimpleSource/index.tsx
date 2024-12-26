@@ -80,12 +80,7 @@ export default function SimpleSource() {
         id="top"
         style={{ width: '100%' }}
       >
-        <img src={`${baseURL}/etc/Untitled-1.jpg`} />
-
-        <br />
-        <img src={`${baseURL}/etc/Untitled-2.jpg`} />
-        <br />
-        <img src={`${baseURL}/page/${dateStr}/${folderName}/${imgPrefix}${folderName}-${jobName}_01.jpg`} />
+        <img src={`${baseURL}/${dateStr}/${folderName}/${imgPrefix}${folderName}-${jobName}_01.jpg`} />
         <br />
       </div>
       <div
