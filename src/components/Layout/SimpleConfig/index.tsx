@@ -127,6 +127,7 @@ export default function SimpleConfig() {
       <div>
         <h2>이미지 URL</h2>
         <input
+          style={{ width: '100%' }}
           type="string"
           value={info.baseURL}
           onChange={(e) => onInfoBaseChange(e, 'baseURL')}
