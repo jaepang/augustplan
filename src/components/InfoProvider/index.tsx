@@ -42,6 +42,7 @@ export interface InfoSimple extends InfoBase {
 }
 
 export interface InfoDetail extends InfoBase {
+  type: 'simple' | 'detail'
   comment?: string
   titleImage?: string
   fabricComment?: string
@@ -81,6 +82,7 @@ export default function InfoProvider({ children }) {
     baseURL: '',
     imgPrefix: '',
     detail: {
+      type: 'simple',
       titleImage: '',
       comment: '',
       cautionComment: 'none',
