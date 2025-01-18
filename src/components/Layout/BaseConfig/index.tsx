@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { InfoContext } from '@components/InfoProvider'
+import { type Info,InfoContext } from '@components/InfoProvider'
 import { config } from '@shared/consts'
 
 export default function BaseConfig() {
@@ -7,7 +7,7 @@ export default function BaseConfig() {
   const { date, type } = info
   const { categories } = config
 
-  function onInfoBaseChange(e, option) {
+  function onInfoBaseChange(e, option: keyof typeof info) {
     if (e?.target?.value) {
       setInfo((prev) => ({
         ...prev,
