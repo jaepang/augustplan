@@ -1,18 +1,4 @@
 {
-  "models": [
-    {
-      "name": "연정",
-      "code": "16"
-    },
-    {
-      "name": "아름",
-      "code": "17"
-    },
-    {
-      "name": "유진",
-      "code": "18"
-    }
-  ],
   "excelColumns": {
     "detail": {
       "top": [
@@ -144,7 +130,7 @@
           "code": "16"
         },
         {
-          "name": "아름",
+          "name": "지연",
           "code": "17"
         },
         {
@@ -155,7 +141,7 @@
     },
     "hopescoder": {
       "name": "hopescoder",
-      "imgBaseUrl": "http://aplan92.hgodo.com/hopes",
+      "imgBaseUrl": "http://aplan92.hgodo.com/hopes/page",
       "imgPrefix": "h",
       "type": "simple",
       "models": [
