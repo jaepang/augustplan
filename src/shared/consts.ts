@@ -1,3 +1,5 @@
+import mock from './presets-mock.json'
+
 export const KnitComment = `
 +
 원사를 편직하여 만든 니트제품은
@@ -18,4 +20,4 @@ export const CoatComment = `
 
 `
 
-export const config = JSON.parse(process.env.CONFIG)
+export const config = JSON.parse(process.env.CONFIG || 'null') || mock
