@@ -9,9 +9,8 @@ const cx = classNames.bind(styles)
 export default function DragDrop({ scope = 'detail' }: { scope?: 'detail' | 'simple' }) {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL, dateStr } = info
-  const { folderName } = info[scope] as InfoDetail
+  const { folderName, images } = info[scope] as InfoDetail
   const isDetail = scope === 'detail'
-  const images = isDetail ? info.detail.modelImages : info.simple.images
 
   function onDragEnd(srcIndex: number, destIndex: number) {
     const target = images[srcIndex]
@@ -34,15 +33,14 @@ export default function DragDrop({ scope = 'detail' }: { scope?: 'detail' | 'sim
 
   function removeImage(image: string) {
     const idx = images.findIndex((img) => img === image)
-    const newImages = isDetail ? info.detail.modelImages : info.simple.images
+    const newImages = info[scope].images
     newImages.splice(idx, 1)
 
     setInfo((prev) => ({
       ...prev,
       [scope]: {
         ...prev[scope],
-        ...(isDetail && { modelImages: newImages }),
-        ...(!isDetail && { images: newImages }),
+        images: newImages,
       },
     }))
   }

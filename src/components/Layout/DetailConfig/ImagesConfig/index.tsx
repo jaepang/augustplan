@@ -9,12 +9,10 @@ const cx = classNames.bind(styles)
 export default function ImageConfig({ onChange }) {
   const { info, setInfo } = useContext(InfoContext)
   const { baseURL, imgPrefix, date, dateStr } = info
-  const { folderName, jobName, titleImage, modelImages } = info.detail
+  const { folderName, jobName, titleImage, images } = info.detail
+  console.log(images)
   
-  const [imageLength, setImageLength] = useState({
-    detail: 6,
-    model: 0,
-  })
+  const [imageLength, setImageLength] = useState(0)
   const [additionalAdded, setAdditionalAdded] = useState(false)
   const [includeDate, setIncludeDate] = useState(true)
   const [additionalImage, setAdditionalImage] = useState({
@@ -44,9 +42,7 @@ export default function ImageConfig({ onChange }) {
         ...prev,
         detail: {
           ...prev.detail,
-          titleImage: `${baseURL}/page/${dateStr}/${folderName}/${prefix}m.jpg`,
-          colorImage: `${baseURL}/page/${dateStr}/${folderName}/${prefix}_01.jpg`,
-          fabricImages: [prev.detail.fabricImages[0], `${baseURL}/page/${dateStr}/${folderName}/${prefix}f.jpg`],
+          titleImage: `${baseURL}/page/${dateStr}/${folderName}/${prefix}_01.jpg`,
         },
       }))
   }, [dateStr, folderName, jobName])
@@ -57,16 +53,9 @@ export default function ImageConfig({ onChange }) {
       ...prev,
       detail: {
         ...prev.detail,
-        fabricImages: [`${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(imageLength.detail).toString().padStart(2, '0')}.jpg`, prev.detail.fabricImages[1]],
-        detailImages: Array.from({ length: imageLength.detail - 2 }).map(
+        images: Array.from({ length: imageLength }).map(
           (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 2).toString().padStart(2, '0')}.jpg`,
         ),
-        modelImages: [
-          ...Array.from({ length: imageLength.model }).map(
-            (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${defaultPrefix}_${(i + 1).toString().padStart(2, '0')}.jpg`,
-          ),
-          `${baseURL}/page/${dateStr}/cut.jpg`,
-        ],
       },
     }))
   }
@@ -83,7 +72,7 @@ export default function ImageConfig({ onChange }) {
       ...prev,
       detail: {
         ...prev.detail,
-        modelImages: [...prev.detail.modelImages, `${baseURL}/page/${additionalImageFilename}.jpg`],
+        images: [...prev.detail.images, `${baseURL}/page/${additionalImageFilename}.jpg`],
       },
     }))
     setAdditionalAdded(true)
@@ -121,25 +110,14 @@ export default function ImageConfig({ onChange }) {
         </div>
         <div>
           <h3>본문 이미지 개수</h3>
-          <div>
-            <h4>디테일</h4>
             <input
               type="number"
-              value={imageLength.detail}
-              onChange={(e) => setImageLength((prev) => ({ ...prev, detail: parseInt(e.target.value) }))}
+              value={imageLength}
+              onChange={(e) => setImageLength(parseInt(e.target.value))}
             />
-          </div>
-          <div>
-            <h4>모델</h4>
-            <input
-              type="number"
-              value={imageLength.model}
-              onChange={(e) => setImageLength((prev) => ({ ...prev, model: parseInt(e.target.value) }))}
-            />
-          </div>
         </div>
       </div>
-      {folderName && titleImage && (imageLength.detail > 0 || imageLength.model > 0) && (
+      {folderName && titleImage && imageLength > 0 && (
         <button
           className={cx('create-img-btn')}
           onClick={createImages}
@@ -147,7 +125,7 @@ export default function ImageConfig({ onChange }) {
           이미지 목록 자동 생성
         </button>
       )}
-      {modelImages.length > 0 && <DragDrop />}
+      {images.length > 0 && <DragDrop />}
       <div className={cx('additional-img')}>
         <h3>추가 이미지 수동 입력</h3>
 

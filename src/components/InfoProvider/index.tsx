@@ -30,6 +30,7 @@ interface InfoBase {
   made?: string
   folderName?: string
   jobName?: string
+  images: string[]
 }
 
 export interface InfoSimple extends InfoBase {
@@ -38,11 +39,9 @@ export interface InfoSimple extends InfoBase {
   comment_3?: string
   colors?: string
   imageLength?: number
-  images: string[]
 }
 
 export interface InfoDetail extends InfoBase {
-  type: 'simple' | 'detail'
   comment?: string
   titleImage?: string
   fabricComment?: string
@@ -50,10 +49,6 @@ export interface InfoDetail extends InfoBase {
     name?: string
     comment?: string
   }[]
-  colorImage: string
-  fabricImages: string[]
-  modelImages: string[]
-  detailImages: string[]
 }
 
 export interface Info {
@@ -82,7 +77,6 @@ export default function InfoProvider({ children }) {
     baseURL: '',
     imgPrefix: '',
     detail: {
-      type: 'simple',
       titleImage: '',
       comment: '',
       cautionComment: 'none',
@@ -95,10 +89,7 @@ export default function InfoProvider({ children }) {
       fittingSize: new Set(),
       folderName: '',
       jobName: '',
-      colorImage: '',
-      fabricImages: ['', ''],
-      detailImages: [],
-      modelImages: [],
+      images: []
     },
     simple: {
       cautionComment: 'none',
