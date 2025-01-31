@@ -164,7 +164,7 @@ export default function DetailSource() {
       <br />
       제조국 : {made}
       <br />
-      제조사 : 홉스앤드 헙력업체
+      제조사 : 어거스트플랜 헙력업체
       <br />
       제조일자 : 게시일로 부터 3개월 내 제작된 제품
       <br />
