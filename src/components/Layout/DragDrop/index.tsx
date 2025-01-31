@@ -16,16 +16,16 @@ export default function DragDrop({ scope = 'detail' }: { scope?: 'detail' | 'sim
     const target = images[srcIndex]
     console.log(srcIndex, destIndex, images[srcIndex])
     setInfo((prev) => {
-      const newImages = prev[scope][isDetail ? 'modelImages' : 'images']
+      const newImages = [...prev[scope].images]
 
       newImages.splice(srcIndex, 1)
       newImages.splice(destIndex, 0, target)
 
       return {
         ...prev,
-        detail: {
-          ...prev.detail,
-          modelImages: newImages,
+        [scope]: {
+          ...prev[scope],
+          images: newImages,
         },
       }
     })
