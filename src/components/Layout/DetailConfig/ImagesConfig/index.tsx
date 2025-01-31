@@ -57,7 +57,7 @@ export default function ImageConfig({ onChange }) {
           ...Array.from({ length: imageLength - 1 }).map(
             (_, i) => `${baseURL}/page/${dateStr}/${folderName}/${prefix}_${(i + 2).toString().padStart(2, '0')}.jpg`,
           ),
-          `${baseURL}/page/${dateStr}/${folderName}/cut.jpg`
+          `${baseURL}/page/${dateStr}/cut.jpg`
         ],
       },
     }))
